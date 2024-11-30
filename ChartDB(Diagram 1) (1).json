@@ -1,0 +1,1988 @@
+{
+  "id": "0",
+  "name": "Diagram 1",
+  "createdAt": "2024-11-30T14:34:30.243Z",
+  "updatedAt": "2024-11-30T14:34:30.243Z",
+  "databaseType": "mysql",
+  "tables": [
+    {
+      "id": "1",
+      "name": "admins",
+      "x": -108.87499999999989,
+      "y": -321.68434406142103,
+      "fields": [
+        {
+          "id": "2",
+          "name": "admin _id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732785176251
+        },
+        {
+          "id": "3",
+          "name": "name",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785198802
+        },
+        {
+          "id": "4",
+          "name": "email",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785363449
+        },
+        {
+          "id": "5",
+          "name": "password_hash",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974774675
+        },
+        {
+          "id": "6",
+          "name": "password_set",
+          "type": {
+            "name": "boolean",
+            "id": "boolean"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974787380
+        },
+        {
+          "id": "7",
+          "name": "created_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974809551
+        },
+        {
+          "id": "8",
+          "name": "updated_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974823963
+        },
+        {
+          "id": "9",
+          "name": "role_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732975486202
+        }
+      ],
+      "indexes": [],
+      "color": "#ff6363",
+      "isView": false,
+      "createdAt": 1732785176251,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "10",
+      "name": "class",
+      "x": -30.1758577585656,
+      "y": 553.138564829459,
+      "fields": [
+        {
+          "id": "11",
+          "name": "class_ id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732785516467
+        },
+        {
+          "id": "12",
+          "name": "students_ id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785537467
+        },
+        {
+          "id": "13",
+          "name": "teacher_ id ",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785557573
+        },
+        {
+          "id": "14",
+          "name": "modules_ id ",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732786123802
+        }
+      ],
+      "indexes": [],
+      "color": "#ff6363",
+      "isView": false,
+      "createdAt": 1732785516467,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "15",
+      "name": "course",
+      "x": 75.4014259748194,
+      "y": 98.6107658355921,
+      "fields": [
+        {
+          "id": "16",
+          "name": "course_ id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732785651153
+        },
+        {
+          "id": "17",
+          "name": "course_ name",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785675400
+        },
+        {
+          "id": "18",
+          "name": "start _date ",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785684478
+        },
+        {
+          "id": "19",
+          "name": "end_ date ",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785691311
+        },
+        {
+          "id": "20",
+          "name": "staff _id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785713829
+        },
+        {
+          "id": "21",
+          "name": "class_ id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785747524
+        },
+        {
+          "id": "22",
+          "name": "student _id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785758912
+        }
+      ],
+      "indexes": [],
+      "color": "#7175fa",
+      "isView": false,
+      "createdAt": 1732785651153,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "23",
+      "name": "faculty staff",
+      "x": 398.19795940662584,
+      "y": -181.18255131087358,
+      "fields": [
+        {
+          "id": "24",
+          "name": "staff_id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732785407768
+        },
+        {
+          "id": "25",
+          "name": "name",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785438590
+        },
+        {
+          "id": "26",
+          "name": "email",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785446199
+        },
+        {
+          "id": "27",
+          "name": "phone _number ",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785454631
+        },
+        {
+          "id": "28",
+          "name": "department",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785477716
+        },
+        {
+          "id": "29",
+          "name": "password_hash",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974848105
+        },
+        {
+          "id": "30",
+          "name": "password_set",
+          "type": {
+            "name": "boolean",
+            "id": "boolean"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974877112
+        },
+        {
+          "id": "31",
+          "name": "created_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974929971
+        },
+        {
+          "id": "32",
+          "name": "updated_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974941149
+        },
+        {
+          "id": "33",
+          "name": "role_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732975505528
+        }
+      ],
+      "indexes": [],
+      "color": "#ff9f74",
+      "isView": false,
+      "createdAt": 1732785407768,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "34",
+      "name": "grades",
+      "x": -565.7019739973392,
+      "y": 399.4405544913968,
+      "fields": [
+        {
+          "id": "35",
+          "name": "grade _id ",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732786213101
+        },
+        {
+          "id": "36",
+          "name": "student_ id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732786236658
+        },
+        {
+          "id": "37",
+          "name": "course_ id ",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732786247502
+        },
+        {
+          "id": "38",
+          "name": "score",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": true,
+          "createdAt": 1732786257869
+        },
+        {
+          "id": "39",
+          "name": "grade",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": true,
+          "createdAt": 1732786266441
+        },
+        {
+          "id": "40",
+          "name": "entered_by",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732786309777
+        },
+        {
+          "id": "41",
+          "name": "entered_at ",
+          "type": {
+            "id": "timestamp",
+            "name": "timestamp"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732786321995
+        }
+      ],
+      "indexes": [],
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1732786213101,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "42",
+      "name": "login",
+      "x": -97.0699032392248,
+      "y": -606.5868924418086,
+      "fields": [
+        {
+          "id": "43",
+          "name": "login_id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732784592285
+        },
+        {
+          "id": "44",
+          "name": "password",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784654612
+        }
+      ],
+      "indexes": [],
+      "color": "#ff9f74",
+      "isView": false,
+      "createdAt": 1732784592285,
+      "width": 235,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "45",
+      "name": "modules",
+      "x": 494.43333853576394,
+      "y": 322.34778463501345,
+      "fields": [
+        {
+          "id": "46",
+          "name": "module_ id",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732785882608
+        },
+        {
+          "id": "47",
+          "name": "year ",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785899084
+        },
+        {
+          "id": "48",
+          "name": "semester",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785919041
+        },
+        {
+          "id": "49",
+          "name": "terms",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732785933020
+        },
+        {
+          "id": "50",
+          "name": "staff _id ",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732786037673
+        }
+      ],
+      "indexes": [],
+      "color": "#ffe374",
+      "isView": false,
+      "createdAt": 1732785882608,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "51",
+      "name": "students",
+      "x": -552.3516989202584,
+      "y": -380.8601935215502,
+      "fields": [
+        {
+          "id": "52",
+          "name": "student_id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": true,
+          "unique": true,
+          "nullable": false,
+          "createdAt": 1732784131937
+        },
+        {
+          "id": "53",
+          "name": "name",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784417012
+        },
+        {
+          "id": "54",
+          "name": "phone_ number",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784435077
+        },
+        {
+          "id": "55",
+          "name": "email",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784450099
+        },
+        {
+          "id": "56",
+          "name": "password_hash",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974694417
+        },
+        {
+          "id": "57",
+          "name": "password_set",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974721801
+        },
+        {
+          "id": "58",
+          "name": "created_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974735197
+        },
+        {
+          "id": "59",
+          "name": "updated_at ",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974746189
+        },
+        {
+          "id": "60",
+          "name": "course",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784457958
+        },
+        {
+          "id": "61",
+          "name": "faculty",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784480377
+        },
+        {
+          "id": "62",
+          "name": "department",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784490136
+        },
+        {
+          "id": "63",
+          "name": "grade_id",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": true,
+          "createdAt": 1732784548209
+        },
+        {
+          "id": "64",
+          "name": "class",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "primaryKey": false,
+          "unique": false,
+          "nullable": false,
+          "createdAt": 1732784621222
+        },
+        {
+          "id": "65",
+          "name": "role_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732975462182
+        }
+      ],
+      "indexes": [],
+      "color": "#7175fa",
+      "isView": false,
+      "createdAt": 1732784131937,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "66",
+      "name": "login_data",
+      "x": -543,
+      "y": -604,
+      "fields": [
+        {
+          "id": "67",
+          "name": "login _id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732974408789
+        },
+        {
+          "id": "68",
+          "name": "password_ hash ",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732973449882
+        },
+        {
+          "id": "69",
+          "name": "password _salt",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732973486242
+        },
+        {
+          "id": "70",
+          "name": "hash_algorithm _id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732973745564
+        }
+      ],
+      "indexes": [],
+      "color": "#ff6363",
+      "createdAt": 1732973378971,
+      "isView": false,
+      "width": 224
+    },
+    {
+      "id": "71",
+      "name": "password_resets",
+      "x": 470.3495752699357,
+      "y": -628.685398975616,
+      "fields": [
+        {
+          "id": "72",
+          "name": "password_reset id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732974430621
+        },
+        {
+          "id": "73",
+          "name": "student_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974486741
+        },
+        {
+          "id": "74",
+          "name": "staff _uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974571169
+        },
+        {
+          "id": "75",
+          "name": "admin_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974578563
+        },
+        {
+          "id": "76",
+          "name": "email_ address",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974598399
+        },
+        {
+          "id": "77",
+          "name": "reset _token",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974610167
+        },
+        {
+          "id": "78",
+          "name": "reset_ link",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974624876
+        },
+        {
+          "id": "79",
+          "name": "token _expiry",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974635103
+        },
+        {
+          "id": "80",
+          "name": "requested_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732974648320
+        }
+      ],
+      "indexes": [],
+      "color": "#9ef07a",
+      "createdAt": 1732974430621,
+      "isView": false
+    },
+    {
+      "id": "81",
+      "name": "hash_algortihm",
+      "x": -971.9466148763067,
+      "y": -540.6707766295654,
+      "fields": [
+        {
+          "id": "82",
+          "name": "hash_algorithms_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732975158162
+        },
+        {
+          "id": "83",
+          "name": "algorithm_name",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732975187255
+        }
+      ],
+      "indexes": [],
+      "color": "#7175fa",
+      "createdAt": 1732975158162,
+      "isView": false
+    },
+    {
+      "id": "84",
+      "name": "user_roles",
+      "x": -961.8377634046614,
+      "y": -362.4249057825895,
+      "fields": [
+        {
+          "id": "85",
+          "name": "role_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732975235667
+        },
+        {
+          "id": "86",
+          "name": "role_description",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732975334701
+        }
+      ],
+      "indexes": [],
+      "color": "#ffe374",
+      "createdAt": 1732975235667,
+      "isView": false
+    },
+    {
+      "id": "87",
+      "name": "granted_permissions",
+      "x": -966.7890375948549,
+      "y": -190.7807338558718,
+      "fields": [
+        {
+          "id": "88",
+          "name": "role_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732975377246
+        },
+        {
+          "id": "89",
+          "name": "permission_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732975358380
+        }
+      ],
+      "indexes": [],
+      "color": "#ff6363",
+      "createdAt": 1732975358380,
+      "isView": false
+    },
+    {
+      "id": "90",
+      "name": "permissions",
+      "x": -961.2360644844027,
+      "y": -35.640809229800126,
+      "fields": [
+        {
+          "id": "91",
+          "name": "permission_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732975400006
+        },
+        {
+          "id": "92",
+          "name": "permissions_description",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1732975424938
+        }
+      ],
+      "indexes": [],
+      "color": "#ff6b8a",
+      "createdAt": 1732975400006,
+      "isView": false
+    },
+    {
+      "id": "93",
+      "name": "login_attempts",
+      "x": 789.2628751938711,
+      "y": -618.0150949365379,
+      "fields": [
+        {
+          "id": "94",
+          "name": "login _id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732975811723
+        },
+        {
+          "id": "95",
+          "name": "student uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1732975908735
+        },
+        {
+          "id": "96",
+          "name": "admin_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1732975920409
+        },
+        {
+          "id": "97",
+          "name": "staff_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1732975930865
+        },
+        {
+          "id": "98",
+          "name": "ip_address",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1732975940319
+        },
+        {
+          "id": "99",
+          "name": "attempt_time",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1732975953868
+        },
+        {
+          "id": "100",
+          "name": "success",
+          "type": {
+            "name": "boolean",
+            "id": "boolean"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1732975983817
+        }
+      ],
+      "indexes": [],
+      "color": "#ffe374",
+      "createdAt": 1732975811723,
+      "isView": false
+    },
+    {
+      "id": "101",
+      "name": "csrf_tokens",
+      "x": 807.4175472245815,
+      "y": -281.3284500033609,
+      "fields": [
+        {
+          "id": "102",
+          "name": "csrf_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732976125605
+        },
+        {
+          "id": "103",
+          "name": "student_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976158850
+        },
+        {
+          "id": "104",
+          "name": "admin_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976186258
+        },
+        {
+          "id": "105",
+          "name": "staff_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976195967
+        },
+        {
+          "id": "106",
+          "name": "token",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976244679
+        },
+        {
+          "id": "107",
+          "name": "issued_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976257316
+        },
+        {
+          "id": "108",
+          "name": "expires_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976274429
+        }
+      ],
+      "indexes": [],
+      "color": "#ff6363",
+      "createdAt": 1732976125605,
+      "isView": false
+    },
+    {
+      "id": "109",
+      "name": "sensitive_data",
+      "x": 790.0880875589035,
+      "y": 40.504372359234566,
+      "fields": [
+        {
+          "id": "110",
+          "name": "id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732976542642
+        },
+        {
+          "id": "111",
+          "name": "student_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976582379
+        },
+        {
+          "id": "112",
+          "name": "admin_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976591361
+        },
+        {
+          "id": "113",
+          "name": "staff_id",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976599219
+        },
+        {
+          "id": "114",
+          "name": "encrypted_data",
+          "type": {
+            "name": "blob",
+            "id": "blob"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976608855
+        },
+        {
+          "id": "115",
+          "name": "encryption_key_id",
+          "type": {
+            "name": "int",
+            "id": "int"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976624734
+        },
+        {
+          "id": "116",
+          "name": "created_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976645841
+        },
+        {
+          "id": "117",
+          "name": "updated_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976657571
+        }
+      ],
+      "indexes": [],
+      "color": "#ff9f74",
+      "createdAt": 1732976542642,
+      "isView": false
+    },
+    {
+      "id": "118",
+      "name": "error_logs",
+      "x": 798.3402112092263,
+      "y": 375.5405925623467,
+      "fields": [
+        {
+          "id": "119",
+          "name": "id",
+          "type": {
+            "name": "int",
+            "id": "int"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1732976696525
+        },
+        {
+          "id": "120",
+          "name": "error_message",
+          "type": {
+            "name": "text",
+            "id": "text"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976711083
+        },
+        {
+          "id": "121",
+          "name": "error_type",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976751385
+        },
+        {
+          "id": "122",
+          "name": "student_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976774601
+        },
+        {
+          "id": "123",
+          "name": "admin_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976785433
+        },
+        {
+          "id": "124",
+          "name": "staff_uid",
+          "type": {
+            "name": "varchar",
+            "id": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976790712
+        },
+        {
+          "id": "125",
+          "name": "occured_at",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1732976796917
+        }
+      ],
+      "indexes": [],
+      "color": "#8a61f5",
+      "createdAt": 1732976696525,
+      "isView": false
+    }
+  ],
+  "relationships": [
+    {
+      "id": "126",
+      "name": "admins_admin id_fk",
+      "sourceTableId": "1",
+      "targetTableId": "34",
+      "sourceFieldId": "2",
+      "targetFieldId": "40",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732786432027,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "127",
+      "name": "class_modules id _fk",
+      "sourceTableId": "10",
+      "targetTableId": "45",
+      "sourceFieldId": "14",
+      "targetFieldId": "46",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732786132427,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "128",
+      "name": "course_class id_fk",
+      "sourceTableId": "15",
+      "targetTableId": "10",
+      "sourceFieldId": "21",
+      "targetFieldId": "11",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785978276,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "129",
+      "name": "course_course id_fk",
+      "sourceTableId": "15",
+      "targetTableId": "34",
+      "sourceFieldId": "16",
+      "targetFieldId": "37",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732786369461,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "130",
+      "name": "faculty staff_staff id_fk",
+      "sourceTableId": "23",
+      "targetTableId": "15",
+      "sourceFieldId": "24",
+      "targetFieldId": "20",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785963790,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "131",
+      "name": "faculty staff_staff id_fk",
+      "sourceTableId": "23",
+      "targetTableId": "34",
+      "sourceFieldId": "24",
+      "targetFieldId": "40",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732786435744,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "132",
+      "name": "faculty staff_staff id_fk",
+      "sourceTableId": "23",
+      "targetTableId": "45",
+      "sourceFieldId": "24",
+      "targetFieldId": "50",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732786063124,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "133",
+      "name": "faculty staff_staff id_fk",
+      "sourceTableId": "23",
+      "targetTableId": "10",
+      "sourceFieldId": "24",
+      "targetFieldId": "13",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785593508,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "134",
+      "name": "login_ id_fk",
+      "sourceTableId": "42",
+      "targetTableId": "51",
+      "sourceFieldId": "43",
+      "targetFieldId": "52",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785264979,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "135",
+      "name": "login_ id_fk",
+      "sourceTableId": "42",
+      "targetTableId": "23",
+      "sourceFieldId": "43",
+      "targetFieldId": "24",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785507696,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "136",
+      "name": "login_ id_fk",
+      "sourceTableId": "42",
+      "targetTableId": "1",
+      "sourceFieldId": "43",
+      "targetFieldId": "2",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785403624,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "137",
+      "name": "students_grade id_fk",
+      "sourceTableId": "51",
+      "targetTableId": "34",
+      "sourceFieldId": "63",
+      "targetFieldId": "35",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732786360712,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "138",
+      "name": "students_student id_fk",
+      "sourceTableId": "51",
+      "targetTableId": "10",
+      "sourceFieldId": "52",
+      "targetFieldId": "12",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785584498,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "139",
+      "name": "students_student id_fk",
+      "sourceTableId": "51",
+      "targetTableId": "15",
+      "sourceFieldId": "52",
+      "targetFieldId": "22",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732785989881,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "140",
+      "name": "students_student id_fk",
+      "sourceTableId": "51",
+      "targetTableId": "34",
+      "sourceFieldId": "52",
+      "targetFieldId": "36",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732786364206,
+      "diagramId": "zjcn8wwtsmkw"
+    },
+    {
+      "id": "141",
+      "name": "login_data_login id_fk",
+      "sourceTableId": "66",
+      "targetTableId": "42",
+      "sourceFieldId": "67",
+      "targetFieldId": "43",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732974425159
+    },
+    {
+      "id": "142",
+      "name": "password_resets_student uid_fk",
+      "sourceTableId": "71",
+      "targetTableId": "51",
+      "sourceFieldId": "73",
+      "targetFieldId": "52",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732974977144
+    },
+    {
+      "id": "143",
+      "name": "password_resets_faculty uid_fk",
+      "sourceTableId": "71",
+      "targetTableId": "23",
+      "sourceFieldId": "74",
+      "targetFieldId": "24",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732974981378
+    },
+    {
+      "id": "144",
+      "name": "password_resets_admin uid_fk",
+      "sourceTableId": "71",
+      "targetTableId": "1",
+      "sourceFieldId": "75",
+      "targetFieldId": "2",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732974984117
+    },
+    {
+      "id": "145",
+      "name": "login_data_password hash _fk",
+      "sourceTableId": "66",
+      "targetTableId": "51",
+      "sourceFieldId": "68",
+      "targetFieldId": "56",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975046656
+    },
+    {
+      "id": "146",
+      "name": "admins_password_hash_fk",
+      "sourceTableId": "1",
+      "targetTableId": "66",
+      "sourceFieldId": "5",
+      "targetFieldId": "68",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975069081
+    },
+    {
+      "id": "147",
+      "name": "faculty staff_password_hash_fk",
+      "sourceTableId": "23",
+      "targetTableId": "66",
+      "sourceFieldId": "29",
+      "targetFieldId": "68",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975074871
+    },
+    {
+      "id": "148",
+      "name": "hash_algortihm_hash_algorithms_id_fk",
+      "sourceTableId": "81",
+      "targetTableId": "66",
+      "sourceFieldId": "82",
+      "targetFieldId": "70",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975220194
+    },
+    {
+      "id": "149",
+      "name": "user_roles_role_id_fk",
+      "sourceTableId": "84",
+      "targetTableId": "87",
+      "sourceFieldId": "85",
+      "targetFieldId": "88",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975397506
+    },
+    {
+      "id": "150",
+      "name": "granted_permissions_permission_id_fk",
+      "sourceTableId": "87",
+      "targetTableId": "90",
+      "sourceFieldId": "89",
+      "targetFieldId": "91",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975443300
+    },
+    {
+      "id": "151",
+      "name": "user_roles_role_id_fk",
+      "sourceTableId": "84",
+      "targetTableId": "51",
+      "sourceFieldId": "85",
+      "targetFieldId": "65",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975478987
+    },
+    {
+      "id": "152",
+      "name": "user_roles_role_id_fk",
+      "sourceTableId": "84",
+      "targetTableId": "1",
+      "sourceFieldId": "85",
+      "targetFieldId": "9",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975498856
+    },
+    {
+      "id": "153",
+      "name": "user_roles_role_id_fk",
+      "sourceTableId": "84",
+      "targetTableId": "23",
+      "sourceFieldId": "85",
+      "targetFieldId": "33",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732975519428
+    },
+    {
+      "id": "154",
+      "name": "login_login_id_fk",
+      "sourceTableId": "42",
+      "targetTableId": "93",
+      "sourceFieldId": "43",
+      "targetFieldId": "94",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976026784
+    },
+    {
+      "id": "155",
+      "name": "login_attempts_student uid_fk",
+      "sourceTableId": "93",
+      "targetTableId": "51",
+      "sourceFieldId": "95",
+      "targetFieldId": "52",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976031041
+    },
+    {
+      "id": "156",
+      "name": "login_attempts_admin_uid_fk",
+      "sourceTableId": "93",
+      "targetTableId": "1",
+      "sourceFieldId": "96",
+      "targetFieldId": "2",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976034035
+    },
+    {
+      "id": "157",
+      "name": "login_attempts_staff_uid_fk",
+      "sourceTableId": "93",
+      "targetTableId": "23",
+      "sourceFieldId": "97",
+      "targetFieldId": "24",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976037136
+    },
+    {
+      "id": "158",
+      "name": "csrf_tokens_student_uid_fk",
+      "sourceTableId": "101",
+      "targetTableId": "51",
+      "sourceFieldId": "103",
+      "targetFieldId": "52",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976371480
+    },
+    {
+      "id": "159",
+      "name": "csrf_tokens_admin_uid_fk",
+      "sourceTableId": "101",
+      "targetTableId": "1",
+      "sourceFieldId": "104",
+      "targetFieldId": "2",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976374978
+    },
+    {
+      "id": "160",
+      "name": "csrf_tokens_staff_uid_fk",
+      "sourceTableId": "101",
+      "targetTableId": "23",
+      "sourceFieldId": "105",
+      "targetFieldId": "24",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976377631
+    },
+    {
+      "id": "161",
+      "name": "sensitive_data_student_id_fk",
+      "sourceTableId": "109",
+      "targetTableId": "51",
+      "sourceFieldId": "111",
+      "targetFieldId": "52",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976677755
+    },
+    {
+      "id": "162",
+      "name": "sensitive_data_admin_id_fk",
+      "sourceTableId": "109",
+      "targetTableId": "1",
+      "sourceFieldId": "112",
+      "targetFieldId": "2",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976681307
+    },
+    {
+      "id": "163",
+      "name": "sensitive_data_staff_id_fk",
+      "sourceTableId": "109",
+      "targetTableId": "23",
+      "sourceFieldId": "113",
+      "targetFieldId": "24",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976685424
+    },
+    {
+      "id": "164",
+      "name": "error_logs_student_uid_fk",
+      "sourceTableId": "118",
+      "targetTableId": "51",
+      "sourceFieldId": "122",
+      "targetFieldId": "52",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976838944
+    },
+    {
+      "id": "165",
+      "name": "error_logs_admin_uid_fk",
+      "sourceTableId": "118",
+      "targetTableId": "1",
+      "sourceFieldId": "123",
+      "targetFieldId": "2",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976841961
+    },
+    {
+      "id": "166",
+      "name": "error_logs_staff_uid_fk",
+      "sourceTableId": "118",
+      "targetTableId": "23",
+      "sourceFieldId": "124",
+      "targetFieldId": "24",
+      "sourceCardinality": "one",
+      "targetCardinality": "one",
+      "createdAt": 1732976845879
+    }
+  ],
+  "dependencies": []
+}

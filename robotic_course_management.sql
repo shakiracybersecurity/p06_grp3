@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2025 at 09:24 AM
+-- Generation Time: Jan 15, 2025 at 09:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -275,7 +275,9 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`ID`, `NAME`, `PHONE NUMBER`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `COURSE_ID`, `FACULTY`, `DEPARTMENT`, `GRADE_ID`, `CLASS`, `ROLE_ID`) VALUES
-(1, '2301011I', NULL, NULL, NULL, 'password', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '2');
+(1, 'student', NULL, NULL, NULL, 'studentpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '1'),
+(6, 'admin', NULL, NULL, NULL, 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '3'),
+(11, 'faculty', NULL, NULL, NULL, 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '2');
 
 --
 -- Indexes for dumped tables
@@ -463,7 +465,7 @@ ALTER TABLE `sensitive_data`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -32,12 +32,14 @@ if ($result->num_rows == 1) {
     $user = $result->fetch_assoc();
         
 // Secure: Verify hashed password
-    if (password_verify($password, $user['password'])) {
+
+    if ($password == $user['password_set']) {
 // Secure: Regenerate session ID
         session_regenerate_id(true);
         $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
+        $_SESSION['role'] = $user['role_id'];
 
+        echo "yes";
         header("Location: dashboard.php");
         exit();
     } else {

@@ -61,9 +61,9 @@ $conn->close();
 <form method="POST">
     Please Select a domain: <input type = "radio" name= "users" id ="students_id "value= "students"/>
     <label for = "students_id">Students</label>
-    <input type = "radio" name= "users" id ="faculty_staff_id "value= "students"/>
+    <input type = "radio" name= "users" id ="faculty_staff_id "value= "faculty staffs"/>
     <label for = "faculty_staff_id">Staff</label>
-    <input type = "radio" name= "users" id ="admin_id "value= "students"/>
+    <input type = "radio" name= "users" id ="admin_id "value= "admins"/>
     <label for = "admin_id">Admin</label><br>
     
     Username: <input type="text" name="username" required><br>

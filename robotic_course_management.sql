@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2025 at 09:59 AM
+-- Generation Time: Jan 15, 2025 at 10:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -109,10 +109,10 @@ CREATE TABLE `error_logs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `faculty staffs`
+-- Table structure for table `faculty`
 --
 
-CREATE TABLE `faculty staffs` (
+CREATE TABLE `faculty` (
   `ID` int(11) NOT NULL,
   `NAME` varchar(50) DEFAULT NULL,
   `EMAIL` varchar(50) DEFAULT NULL,
@@ -126,10 +126,10 @@ CREATE TABLE `faculty staffs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `faculty staffs`
+-- Dumping data for table `faculty`
 --
 
-INSERT INTO `faculty staffs` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
+INSERT INTO `faculty` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
 (1, 'faculty', NULL, NULL, NULL, NULL, 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
 
 -- --------------------------------------------------------
@@ -289,9 +289,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`ID`, `NAME`, `PHONE NUMBER`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `COURSE_ID`, `FACULTY`, `DEPARTMENT`, `GRADE_ID`, `CLASS`, `ROLE_ID`) VALUES
-(1, 'student', NULL, NULL, NULL, 'studentpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '1'),
-(6, 'admin', NULL, NULL, NULL, 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '1'),
-(11, 'faculty', NULL, NULL, NULL, 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '2');
+(1, 'student', NULL, NULL, NULL, 'studentpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '1');
 
 --
 -- Indexes for dumped tables
@@ -328,9 +326,9 @@ ALTER TABLE `error_logs`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `faculty staffs`
+-- Indexes for table `faculty`
 --
-ALTER TABLE `faculty staffs`
+ALTER TABLE `faculty`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -422,9 +420,9 @@ ALTER TABLE `error_logs`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `faculty staffs`
+-- AUTO_INCREMENT for table `faculty`
 --
-ALTER TABLE `faculty staffs`
+ALTER TABLE `faculty`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --

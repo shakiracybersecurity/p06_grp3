@@ -56,6 +56,13 @@ $conn->close();
 
 <!-- Login form -->
 <form method="POST">
+    Please Select a domain: <input type = "radio" name= "users" id ="students_id "value= "id"/>
+    <label for = "students_id">Students</label>
+    <input type = "radio" name= "users" id ="faculty_staff_id "value= "id"/>
+    <label for = "faculty_staff_id">Staff</label>
+    <input type = "radio" name= "users" id ="admin_id "value= "id"/>
+    <label for = "admin_id">Admin</label><br>
+    
     Username: <input type="text" name="username" required><br>
     Password: <input type="password" name="password" required><br>
     <input type="submit" value="Login">

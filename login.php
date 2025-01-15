@@ -1,7 +1,7 @@
 <?php
 // Database connection details
 $host = 'localhost';
-$dbname = 'insecure_login_system'; // Updated for clarity
+$dbname = 'secure_login_system'; // Updated for clarity
 $user = 'root';
 $pass = '';
 

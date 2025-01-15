@@ -1,7 +1,7 @@
 <?php
 // Database connection details
 $host = 'localhost';
-$dbname = 'secure_login_system'; // Updated for clarity
+$dbname = 'robotic course management'; // Updated for clarity
 $user = 'root';
 $pass = '';
 

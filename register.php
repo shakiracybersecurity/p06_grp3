@@ -1,7 +1,7 @@
 <?php
 // Database connection details
 $host = 'localhost';
-$dbname = 'secure_login_system';
+$dbname = 'robotic course management';
 $user = 'root';  // Replace with your MySQL username
 $pass = '';      // Replace with your MySQL password
 

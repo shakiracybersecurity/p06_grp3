@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2025 at 09:50 AM
+-- Generation Time: Jan 15, 2025 at 09:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,13 @@ CREATE TABLE `admins` (
   `UPDATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `ROLE_ID` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`ID`, `NAME`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
+(2, 'admin', NULL, NULL, 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '3');
 
 -- --------------------------------------------------------
 
@@ -117,6 +124,13 @@ CREATE TABLE `faculty staffs` (
   `UPDATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `ROLE_ID` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `faculty staffs`
+--
+
+INSERT INTO `faculty staffs` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
+(1, 'faculty', NULL, NULL, NULL, NULL, 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
 
 -- --------------------------------------------------------
 
@@ -276,7 +290,7 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`ID`, `NAME`, `PHONE NUMBER`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `COURSE_ID`, `FACULTY`, `DEPARTMENT`, `GRADE_ID`, `CLASS`, `ROLE_ID`) VALUES
 (1, 'student', NULL, NULL, NULL, 'studentpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '1'),
-(6, 'admin', NULL, NULL, NULL, 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '3'),
+(6, 'admin', NULL, NULL, NULL, 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '1'),
 (11, 'faculty', NULL, NULL, NULL, 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '2');
 
 --
@@ -381,7 +395,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `class`
@@ -411,7 +425,7 @@ ALTER TABLE `error_logs`
 -- AUTO_INCREMENT for table `faculty staffs`
 --
 ALTER TABLE `faculty staffs`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `grades`

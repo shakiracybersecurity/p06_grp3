@@ -1,7 +1,7 @@
 <?php
 // Database connection details
 $host = 'localhost';
-$dbname = 'insecure_login_system';
+$dbname = 'robotic course management';
 $user = 'root';  // Replace with your MySQL username
 $pass = '';      // Replace with your MySQL password
 
@@ -26,19 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $studentid = htmlspecialchars(trim($_POST['id']));
     $course_id =htmlspecialchars(trim($_POST['course_id']));
     $role_id = 1;  // Default role is 1
-
+}
     // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO students (name, phonenumber, email, department_id, studentid, course_id, role_id) VALUES (?, ?, ?, ?,?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO students (name, phonenumber, email, department_id, id, course_id, role_id) VALUES (?, ?, ?, ?,?, ?, ?)");
     $stmt->bind_param("ssssssi", $name, $phonenumber, $email, $department_id, $studentid, $course_id, $role_id);
     
     if ($stmt->execute()) {
         echo "Registration successful!";
-        header("Location: login.php");
         exit();
     } else {
         echo "Error: " . $stmt->error;
     }
-}
+
 
     // Close the statement
     $stmt->close();

@@ -67,5 +67,7 @@ $conn->close();
     
     Username: <input type="text" name="username" required><br>
     Password: <input type="password" name="password" required><br>
+    <a href="forgot.php">Forgot Password</a>
     <input type="submit" value="Login">
+
 </form>

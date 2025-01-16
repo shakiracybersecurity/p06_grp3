@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2025 at 10:04 AM
+-- Generation Time: Jan 16, 2025 at 09:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -88,6 +88,17 @@ CREATE TABLE `csrf` (
   `TOKEN` varchar(50) DEFAULT NULL,
   `ISSUED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `EXPIRES_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `department`
+--
+
+CREATE TABLE `department` (
+  `ID` int(11) NOT NULL,
+  `NAME` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -278,7 +289,7 @@ CREATE TABLE `students` (
   `UPDATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `COURSE_ID` varchar(11) DEFAULT NULL,
   `FACULTY` varchar(11) DEFAULT NULL,
-  `DEPARTMENT` varchar(11) DEFAULT NULL,
+  `DEPARTMENT_ID` int(11) DEFAULT NULL,
   `GRADE_ID` varchar(11) DEFAULT NULL,
   `CLASS` varchar(11) DEFAULT NULL,
   `ROLE_ID` varchar(11) DEFAULT NULL
@@ -288,8 +299,8 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`ID`, `NAME`, `PHONE NUMBER`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `COURSE_ID`, `FACULTY`, `DEPARTMENT`, `GRADE_ID`, `CLASS`, `ROLE_ID`) VALUES
-(1, 'student', NULL, NULL, NULL, 'studentpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', NULL, NULL, NULL, NULL, NULL, '1');
+INSERT INTO `students` (`ID`, `NAME`, `PHONE NUMBER`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `COURSE_ID`, `FACULTY`, `DEPARTMENT_ID`, `GRADE_ID`, `CLASS`, `ROLE_ID`) VALUES
+(1, 'student', NULL, NULL, NULL, 'studentpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '1', NULL, NULL, NULL, NULL, '1');
 
 --
 -- Indexes for dumped tables
@@ -317,6 +328,12 @@ ALTER TABLE `course`
 -- Indexes for table `csrf`
 --
 ALTER TABLE `csrf`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `department`
+--
+ALTER TABLE `department`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -411,6 +428,12 @@ ALTER TABLE `course`
 -- AUTO_INCREMENT for table `csrf`
 --
 ALTER TABLE `csrf`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `department`
+--
+ALTER TABLE `department`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --

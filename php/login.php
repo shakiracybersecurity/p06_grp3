@@ -32,7 +32,7 @@ if ($result->num_rows == 1) {
     $user = $result->fetch_assoc();
         
 // Secure: Verify hashed password stored in password_hash column
-    if (password_verify($password, $user['password_hash'])){
+    if ($password==$user['password_set']){
 // Secure: Regenerate session ID
         session_regenerate_id(true);
         $_SESSION['username'] = $user['name'];

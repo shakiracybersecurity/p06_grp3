@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ssssssi", $name, $phonenumber, $email, $department_id, $studentid, $course_id, $role_id);
     
     if ($stmt->execute()) {
-        echo "Registration successful!";
+        echo "Registration for $name successful!";
+        echo '<br><a href="register.php">Register another student</a>';
         exit();
     } else {
         echo "Error: " . $stmt->error;

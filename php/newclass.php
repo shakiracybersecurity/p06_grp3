@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-
+<a href="admin_dashboard">back</a>
 <form method="POST">
     class name: <input type="text" name="class" required><br>
 

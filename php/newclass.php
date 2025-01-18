@@ -35,7 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<a href="admin_dashboard">back</a>
+<table>
+    <thead>
+        <tr>
+            <th>departmet</th>
+            <th>module</th>
+            <th>mode</th>
+            <th>class</th>
+        </tr>
+    </thead>  
+
+
+<a href="admin_dashboard.php">back</a>
 <form method="POST">
     class name: <input type="text" name="class" required><br>
 

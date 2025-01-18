@@ -12,8 +12,11 @@ if ($conn->connect_error) {
 }
 
 // Start session
-session_start();
 
+session_start();
+if (isset($_SESSION['username'])) {
+    header("Location: dashboard.php");
+    exit();}
 // Handle the login form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Secure: Sanitize user inputs

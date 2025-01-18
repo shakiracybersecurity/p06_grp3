@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 echo $_SESSION['username'];
-session_destroy()
+//session_destroy()
 
 ?>
 

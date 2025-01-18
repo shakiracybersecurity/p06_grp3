@@ -9,13 +9,16 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 echo $_SESSION['username'];
-session_destroy()
+//session_destroy()
 ?>
 
-<p> test admin</p>
+<p> test admin</p>  
+
+
 
 <a href="newclass.php">Create new classes</a>
 <br>
 <a href="register.php">Create new student profiles</a>
 <br>
 <a href="logout.php">Logout</a>
+

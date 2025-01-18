@@ -1,5 +1,17 @@
 <?php
-include 'db_connection.php'; // Include your DB connection file.
+// Database connection details
+$host = 'localhost';
+$dbname = 'robotic course management'; // Ensure this matches your database name
+$user = 'root';
+$pass = '';
+
+// Create connection
+$conn = new mysqli($host, $user, $pass, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 $result = $conn->query("SELECT g.ID, s.NAME AS student_name, c.NAME AS course_name, g.SCORE, g.GRADE 
                         FROM grades g
@@ -17,4 +29,7 @@ while ($row = $result->fetch_assoc()) {
         <td>{$row['GRADE']}</td>
     </tr>";
 }
-echo "</ta
+echo "</table>";
+
+$conn->close();
+?>

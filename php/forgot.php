@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- Login form -->
 <form method="POST">
 <title>Forgot Password</title>
+<h2>Forgot Password</h2>
 <?php if (isset($error)) {echo $error;}?>
 <?php if (isset($success)){echo $success; }?>
 <label for ="email"> Enter your email address:</label>

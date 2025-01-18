@@ -24,5 +24,7 @@ echo $_SESSION['username'];
 <br>
 <a href="viewgrade.php">View student's grade</a>
 <br>
+<a href="student_records.php"> View existing students</a>
+<br>
 <a href="logout.php">Logout</a>
 

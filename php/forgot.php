@@ -3,6 +3,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+require_DIR_ . "/vendor/autoload.php";
+
 // Database connection details
 $host = 'localhost';
 $dbname = 'robotic course management'; // Updated for clarity

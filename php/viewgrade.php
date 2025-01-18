@@ -36,3 +36,4 @@ $conn->close();
 
 <a href="editgrade.php">Edit student's grade</a>
 <br>
+<a href="deletegrade.php">Delete Student's grade</a>

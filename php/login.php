@@ -35,7 +35,7 @@ if ($result->num_rows == 1) {
     if ($password==$user['password_set']){
 // Secure: Regenerate session ID
         session_regenerate_id(true);
-        $_SESSION['id'] = $user['id']
+        $_SESSION['id'] = $user['id'];
         $_SESSION['username'] = $user['name'];
         $_SESSION['role'] = $user['role_id'];
 

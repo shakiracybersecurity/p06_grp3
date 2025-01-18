@@ -46,17 +46,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </thead>  
 
 
-<a href="admin_dashboard.php">back</a>
+<a href="admin_dashboard.php">back</a> <br>
 <form method="POST">
     class name: <input type="text" name="class" required><br>
 
+    class mode:
     <input type = "radio" name= "mode" id ="semester"value= "semester"/>
     <label for = "semester">Semester</label>
     <input type = "radio" name= "mode" id ="term"value= "term"/>
     <label for = "term">Term</label>
     <br>
-    <!-- not done 
+
+    department:  
     <select name="course" id="course">
+        <?php 
+            $stmt = $conn->prepare("select id, name from department");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $department = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            foreach ($department as $department): ?>
+            <option value= <?php $department['id']; ?>> <?php echo $department['name']; ?> </option>
+            <?php endforeach; ?>
+
+                
+        ?><!--
     <option value="1">1</option> 
     <option value="2">2</option>
     <option value="3">3</option>

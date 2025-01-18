@@ -33,3 +33,6 @@ echo "</table>";
 
 $conn->close();
 ?>
+
+<a href="editgrade.php">Edit student's grade</a>
+<br>

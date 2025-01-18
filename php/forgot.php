@@ -2,8 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-require_DIR_ . "/vendor/autoload.php";
+require __DIR__ . "/vendor/autoload.php";
 
 // Database connection details
 $host = 'localhost';
@@ -50,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->isHtml(true);
 
         return $mail;
-        
+        $mail = require __DIR__ . "/mailer.php";
         $mail->setFrom("noreply@roboticcourse.com");
         $mail->addAddress($email);
         $mail->Subject = "Password Reset";

@@ -31,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if ($result->num_rows == 1) {
     $user = $result->fetch_assoc();
         
-// Secure: Verify hashed password
-
-    if ($password == $user['password_set']) {
+// Secure: Verify hashed password stored in password_hash column
+    if ($password==$user['password_set']){
 // Secure: Regenerate session ID
         session_regenerate_id(true);
+        $_SESSION['id'] = $user['id']
         $_SESSION['username'] = $user['name'];
         $_SESSION['role'] = $user['role_id'];
 
@@ -70,4 +70,5 @@ $conn->close();
     <a href="forgot.php">Forgot Password</a>
     <input type="submit" value="Login">
 
+    
 </form>

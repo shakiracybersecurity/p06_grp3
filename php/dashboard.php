@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])) {
 }
     
 
-// Role-based access control
+// Role-based access control: only admins can access specific parts
 if ($_SESSION['role'] === '1') {
     header("Location: student_dashboard.php");
     echo "Welcome, ", $_SESSION['username'] ," You have full access.<br>";

@@ -12,8 +12,11 @@ if ($conn->connect_error) {
 }
 
 // Start session
-session_start();
 
+session_start();
+if (isset($_SESSION['username'])) {
+    header("Location: dashboard.php");
+    exit();}
 // Handle the login form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Secure: Sanitize user inputs
@@ -35,7 +38,7 @@ if ($result->num_rows == 1) {
     if ($password==$user['password_set']){
 // Secure: Regenerate session ID
         session_regenerate_id(true);
-        $_SESSION['id'] = $user['id']
+        $_SESSION['id'] = $user['id'];
         $_SESSION['username'] = $user['name'];
         $_SESSION['role'] = $user['role_id'];
 

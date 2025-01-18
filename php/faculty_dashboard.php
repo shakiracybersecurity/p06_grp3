@@ -17,4 +17,6 @@ echo $_SESSION['username'];
 
 <a href="register.php">Create new student profiles</a>
 <br>
+<a href="creategrade.php">Enter Student's Grade</a>
+<br>
 <a href="logout.php">Logout</a>

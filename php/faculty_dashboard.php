@@ -17,6 +17,6 @@ session_destroy()
 
 <a href="register.php">Create new student profiles</a>
 <br>
-<a href="logout.php">Logout</a>
-<br>
 <a href="creategrade.php">Enter Student's Grade</a>
+<br>
+<a href="logout.php">Logout</a>

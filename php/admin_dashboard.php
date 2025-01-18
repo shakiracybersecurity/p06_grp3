@@ -22,5 +22,7 @@ echo $_SESSION['username'];
 <br>
 <a href="creategrade.php">Enter Student's Grade</a>
 <br>
+<a href="viewgrade.php">View student's grade</a>
+<br>
 <a href="logout.php">Logout</a>
 

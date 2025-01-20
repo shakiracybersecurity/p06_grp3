@@ -46,6 +46,8 @@ if ($result->num_rows >0){
 $stmt->close();
 $conn->close();
 ?>
-
+<a href="admin_dashboard.php">Back</a>
+<br>
+<a href="register.php">Register a new student</a>
 
 

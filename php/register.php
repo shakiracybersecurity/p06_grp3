@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $department_id= htmlspecialchars(trim($_POST['department_id']));
     $studentid = htmlspecialchars(trim($_POST['id']));
     $course_id =htmlspecialchars(trim($_POST['course_id']));
+    $faculty = htmlspecialchars(trim($_POST['faculty']));
     $role_id = 1;  // Default role is 1
 }
     // Secure: Use prepared statements to prevent SQL injection
@@ -68,6 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <option value = "3">Robotic Mechanics and Control</option>
     </select><br>
 
+    <label for="course">Faculty:</label>
+    <select id="faculty" name = "faculty" required>
+        <option value = ""Disabled Select>Select</option>
+        <option value = "ENG">Engineering</option>
+        <option value = "IIT">Informatics and IT </option>
+    </select><br>
 <input type="submit" value="Register">
 </form>
 

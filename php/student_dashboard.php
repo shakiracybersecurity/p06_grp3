@@ -15,4 +15,6 @@ echo $_SESSION['username'];
 
 <p> test student </p>
 
+<a href="student_record.php">View your own record</a>
+<br>
 <a href="logout.php">Logout</a>

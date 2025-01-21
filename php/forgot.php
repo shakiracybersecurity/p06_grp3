@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
 
     //Check if the email exists in the users table
+    
     $stmt = $conn->prepare("SELECT email FROM students WHERE email= ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();

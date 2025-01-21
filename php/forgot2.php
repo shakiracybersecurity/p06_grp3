@@ -23,41 +23,69 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
+
+    $stmt = $conn->prepare("SELECT email FROM students WHERE email= ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 // Start with PHPMailer class
 
-// create a new object
-$mail = new PHPMailer();
-// configure an SMTP
-$mail->isSMTP();
-$mail->Host = 'smtp.gmail.com';
-$mail->SMTPAuth = true;
-$mail->Username = 'robotictp@gmail.com';
-$mail->Password = 'pboi xxfi zxrv atuk';
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-$mail->Port = 587;
 
-$mail->setFrom('robotictp@gmail.com');
-$mail->addAddress($email);
-$mail->Subject = 'password reset';
-// Set HTML 
-$mail->isHTML(TRUE);
-$mail->Body = '<html>Click <a href="http://example.com/reset-password.php?token">here</a>
-        to reset your password.</html>';
-$mail->AltBody = 'Hi there, we are happy to confirm your booking. Please check the document in the attachment.';
-// add attachment 
-// just add the '/path/to/file.pdf'
-$attachmentPath = './confirmations/yourbooking.pdf';
-if (file_exists($attachmentPath)) {
-    $mail->addAttachment($attachmentPath, 'yourbooking.pdf');
+    if ($result ->num_rows ===1){
+
+        //token
+        $length = 32;
+        $token = bin2hex(random_bytes($length));
+        $token_expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
+
+
+        $stmt=$conn->prepare("INSERT INTO password_resets (email, reset_token, token_expiry) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $email,$token,$token_expiry);
+        $stmt -> execute();
+
+
+
+        //
+
+
+
+        // create a new object
+        $mail = new PHPMailer();
+        // configure an SMTP
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'robotictp@gmail.com';
+        $mail->Password = 'pboi xxfi zxrv atuk';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom('robotictp@gmail.com');
+        $mail->addAddress($email);
+        $mail->Subject = 'password reset';
+        // Set HTML 
+        $mail->isHTML(TRUE);
+        $mail->Body = '<html>Click <a href="http://localhost/p06_grp3/php/reset_password.php?' . $token . '">here</a>
+                to reset your password.</html>';
+        $mail->AltBody = 'Hi there, we are happy to confirm your booking. Please check the document in the attachment.';
+        // add attachment 
+        // just add the '/path/to/file.pdf'
+        $attachmentPath = './confirmations/yourbooking.pdf';
+        if (file_exists($attachmentPath)) {
+            $mail->addAttachment($attachmentPath, 'yourbooking.pdf');
+        }
+
+        // send the message
+        if(!$mail->send()){
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Message has been sent';
+        }    
+}else{
+    echo "email is not registered";
 }
-
-// send the message
-if(!$mail->send()){
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message has been sent';
-}}
+}
 ?>
 
 <!-- Login form -->

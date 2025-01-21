@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 session_start();
 
-require 'checkuser.php';
+require 'functions.php';
 is_logged_in([3,2]);
 
 $stmt = $conn->prepare("SELECT class.id, class.name as classname, class.mode, department.name as depname
@@ -45,7 +45,7 @@ $stmt->close();
                 <td><?php echo htmlspecialchars($class_info['classname']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['mode']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['depname']); ?></td>
-
+                <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"> edit </a> </td> 
             </tr>
         <?php endforeach; ?>
     </tbody>

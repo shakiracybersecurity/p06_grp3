@@ -1,4 +1,7 @@
 <?php
+require 'C:\xampp\htdocs\p06_grp3\PHPMailer-master\PHPMailer-master\src\PHPMailer.php';
+require 'C:\xampp\htdocs\p06_grp3\PHPMailer-master\PHPMailer-master\src\Exception.php';
+require 'C:\xampp\htdocs\p06_grp3\PHPMailer-master\PHPMailer-master\src\SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -29,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result ->num_rows ===1){
         //Generate a unique token
         $reset_token = bin2hex(random_bytes(32));
-        $token_expiry = date("Y-m-d H-i-s", strtotime("+1 hour"));
+        $token_expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
         //Insert token into passwords_resets table
         $insertStmt = $conn ->prepare("INSERT INTO password_resets (email, reset_token, token_expiry) VALUES (?, ?, ?)");
@@ -40,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail= new PHPMailer(true);
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail ->SMTPAuth = true;
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = 'smtp.gmail.com';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
-        $mail->Username = "no-reply@roboticcourse.com";
-        $mail->Password = "roboticcourse";
+        $mail->Username = "robotictp@gmail.com";
+        $mail->Password = "pboi xxfi zxrv atuk";
 
         $mail->isHtml(true);
 
         return $mail;
-     
-        $mail->setFrom("noreply@roboticcourse.com");
+    
+        $mail->setFrom("robotictp@gmail.com");
         $mail->addAddress($email);
         $mail->Subject = "Password Reset";
         $mail->Body = <<<END

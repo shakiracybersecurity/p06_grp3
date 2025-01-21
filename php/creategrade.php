@@ -1,32 +1,64 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include 'db_connection.php'; // Include your DB connection file.
+// Database connection details
+$host = 'localhost';
+$dbname = 'robotic course management'; // Ensure this matches your database name
+$user = 'root';
+$pass = '';
 
-    $student_id = $_POST['student_id'];
-    $course_id = $_POST['course_id'];
-    $score = $_POST['score'];
-    $grade = $_POST['grade'];
-    $entered_by = $_SESSION['username']; // Assume a session holds the logged-in user.
+// Create connection
+$conn = new mysqli($host, $user, $pass, $dbname);
 
-    $stmt = $conn->prepare("INSERT INTO grades (STUDENT_ID, COURSE_ID, SCORE, GRADE, ENTERED_BY) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("iisss", $student_id, $course_id, $score, $grade, $entered_by);
-
-    if ($stmt->execute()) {
-        echo "Grade successfully added!";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-    $stmt->close();
-    $conn->close();
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Handle POST request for creating grades
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $student_id = $_POST['student_id']; // ID of the student
+    $course_id = $_POST['course_id']; // ID of the course
+    $score = $_POST['score']; // Score
+    $grade = $_POST['grade']; // Grade
+
+    // Input validation
+    if (empty($student_id) || empty($course_id) || empty($score) || empty($grade)) {
+        echo "All fields are required.";
+    } else {
+        // Prepare the SQL statement to insert data securely
+        $stmt = $conn->prepare("INSERT INTO grades (STUDENT_ID, COURSE_ID, SCORE, GRADE) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iids", $student_id, $course_id, $score, $grade); // i = integer, d = double, s = string
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo "Grade successfully added!";
+        } else {
+            echo "Error adding grade: " . $stmt->error;
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
+}
+
+// Close the database connection
+$conn->close();
 ?>
 
-<!-- Add Grades Form -->
+<!-- HTML Form for Creating Grades -->
 <form method="POST">
-    Student ID: <input type="number" name="student_id" required><br>
-    Course ID: <input type="number" name="course_id" required><br>
-    Score: <input type="text" name="score" required><br>
-    Grade: <input type="text" name="grade" required><br>
-    <input type="submit" value="Add Grade">
+    <label for="student_id">Student ID:</label>
+    <input type="number" name="student_id" id="student_id" required><br>
+
+    <label for="course_id">Course ID:</label>
+    <input type="number" name="course_id" id="course_id" required><br>
+
+    <label for="score">Score:</label>
+    <input type="number" step="0.01" name="score" id="score" required><br>
+
+    <label for="grade">Grade:</label>
+    <input type="text" name="grade" id="grade" required><br>
+
+    <button type="submit">Create Grade</button>
 </form>
+
 

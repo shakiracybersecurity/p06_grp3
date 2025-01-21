@@ -16,7 +16,7 @@ echo $_SESSION['username'];
 
 
 
-<a href="newclass.php">Create new classes</a>
+<a href="viewclass.php">view classes</a>
 <br>
 <a href="register.php">Create new student profiles</a>
 <br>

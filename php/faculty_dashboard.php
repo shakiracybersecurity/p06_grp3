@@ -15,6 +15,8 @@ echo $_SESSION['username'];
 
 <p> test faculty </p>
 
+<a href="viewclass.php">view classes</a>
+<br>
 <a href="register.php">Create new student profiles</a>
 <br>
 <a href="creategrade.php">Enter Student's Grade</a>

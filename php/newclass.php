@@ -12,15 +12,19 @@ if ($conn->connect_error) {
 }
 session_start();
 
+require 'functions.php';
+is_logged_in([3,2]);
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Secure: Sanitize user inputs
     $mode = $_POST['mode'];
     $classname = htmlspecialchars(trim($_POST['class']));
+    $dep = $_POST['department'];
 
     // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO class (name, mode) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id) VALUES (?, ?, ?)");
     if ($stmt) {
-        $stmt->bind_param("ss", $classname, $mode);
+        $stmt->bind_param("ssi", $classname, $mode, $dep);
         
         if ($stmt->execute()) {
             echo "class added!";
@@ -35,30 +39,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<table>
-    <thead>
-        <tr>
-            <th>departmet</th>
-            <th>module</th>
-            <th>mode</th>
-            <th>class</th>
-        </tr>
-    </thead>  
 
 
-<a href="admin_dashboard.php">back</a> <br>
+<a href="viewclass.php">back</a> <br>
 <form method="POST">
     class name: <input type="text" name="class" required><br>
 
     class mode:
-    <input type = "radio" name= "mode" id ="semester"value= "semester"/>
+    <input type = "radio" name= "mode" id ="semester" value= "semester"/>
     <label for = "semester">Semester</label>
-    <input type = "radio" name= "mode" id ="term"value= "term"/>
+    <input type = "radio" name= "mode" id ="term" value= "term"/>
     <label for = "term">Term</label>
     <br>
 
     department:  
-    <select name="course" id="course">
+    <select name="department" id="department">
         <?php 
             $stmt = $conn->prepare("select id, name from department");
             $stmt->execute();
@@ -66,15 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $department = $result->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
             foreach ($department as $department): ?>
-            <option value= <?php $department['id']; ?>> <?php echo $department['name']; ?> </option>
+            <option value= "<?php echo $department['id']; ?>"> <?php echo $department['name'] ?> </option>
             <?php endforeach; ?>
 
                 
-        ?><!--
-    <option value="1">1</option> 
-    <option value="2">2</option>
-    <option value="3">3</option>
--->
 <input type="submit" value="add">
 
 </form>

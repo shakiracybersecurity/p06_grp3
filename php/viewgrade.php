@@ -7,7 +7,7 @@ $pass = '';
 
 // Create connection
 $conn = new mysqli($host, $user, $pass, $dbname);
-
+session_start();
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -22,7 +22,7 @@ echo "<table border='1'>";
 echo "<tr><th>ID</th><th>Student</th><th>Course</th><th>Score</th><th>Grade</th></tr>";
 while ($row = $result->fetch_assoc()) {
     echo "<tr>
-        <td>{$row['ID']}</td>
+        <td>{$row['id']}</td>
         <td>{$row['student_name']}</td>
         <td>{$row['course_name']}</td>
         <td>{$row['SCORE']}</td>
@@ -34,6 +34,14 @@ echo "</table>";
 $conn->close();
 ?>
 
-<a href="editgrade.php">Edit student's grade</a>
+<?php if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
+    $redirect = "admin_dashboard.php";
+}elseif($_SESSION['role'] == 2) 
+    $redirect = "faculty_dashboard.php";
+?>
+
+
+<a href="editgrade.php">Edit Student's grade</a>
 <br>
-<a href="deletegrade.php">Delete Student's grade</a>
+<a href="deletegrade.php">Delete Student's grade</a><br>
+<a href="<?php echo $redirect; ?>">back</a>

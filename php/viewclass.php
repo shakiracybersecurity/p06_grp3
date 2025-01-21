@@ -45,7 +45,7 @@ $stmt->close();
                 <td><?php echo htmlspecialchars($class_info['classname']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['mode']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['depname']); ?></td>
-                <td><a href="editclass.php"> edit </a> </td> 
+                <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"> edit </a> </td> 
             </tr>
         <?php endforeach; ?>
     </tbody>

@@ -1,15 +1,17 @@
 <?php
 function db_connect(){
     $host = 'localhost';
-$dbname = 'robotic course management'; // Updated for clarity
-$user = 'root';
-$pass = '';
+    $dbname = 'robotic course management'; // Updated for clarity
+    $user = 'root';
+    $pass = '';
 
-// Connect to the database
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Connect to the database
+    $conn = new mysqli($host, $user, $pass, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
 }
 
 // check if the user is logged in and role of user

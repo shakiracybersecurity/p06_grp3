@@ -65,7 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo"Message could not be sent. Mailer error: {$mail->ErrorInfo}";
         }
         echo "Message sent, please check your inbox.";
-}  
+}  else {
+    echo "email is not registered";
+}
 }
 ?>
 <!-- Login form -->

@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 session_start();
 
-require 'checkuser.php';
+require 'functions.php';
 is_logged_in([3,2]);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

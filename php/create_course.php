@@ -1,16 +1,16 @@
 <?php
 // Database connection variables
-$host = 'localhost';       // The hostname where the database is hosted (usually 'localhost' for local servers)
-$dbname = 'robotic course management'; // The name of your database
-$user = 'root';            // The database username (default is 'root' for local MySQL installations)
-$pass = '';                // The database password (usually empty for local servers)
+$host = 'localhost';
+$dbname = 'robotic course management';
+$user = 'root';
+$pass = '';
 
 // Connect to the database using MySQLi
 $conn = new mysqli($host, $user, $pass, $dbname);
 
 // Check if the connection to the database was successful
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error); // Display an error message if the connection fails
+    die("Connection failed: " . $conn->connect_error);
 }
 
 // Start a session to manage user authentication
@@ -76,25 +76,49 @@ function deleteCourse($id) {
     }
     $stmt->close(); // Close the statement
 }
-
-// Example usage based on form inputs
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Check if the request method is POST
-    $action = $_POST['action']; // Get the action from the form
-    switch ($action) { // Perform the corresponding action
-        case 'create':
-            createCourse($_POST['name'], $_POST['class_id'], $_POST['start_date'], $_POST['end_date']);
-            break;
-        case 'update':
-            updateCourse($_POST['id'], $_POST['name'], $_POST['class_id'], $_POST['start_date'], $_POST['end_date']);
-            break;
-        case 'delete':
-            deleteCourse($_POST['id']);
-            break;
-    }
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) && $_GET['action'] == 'read') {
-    readCourses(); // Call the read function for GET requests
-}
 ?>
 
+<!-- Form to create a course -->
+<form method="POST">
+    <h3>Create Course</h3>
+    course name: <input type="text" name="course_name" required><br>
+
+    start date: <input type="date" name="start_date" required><br>
+    end date: <input type="date" name="end_date" required><br>
+
+    class ID:
+    <select name="class_id" id="class_id">
+    <?php
+        // Fetch class IDs and names for the dropdown
+        $stmt = $conn->prepare("SELECT ID, NAME FROM class"); // Replace 'class' with the actual table name if different
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $classes = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        foreach ($classes as $class): ?>
+            <option value="<?php echo $class['ID']; ?>"><?php echo $class['NAME']; ?></option>
+        <?php endforeach; ?>
+    </select><br>
+
+    <button type="submit" name="create_course">Create Course</button></form>
+
+<?php
+// Handle form submission for course creation
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_course'])) {
+    $course_name = $_POST['course_name'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $class_id = $_POST['class_id'];
+
+    // Insert the new course into the database
+    $stmt = $conn->prepare("INSERT INTO course (NAME, START_DATE, END_DATE, CLASS_ID, STAFF_ID, STUDENT_ID) VALUES (?, ?, ?, ?, NULL, NULL)");
+    $stmt->bind_param("sssi", $course_name, $start_date, $end_date, $class_id);
+
+    if ($stmt->execute()) {
+        echo "Course created successfully.";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+    $stmt->close();
+}
+?>

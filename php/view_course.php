@@ -27,6 +27,9 @@ $result = $conn->query($sql);
 </head>
 <body>
     <h2>View Courses</h2>
+    <!-- Create Course Button -->
+    <a href="create_course.php" style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Create Course</a>
+    <br><br>
     <table border="1">
         <tr>
             <th>ID</th>

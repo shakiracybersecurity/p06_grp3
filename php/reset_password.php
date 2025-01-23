@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo "your password has been reset!";
         echo "<br><a href='login.php'>log in here</a>";
+        echo $passHash;
     }else{
         echo "passwords do not match";
     }
@@ -42,3 +43,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <input type = "text" id ="conf_password" name ="conf_password" required>
 <br>
 <button type = "submit"> Reset </button> 
+

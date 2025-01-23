@@ -18,8 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $confpass = htmlspecialchars(trim($_POST['conf_password']));
 
     if ($pass == $confpass){
-        $stmt = $conn->prepare("UPDATE students SET password_set = ? WHERE id = ?");
-        $stmt -> bind_param("si", $pass, $user_id);
+        $passHash = password_hash($pass, PASSWORD_DEFAULT);
+        $stmt = $conn->prepare("UPDATE students SET password_hash = ? WHERE id = ?");
+        $stmt -> bind_param("si", $passHash, $user_id);
         $stmt -> execute();
 
         echo "your password has been reset!";

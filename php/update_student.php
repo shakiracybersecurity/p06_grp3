@@ -13,46 +13,60 @@ if ($conn->connect_error) {
 
 // Start session
 session_start();
-
-$current_student = [];
-
-if (isset($_POST['search_student_id'])){
-    $search_student_id = intval($_POST['search_student_id']);
+$student = null;
+if (isset($_GET['id'] )&& is_numeric($_GET['id'])){
+    $student_id = intval($_GET['id']);
     $stmt = $conn->prepare("SELECT id, name, phonenumber, email, course_id, faculty,department_id,class FROM students WHERE id = ?");
-    if (!$stmt){
-        die("Query preparation failed: " .$conn->error);
-    }
-
-    $stmt->bind_param("i", $search_student_id);
+    $stmt->bind_param("i", $student_id);
     $stmt->execute();
     $result = $stmt->get_result();
-
-    if ($result->num_rows >0){
-        echo "<h1>Update Student Record</h1>";
-        echo"<table border='1' cellpadding='10'>";
-        echo "<tr><th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Class</th>";
-
-    //Display each record
-    while ($student = $result->fetch_assoc()){
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($student['id']) . "</td>";
-        echo "<td>" . htmlspecialchars($student['name']) . "</td>";
-        echo "<td>" . htmlspecialchars($student['phonenumber']) . "</td>";
-        echo "<td>"  . htmlspecialchars($student['email'])."</td>";
-        echo "<td>"  . htmlspecialchars($student['faculty'])."</td>";
-        echo "<td>"  . htmlspecialchars($student['class'])."</td>";
+     if ($result->num_rows >0){
+        $student = $result->fetch_assoc();
+    
+    }else{
+        echo "<p> No student records found.</p>";
     }
-    echo "</table>";
- } else{
-    echo"<p>No student records found.</p>";
- }
- $stmt->close();
+    $stmt ->close();
 }
+if($_SERVER["REQUEST_METHOD"]== 'POST' && isset($_POST['update'])){
+    $name = $_POST['name'];
+    $phonenumber=$_POST['phonenumber'];
+    $email = $_POST['email'];
+    $course_id = $_POST['course_id'];
+    $faculty = $_POST['faculty'];
+    $department_id = $_POST['department_id'];
+    $class = $_POST['class'];
+
+    $stmt = $conn -> prepare("UPDATE students SET name=? , phonenumber=?, email=?, faculty=? WHERE id=?");
+    $stmt->bind_param("ssssi", $_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['faculty'],$_POST['id']);
+    if ($stmt->execute()){
+        $_SESSION['message'] = "Student details updated successfully.";
+    }else{
+        $_SESSION['message']= "Update failed or no changes made:" . htmlspecialchars($stmt->error);
+    }
+    
+    $stmt->close();
+    header("Location: update_student.php?id=$student_id");
+    exit;
+}
+$conn->close();
 ?>
 
-<form method="POST">
-   <label for= 'search_student_id'>Enter Student ID:</label>
-   <input type='text' id='search_student_id' name='search_student_id' required>
-   <input type= 'submit' value ='Search'>,<br>
-   <a href = "update_details.php">Update student detail</a>
-</form>  
+<?php if (isset($_SESSION['message'])) : ?>
+    <p><?= $_SESSION['message']; ?></p>
+    <?php unset($_SESSION['message']); ?>
+<?php endif; ?>
+
+<?php if (isset($student)) : ?>
+    <h1>Update Student Record</h1>
+    <form method="POST">
+        <input type='hidden' name='id' value='<?= htmlspecialchars($student['id']) ?>'>
+        <label>Name:</label><input type='text' name='name' value='<?= htmlspecialchars($student['name']) ?>'><br>
+        <label>Phone Number:</label><input type='text' name='phonenumber' value='<?= htmlspecialchars($student['phonenumber']) ?>'><br>
+        <label>Email:</label><input type='text' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
+        <label>Faculty:</label><input type='text' name='faculty' value='<?= htmlspecialchars($student['faculty']) ?>'><br>
+        <label>Class:</label><input type='text' name='class' value='<?= htmlspecialchars($student['class']) ?>'><br>
+        <input type='submit' name='update' value='Update Details'>
+        <a href = "student_records.php">Back</a>
+    </form>
+<?php endif; ?>

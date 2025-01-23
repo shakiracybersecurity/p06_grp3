@@ -35,6 +35,8 @@ if ($result->num_rows >0){
         echo "<td>"  . htmlspecialchars($student['email'])."</td>";
         echo "<td>"  . htmlspecialchars($student['faculty'])."</td>";
         echo "<td>"  . htmlspecialchars($student['class'])."</td>";
+        echo "<td><a href = 'update_student.php?id=" . $student['id'] . "'>Update</a></td>";
+        echo "</tr>";
     }   
 
     echo "</table>";
@@ -49,5 +51,6 @@ $conn->close();
 <a href="admin_dashboard.php">Back</a>
 <br>
 <a href="register.php">Register a new student</a>
+<br>
 
 

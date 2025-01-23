@@ -20,13 +20,15 @@ echo $_SESSION['username'];
 <br>
 <a href="creategrade.php">Enter Student's Grade</a>
 <br>
-<a href="viewgrade.php">View student's grade</a>
+<a href="viewgradetry.php">View student's grade</a>
 <br>
-<<<<<<< HEAD
+
 <a href="student_records.php"> View existing students</a>
-=======
+
 <a href="create_course.php">Courses Dashboard</a>
->>>>>>> 51817e137c845ddfe7d32af6af038bf2504808d6
+
+<a href="view_course.php">Courses Dashboard</a>
+
 <br>
 <a href="logout.php">Logout</a>
 

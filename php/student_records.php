@@ -36,6 +36,12 @@ if ($result->num_rows >0){
         echo "<td>"  . htmlspecialchars($student['faculty'])."</td>";
         echo "<td>"  . htmlspecialchars($student['class'])."</td>";
         echo "<td><a href = 'update_student.php?id=" . $student['id'] . "'>Update</a></td>";
+        echo "<td>
+            <form method = 'POST' action='delete_student.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
+            <input type='hidden' name='id' value'" . $student['id'] . "'>
+            <input type = 'submit' name='delete' value='Delete'>
+            </form>
+            </td>";
         echo "</tr>";
     }   
 

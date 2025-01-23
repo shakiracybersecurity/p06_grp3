@@ -21,7 +21,9 @@ echo $_SESSION['username'];
 <br>
 <a href="creategrade.php">Enter Student's Grade</a>
 <br>
-<a href="viewgrade.php">View student's grade</a>
+<a href="viewgradetry.php">View student's grade</a>
+<br>    
+<a href="view_course.php">Courses Dashboard</a>
 <br>
 <a href="student_records.php"> View existing students</a>
 <br>

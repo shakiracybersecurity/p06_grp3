@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = htmlspecialchars(trim($_POST['password']));
 
     // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("SELECT id, name, password_set, role_id FROM $role WHERE name = ?");
+    $stmt = $conn->prepare("SELECT id, name, password_hash, role_id FROM $role WHERE name = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -35,7 +35,7 @@ if ($result->num_rows == 1) {
     $user = $result->fetch_assoc();
         
 // Secure: Verify hashed password stored in password_hash column
-    if ($password==$user['password_set']){
+    if (password_verify($password, $user['password_hash'])){
 // Secure: Regenerate session ID
         session_regenerate_id(true);
         $_SESSION['id'] = $user['id'];

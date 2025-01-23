@@ -21,10 +21,12 @@ if ($_SESSION['role'] == 3) { // Redirect back to dashboard of role
     $redirect = "faculty_dashboard.php";
 }
 
-$stmt = $conn->prepare("SELECT g.ID, s.NAME AS student_name, c.NAME AS course_name, g.SCORE, g.GRADE 
+$stmt = $conn->prepare("SELECT g.ID, SCORE, s.NAME AS student_name, c.NAME AS course_name, GRADE 
                         FROM grades g
-                        JOIN students s ON g.STUDENT_ID = s.ID
-                        JOIN course c ON g.COURSE_ID = c.ID");
+                        LEFT JOIN students s ON g.STUDENT_ID = s.ID
+                        LEFT JOIN course c ON g.COURSE_ID = c.ID");
+                       // JOIN 
+                       // JOIN ");   
 
 if (!$stmt) {
     die("Query failed: " . $conn->error);
@@ -34,7 +36,6 @@ $result = $stmt -> get_result();
 $grade = $result->fetch_all(MYSQLI_ASSOC);
 $stmt -> close();
 
-echo htmlspecialchars($grade['ID']);
 ?>
 
 <a href="<?php echo $redirect; ?>">back</a> <br>

@@ -25,8 +25,8 @@ while ($row = $result->fetch_assoc()) {
         <td>{$row['id']}</td>
         <td>{$row['student_name']}</td>
         <td>{$row['course_name']}</td>
-        <td>{$row['SCORE']}</td>
-        <td>{$row['GRADE']}</td>
+        <td>{$row['score']}</td>
+        <td>{$row['grade']}</td>
     </tr>";
 }
 echo "</table>";
@@ -34,14 +34,10 @@ echo "</table>";
 $conn->close();
 ?>
 
-<?php if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
-    $redirect = "admin_dashboard.php";
-}elseif($_SESSION['role'] == 2) 
-    $redirect = "faculty_dashboard.php";
-?>
 
 
 <a href="editgrade.php">Edit Student's grade</a>
 <br>
-<a href="deletegrade.php">Delete Student's grade</a><br>
+<a href="deletegrade.php">Delete Student's grade</a>
+<br>
 <a href="<?php echo $redirect; ?>">back</a>

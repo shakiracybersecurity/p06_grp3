@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2025 at 09:56 AM
+-- Generation Time: Jan 23, 2025 at 10:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,7 +31,7 @@ CREATE TABLE `admins` (
   `ID` int(11) NOT NULL,
   `NAME` varchar(50) DEFAULT NULL,
   `EMAIL` varchar(50) DEFAULT NULL,
-  `PASSWORD_HASH` varchar(255) DEFAULT NULL,
+  `PASSWORD_HASH` char(60) DEFAULT NULL,
   `PASSWORD_SET` varchar(255) DEFAULT NULL,
   `CREATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `UPDATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
@@ -43,7 +43,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`ID`, `NAME`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
-(2, 'admin', NULL, NULL, 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '3');
+(2, 'admin', NULL, '$2y$10$/tYny.o4tscn0gc0rOnOMeAEo2i/zRVexlc5mhF0jh4DSnhPsi85.', 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '3');
 
 -- --------------------------------------------------------
 
@@ -53,10 +53,22 @@ INSERT INTO `admins` (`ID`, `NAME`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `C
 
 CREATE TABLE `class` (
   `ID` int(11) NOT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `TEACHER_ID` varchar(50) DEFAULT NULL,
-  `MODULES_ID` varchar(50) DEFAULT NULL
+  `MODULES_ID` varchar(50) DEFAULT NULL,
+  `MODE` varchar(10) DEFAULT NULL,
+  `DEPARTMENT_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `TEACHER_ID`, `MODULES_ID`, `MODE`, `DEPARTMENT_ID`) VALUES
+(9, 'class1', NULL, NULL, NULL, 'term', 0),
+(12, 'class 2', NULL, NULL, NULL, 'term', 5),
+(13, 'test 3', NULL, NULL, NULL, 'term', 6);
 
 -- --------------------------------------------------------
 
@@ -101,6 +113,14 @@ CREATE TABLE `department` (
   `NAME` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `department`
+--
+
+INSERT INTO `department` (`ID`, `NAME`) VALUES
+(5, 'dep 1'),
+(6, 'dep 2');
+
 -- --------------------------------------------------------
 
 --
@@ -129,7 +149,7 @@ CREATE TABLE `faculty` (
   `EMAIL` varchar(50) DEFAULT NULL,
   `PHONE_NUMBER` int(8) DEFAULT NULL,
   `DEPARTMENT` varchar(50) DEFAULT NULL,
-  `PASSWORD_HASH` varchar(50) DEFAULT NULL,
+  `PASSWORD_HASH` char(60) DEFAULT NULL,
   `PASSWORD_SET` varchar(50) DEFAULT NULL,
   `CREATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `UPDATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
@@ -141,7 +161,7 @@ CREATE TABLE `faculty` (
 --
 
 INSERT INTO `faculty` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
-(1, 'faculty', NULL, NULL, NULL, NULL, 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
+(1, 'faculty', NULL, NULL, NULL, '$2y$10$fNNYal8fxm2k.gP9AbCYbOlPBP/ZPGtvLzPhxSk61cHX1J1Alc0pa', 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
 
 -- --------------------------------------------------------
 
@@ -158,6 +178,13 @@ CREATE TABLE `grades` (
   `ENTERED_BY` varchar(50) DEFAULT NULL,
   `ENTERED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `grades`
+--
+
+INSERT INTO `grades` (`ID`, `STUDENT_ID`, `COURSE_ID`, `SCORE`, `GRADE`, `ENTERED_BY`, `ENTERED_AT`) VALUES
+(1, '3', '3', 0, 'yes', NULL, '2025-01-20 04:42:57.781894');
 
 -- --------------------------------------------------------
 
@@ -255,6 +282,17 @@ CREATE TABLE `password_resets` (
   `REQUESTED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`ID`, `STUDENT_ID`, `STAFF_ID`, `ADMIN_ID`, `EMAIL`, `RESET_TOKEN`, `RESET_LINK`, `TOKEN_EXPIRY`, `REQUESTED_AT`) VALUES
+(17, '1', NULL, NULL, 'yuhaann@gmail.com', 'a61322efd175f7ab8c089c27e51235e2', NULL, '2025-01-21 10:54:04.000000', '2025-01-21 16:54:04.769762'),
+(18, NULL, NULL, NULL, 'yuhaann@gmail.com', '7cbc284a14a1f5327b7a596bd9959be27fede3b19335422ea2', NULL, '2025-01-22 02:07:53.000000', '2025-01-22 08:07:53.034908'),
+(19, '1', NULL, NULL, 'yuhaann@gmail.com', 'c894d7d7617ce6f9c8858deff989a661', NULL, '2025-01-22 02:08:47.000000', '2025-01-22 08:08:47.711307'),
+(20, '1', NULL, NULL, 'yuhaann@gmail.com', 'b53eb871fa5df6267cec5967f16957b2', NULL, '2025-01-23 02:14:39.000000', '2025-01-23 08:14:39.302553'),
+(21, '1', NULL, NULL, 'yuhaann@gmail.com', 'b44c04d613d316fc35e446584dffe465', NULL, '2025-01-23 02:44:54.000000', '2025-01-23 08:44:54.673185');
+
 -- --------------------------------------------------------
 
 --
@@ -283,7 +321,7 @@ CREATE TABLE `students` (
   `NAME` varchar(50) DEFAULT NULL,
   `PHONE NUMBER` int(8) DEFAULT NULL,
   `EMAIL` text DEFAULT NULL,
-  `PASSWORD_HASH` varchar(50) DEFAULT NULL,
+  `PASSWORD_HASH` char(60) DEFAULT NULL,
   `PASSWORD_SET` varchar(50) DEFAULT NULL,
   `CREATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `UPDATED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
@@ -300,7 +338,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`ID`, `NAME`, `PHONE NUMBER`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `COURSE_ID`, `FACULTY`, `DEPARTMENT_ID`, `GRADE_ID`, `CLASS`, `ROLE_ID`) VALUES
-(1, 'student', NULL, NULL, NULL, 'studentpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '1', NULL, NULL, NULL, NULL, '1');
+(1, 'student', NULL, 'yuhaann@gmail.com', '$2y$10$kQy.cTpOx4IEsUJX5ldwduOv2vsvhojVp1tkfmei1dTMSHSbR.oJq', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '1', NULL, NULL, NULL, NULL, '1');
 
 --
 -- Indexes for dumped tables
@@ -416,7 +454,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `course`
@@ -434,7 +472,7 @@ ALTER TABLE `csrf`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `error_logs`
@@ -452,7 +490,7 @@ ALTER TABLE `faculty`
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `granted_permissions`
@@ -488,7 +526,7 @@ ALTER TABLE `modules`
 -- AUTO_INCREMENT for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `sensitive_data`

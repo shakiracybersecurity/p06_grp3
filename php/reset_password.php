@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <?php if (isset($error)) {echo $error;}?>
 <?php if (isset($success)){echo $success; }?>
 <label for ="password"> enter new password:</label>
-<input type = "text" id ="password" name ="password" required><br>
+<input type = "password" id ="password" name ="password" required><br>
 <label for ="conf_password"> confirm password:</label>
-<input type = "text" id ="conf_password" name ="conf_password" required>
+<input type = "password" id ="conf_password" name ="conf_password" required>
 <br>
 <button type = "submit"> Reset </button> 
 

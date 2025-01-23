@@ -53,10 +53,14 @@ if ($result->num_rows >0){
 //close the statement and connection
 $stmt->close();
 $conn->close();
+
+if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
+    $redirect = "admin_dashboard.php";
+}elseif($_SESSION['role'] == 2) 
+    $redirect = "faculty_dashboard.php";
 ?>
-<a href="admin_dashboard.php">Back</a>
+<a href="<?php echo $redirect; ?>">Back</a>
 <br>
-<a href="register.php">Register a new student</a>
-<br>
+
 
 

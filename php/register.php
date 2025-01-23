@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!-- Registration form -->
 <form method="POST">
+    <h1> Register new student</h1>
     Name: <input type="text" id = "name" name="name" required><br>
     Email: <input type="email" id ="email" name="email" required><br>
     Phone Number : <input type ="tel" id = "phonenumber" name = "phonenumber" required><br>

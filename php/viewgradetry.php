@@ -44,8 +44,8 @@ $stmt -> close();
     <thead>
         <tr>
             <th>id</th>
-            <th>student_name</th>
-            <th>course_name</th>
+            <th>student's name</th>
+            <th>course name</th>
             <th>score</th>
             <th>grade</th>
             <th>action</th>

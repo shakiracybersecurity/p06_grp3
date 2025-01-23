@@ -15,6 +15,11 @@ session_start();
 require 'functions.php';
 is_logged_in([3,2]);
 
+if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
+    $redirect = "admin_dashboard.php";
+}elseif($_SESSION['role'] == 2) 
+    $redirect = "faculty_dashboard.php";
+
 $stmt = $conn->prepare("SELECT class.id, class.name as classname, class.mode, department.name as depname
                         FROM class LEFT JOIN department ON class.department_id=department.id
                         UNION
@@ -27,6 +32,8 @@ $stmt->close();
 
 ?>
 
+<a href="<?php echo $redirect; ?>">back</a> <br>
+<br>
 <table>
     <thead>
         <tr>
@@ -38,25 +45,23 @@ $stmt->close();
     </thead>  
     <tbody>
         <?php 
-
+        $count = 0;
         foreach ($class_info as $class_info): ?>
             <tr>
-                <td><?php echo htmlspecialchars($class_info['id']); ?></td>
+                <td><?php echo ($count += 1) ?></td>
                 <td><?php echo htmlspecialchars($class_info['classname']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['mode']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['depname']); ?></td>
                 <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"> edit </a> </td> 
+                <?php 
+                if(can_delete()): ?>
+                <td><a href="deleteclass.php?id=<?php echo $class_info['id']; ?>"> delete </a>
+                <?php endif ?>
             </tr>
         <?php endforeach; ?>
     </tbody>
+</table>
 
-<?php if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
-    $redirect = "admin_dashboard.php";
-}elseif($_SESSION['role'] == 2) 
-    $redirect = "faculty_dashboard.php";
-?>
-
-<a href="<?php echo $redirect; ?>">back</a> <br>
-<a href="newclass.php">add classes</a> <br>
+<br><a href="newclass.php">add classes</a> <br>
 
 

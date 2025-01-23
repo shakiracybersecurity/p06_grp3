@@ -8,10 +8,10 @@ is_logged_in([3,2]);
 
 $class_id = $_GET['id'];
 
-$stmt = $conn->prepare("SELECT class.id, class.name as classname, class.mode, department.name as depname
+$stmt = $conn->prepare("SELECT class.id as class_id , class.name as classname, class.mode, department.name as depname, department.id as dep_id
                         FROM class LEFT JOIN department ON class.department_id=department.id WHERE class.id = ?
                         UNION
-                        SELECT class.id, class.name, class.mode, department.name 
+                        SELECT class.id as class_id , class.name as classname, class.mode, department.name as depname, department.id as dep_id
                         FROM department RIGHT JOIN class ON class.department_id=department.id 
                          ");
 $stmt->bind_param("i", $class_id);
@@ -20,7 +20,63 @@ $result = $stmt->get_result();
 $class_info = $result->fetch_assoc();
 $stmt->close();
 
-echo $class_info['id'], $class_info['classname'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Secure: Sanitize user inputs
+    $mode = $_POST['mode'];
+    $classname = htmlspecialchars(trim($_POST['class']));
+    $dep = $_POST['department'];
+
+    // Secure: Use prepared statements to prevent SQL injection
+    $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ? WHERE id = ?");
+    if ($stmt) {
+        $stmt->bind_param("ssii", $classname, $mode, $dep, $class_id);
+        
+        if ($stmt->execute()) {
+            header("Location: viewclass.php");
+        } else {
+            echo "Error during registration.";
+        }
+        $stmt->close();
+    } else {
+        echo "Failed to prepare the statement.";
+    }
+}
+
 
 
 ?>
+
+<a href="viewclass.php">back</a> <br>
+
+<form method="POST">
+    class name: <input type="text" name="class" value = "<?php echo $class_info['classname'];?>" required ><br>
+
+    class mode:
+    <input type = "radio" name= "mode" id ="semester" value= "semester" <?php if($class_info['mode'] == "semester"){echo "checked";}?>/>
+    <label for = "semester">Semester</label>
+    <input type = "radio" name= "mode" id ="term" value= "term" <?php if($class_info['mode'] == "term"){echo "checked";}?>/>
+    <label for = "term">Term</label>
+    <br>
+
+    department:  
+    <select name="department" id="department">
+        <?php 
+            $stmt = $conn->prepare("select id, name from department");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $department = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            foreach ($department as $department): ?>
+            <option value= "<?php echo $department['id'];?>" 
+            <?php if ($class_info['dep_id']== $department['id']){echo "selected";}?>> 
+                <?php echo $department['name'] ?> </option>
+            <?php endforeach; ?>
+            </select>
+            
+<br>       
+<input type="submit" value="update">
+
+</form>
+
+
+

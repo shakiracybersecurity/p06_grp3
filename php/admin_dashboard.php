@@ -14,9 +14,7 @@ echo $_SESSION['username'];
 
 <p> test admin</p>  
 
-
-
-<a href="viewclass.php">view classes</a>
+<a href="viewclass.php">View classes</a>
 <br>
 <a href="register.php">Create new student profiles</a>
 <br>
@@ -24,7 +22,11 @@ echo $_SESSION['username'];
 <br>
 <a href="viewgrade.php">View student's grade</a>
 <br>
+<<<<<<< HEAD
 <a href="student_records.php"> View existing students</a>
+=======
+<a href="create_course.php">Courses Dashboard</a>
+>>>>>>> 51817e137c845ddfe7d32af6af038bf2504808d6
 <br>
 <a href="logout.php">Logout</a>
 

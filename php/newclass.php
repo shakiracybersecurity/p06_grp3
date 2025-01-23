@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <br>
 
     department:  
-    <select name="department" id="department">
+    <select name="department" id="department" required>
+        <option value = "" disabled selected hidden> please choose </option>
         <?php 
             $stmt = $conn->prepare("select id, name from department");
             $stmt->execute();
@@ -63,8 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             foreach ($department as $department): ?>
             <option value= "<?php echo $department['id']; ?>"> <?php echo $department['name'] ?> </option>
             <?php endforeach; ?>
-
-                
+    </select>
+   
+<br>                
 <input type="submit" value="add">
 
 </form>

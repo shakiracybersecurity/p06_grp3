@@ -24,4 +24,11 @@ function is_logged_in($allowed) {
     exit();
 }}
 
+function can_delete(){
+    if ($_SESSION['role'] == 3){
+        return TRUE;
+    }else{
+        return FALSE;
+    }
+}
 ?>

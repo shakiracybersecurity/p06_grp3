@@ -24,8 +24,40 @@ if (!isset($_SESSION['username'])) { // If the user is not logged in
     header("Location: login.php");   // Redirect to the login page
     exit();
 }
+?>
 
-// Function to create a new course
+<!-- Form to create a course -->
+<form method="POST">
+    <h3>Create Course</h3>
+    course name: <input type="text" name="course_name" required><br>
+    course code: <input type="text" name="course_code" required><br>
+    start date: <input type="date" name="start_date" required><br>
+    end date: <input type="date" name="end_date" required><br>
+
+    <button type="submit" name="create_course">Create Course</button></form>
+
+<?php
+// Handle form submission for course creation
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_course'])) {
+    $course_name = $_POST['course_name'];
+    $course_code = $_POST['course_code'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+
+    // Insert the new course into the database
+    $stmt = $conn->prepare("INSERT INTO course (NAME, CODE, START_DATE, END_DATE) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $course_name, $course_code, $start_date, $end_date);
+
+    if ($stmt->execute()) {
+        echo "Course created successfully.";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+    $stmt->close();
+}
+?>
+
+<!-- // Function to create a new course
 function createCourse($name, $classId, $startDate, $endDate) {
     global $conn; // Use the global database connection
     $stmt = $conn->prepare("INSERT INTO course (NAME, START_DATE, END_DATE, STAFF_ID, CLASS_ID, STUDENT_ID) VALUES (?, ?, ?, NULL, ?, NULL)");
@@ -75,50 +107,4 @@ function deleteCourse($id) {
         echo "Error: " . $stmt->error; // Display an error if something goes wrong
     }
     $stmt->close(); // Close the statement
-}
-?>
-
-<!-- Form to create a course -->
-<form method="POST">
-    <h3>Create Course</h3>
-    course name: <input type="text" name="course_name" required><br>
-
-    start date: <input type="date" name="start_date" required><br>
-    end date: <input type="date" name="end_date" required><br>
-
-    class ID:
-    <select name="class_id" id="class_id">
-    <?php
-        // Fetch class IDs and names for the dropdown
-        $stmt = $conn->prepare("SELECT ID, NAME FROM class"); // Replace 'class' with the actual table name if different
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $classes = $result->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
-        foreach ($classes as $class): ?>
-            <option value="<?php echo $class['ID']; ?>"><?php echo $class['NAME']; ?></option>
-        <?php endforeach; ?>
-    </select><br>
-
-    <button type="submit" name="create_course">Create Course</button></form>
-
-<?php
-// Handle form submission for course creation
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_course'])) {
-    $course_name = $_POST['course_name'];
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-    $class_id = $_POST['class_id'];
-
-    // Insert the new course into the database
-    $stmt = $conn->prepare("INSERT INTO course (NAME, START_DATE, END_DATE, CLASS_ID, STAFF_ID, STUDENT_ID) VALUES (?, ?, ?, ?, NULL, NULL)");
-    $stmt->bind_param("sssi", $course_name, $start_date, $end_date, $class_id);
-
-    if ($stmt->execute()) {
-        echo "Course created successfully.";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-    $stmt->close();
-}
-?>
+} -->

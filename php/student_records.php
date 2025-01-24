@@ -16,7 +16,18 @@ if ($conn->connect_error) {
 session_start();
 
  // Secure: Use prepared statements to prevent SQL injection
- $stmt = $conn->prepare("SELECT id, name, phonenumber, email, course_id, faculty,department_id,class FROM students");
+ $stmt = $conn->prepare("SELECT 
+ students.id AS student_id, 
+ students.name AS student_name, 
+ students.phonenumber, 
+ students.email, 
+ students.faculty, 
+ students.class, 
+ course.name AS course_name, 
+ department.name AS department_name
+FROM students
+LEFT JOIN course ON students.course_id = course.id
+LEFT JOIN department ON students.department_id = department.id");
  $stmt->execute();
  $result = $stmt->get_result();
 
@@ -29,16 +40,16 @@ if ($result->num_rows >0){
     //Display each record
     while ( $student = $result->fetch_assoc()){
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($student['id']) . "</td>";
-        echo "<td>" . htmlspecialchars($student['name']) . "</td>";
+        echo "<td>" . htmlspecialchars($student['student_id']) . "</td>";
+        echo "<td>" . htmlspecialchars($student['student_name']) . "</td>";
         echo "<td>" . htmlspecialchars($student['phonenumber']) . "</td>";
         echo "<td>"  . htmlspecialchars($student['email'])."</td>";
         echo "<td>"  . htmlspecialchars($student['faculty'])."</td>";
         echo "<td>"  . htmlspecialchars($student['class'])."</td>";
-        echo "<td><a href = 'update_student.php?id=" . $student['id'] . "'>Update</a></td>";
+        echo "<td><a href = 'update_student.php?id=" . $student['student_id'] . "'>Update</a></td>";
         echo "<td>
             <form method = 'POST' action='delete_student.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
-            <input type='hidden' name='id' value'" . $student['id'] . "'>
+            <input type='hidden' name='id' value'" . $student['student_id'] . "'>
             <input type = 'submit' name='delete' value='Delete'>
             </form>
             </td>";

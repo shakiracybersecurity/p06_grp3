@@ -13,8 +13,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+session_start();
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
 // Handle POST request for creating grades
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
     $student_id = $_POST['student_id']; // ID of the student
     $course_id = $_POST['course_id']; // ID of the course
     $score = $_POST['score']; // Score
@@ -58,6 +70,7 @@ $conn->close();
     <label for="grade">Grade:</label>
     <input type="text" name="grade" id="grade" required><br>
 
+    <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
     <button type="submit">Create Grade</button>
 </form>
 

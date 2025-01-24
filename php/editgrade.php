@@ -13,8 +13,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+session_start();
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
 // Handle POST request for updating grades
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
     $id = $_POST['id']; // Grade ID to update
     $score = $_POST['score']; // New score
     $grade = $_POST['grade']; // New grade
@@ -52,7 +64,8 @@ $conn->close();
     <input type="text" name="score" id="score" required><br>
 
     <label for="grade">New Grade:</label>
-    <input type="text" name="grade" id="grade" required><br>
-
+    <input type="text" name="grade" id="grade" required><br>  
+    <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
     <button type="submit">Update Grade</button>
+    
 </form>

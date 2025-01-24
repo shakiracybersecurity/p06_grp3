@@ -55,6 +55,8 @@ $result = $conn->query($sql);
             </tr>
         <?php endwhile; ?>
     </table>
+    <br>
+    <a href="admin_dashboard.php">Back to Admin Dashboard</a>
 </body>
 </html>
 <?php $conn->close(); ?>

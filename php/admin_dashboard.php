@@ -12,7 +12,6 @@ echo $_SESSION['username'];
 //session_destroy()
 ?>
 
-<p> test admin</p>  
 <!-- 
 <a href="viewclass.php">View classes</a>
 <br>
@@ -35,7 +34,7 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: rgb(51,51,51);
   position: fixed;
   top: 0;
   width: 100%;
@@ -54,7 +53,7 @@ li a {
 }
 
 li a:hover:not(.active) {
-  background-color: #111;
+  background-color: rgb(214, 204, 188);
 }
 
 .active {
@@ -69,10 +68,10 @@ li a:hover:not(.active) {
   <li><a href="creategrade.php">Enter Student's Grade</a></li>
   <li><a href="viewgradetry.php">View student's grade</a></li>
   <li><a href="view_course.php">Courses Dashboard</a></li>
-  <li style="float:right"><a class="active" href="logout.php">Logout</a></li>
+  <li style="float:right"><a href="logout.php">Logout</a></li>
 </ul>
 
-<div style="padding:20px;margin-top:30px;background-color:#1abc9c;height:1500px;">
+<div style="padding:20px;margin-top:30px;background-color:rgb(148, 214, 201);height:1500px;">
 
 </body>
 </html>

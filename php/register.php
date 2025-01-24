@@ -90,6 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <option value = "ENG">Engineering</option>
         <option value = "IIT">Informatics and IT </option>
     </select><br>
-<input type="submit" value="Register">
-</form>
+<input type="submit" value="Register"><br>
 
+
+</form>
+<a href="admin_dashboard.php" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Back</a>

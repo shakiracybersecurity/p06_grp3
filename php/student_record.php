@@ -46,7 +46,7 @@ WHERE students.id = ?");
 if ($result->num_rows >0){
     echo "<h1>Your Record</h1>";
     echo "<table border='1' cellpadding='10'>";
-    echo "<tr><th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Class</th><th>Department</th><th>Course</th>";
+    echo "<tr><th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Course</th><th>Department</th>";
 
     //Display each record
     $student = $result->fetch_assoc();
@@ -56,7 +56,6 @@ if ($result->num_rows >0){
         echo "<td>" . htmlspecialchars($student['phonenumber']) . "</td>";
         echo "<td>"  . htmlspecialchars($student['email'])."</td>";
         echo "<td>"  . htmlspecialchars($student['faculty'])."</td>";
-        echo "<td>"  . htmlspecialchars($student['class'])."</td>";
         echo "<td>"  . htmlspecialchars($student['course_name']) . "</td>";
         echo "<td>"   .htmlspecialchars($student['department_name']) . "</td>";
 

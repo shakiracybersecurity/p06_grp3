@@ -65,7 +65,6 @@ $conn->close();
         <label>Phone Number:</label><input type='text' name='phonenumber' value='<?= htmlspecialchars($student['phonenumber']) ?>'><br>
         <label>Email:</label><input type='text' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
         <label>Faculty:</label><input type='text' name='faculty' value='<?= htmlspecialchars($student['faculty']) ?>'><br>
-        <label>Class:</label><input type='text' name='class' value='<?= htmlspecialchars($student['class']) ?>'><br>
         <input type='submit' name='update' value='Update Details'>
         <a href = "student_records.php">Back</a>
     </form>

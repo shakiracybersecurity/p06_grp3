@@ -35,7 +35,7 @@ LEFT JOIN department ON students.department_id = department.id");
 if ($result->num_rows >0){
     echo "<h1>Current Student Records</h1>";
     echo "<table border='1' cellpadding='10'>";
-    echo "<tr><th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Class</th>";
+    echo "<tr><th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Course</th><th>Department</th>";
 
     //Display each record
     while ( $student = $result->fetch_assoc()){
@@ -45,11 +45,12 @@ if ($result->num_rows >0){
         echo "<td>" . htmlspecialchars($student['phonenumber']) . "</td>";
         echo "<td>"  . htmlspecialchars($student['email'])."</td>";
         echo "<td>"  . htmlspecialchars($student['faculty'])."</td>";
-        echo "<td>"  . htmlspecialchars($student['class'])."</td>";
+        echo "<td>"  . htmlspecialchars($student['course_name'])."</td>";
+        echo "<td>"  . htmlspecialchars($student['department_name'])."</td>";
         echo "<td><a href = 'update_student.php?id=" . $student['student_id'] . "'>Update</a></td>";
         echo "<td>
             <form method = 'POST' action='delete_student.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
-            <input type='hidden' name='id' value'" . $student['student_id'] . "'>
+            <input type='hidden' name='id' value='" . $student['student_id'] . "'>
             <input type = 'submit' name='delete' value='Delete'>
             </form>
             </td>";

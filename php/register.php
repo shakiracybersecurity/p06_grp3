@@ -16,33 +16,47 @@ session_start();
 
 // Handle the registration form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //Check if all required inputs exist
-    if (isset($_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['department_id'], $_POST['id'], $_POST['course_id'])) {
-    // Insecure: No input sanitization or password hashing
-    $name = htmlspecialchars(trim($_POST['name']));
-    $phonenumber = htmlspecialchars(trim($_POST['phonenumber']));
-    $email = htmlspecialchars(trim($_POST['email']));
-    $department_id= htmlspecialchars(trim($_POST['department_id']));
-    $studentid = htmlspecialchars(trim($_POST['id']));
-    $course_id =htmlspecialchars(trim($_POST['course_id']));
-    $faculty = htmlspecialchars(trim($_POST['faculty']));
-    $role_id = 1;  // Default role is 1
-}
-    // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO students (name, phonenumber, email, department_id, id, course_id, role_id) VALUES (?, ?, ?, ?,?, ?, ?)");
-    $stmt->bind_param("ssssssi", $name, $phonenumber, $email, $department_id, $studentid, $course_id, $role_id);
-    
-    if ($stmt->execute()) {
-        echo "Registration for $name successful!";
-        echo '<br><a href="register.php">Register another student</a>';
-        exit();
+    // Check if all required inputs exist
+    if (isset($_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['department_id'], $_POST['id'], $_POST['course_id'], $_POST['faculty'])) {
+        // Sanitize inputs
+        $name = htmlspecialchars(trim($_POST['name']));
+        $phonenumber = htmlspecialchars(trim($_POST['phonenumber']));
+        $email = htmlspecialchars(trim($_POST['email']));
+        $department_id = htmlspecialchars(trim($_POST['department_id']));
+        $studentid = htmlspecialchars(trim($_POST['id']));
+        $course_id = htmlspecialchars(trim($_POST['course_id']));
+        $faculty = htmlspecialchars(trim($_POST['faculty']));
+        $role_id = 1;  // Default role is 1
+
+        // Check if the ID already exists
+        $check_stmt = $conn->prepare("SELECT id FROM students WHERE id = ?");
+        $check_stmt->bind_param("s", $studentid);
+        $check_stmt->execute();
+        $check_stmt->store_result();
+
+        if ($check_stmt->num_rows > 0) {
+            // ID already exists
+            echo "Error: A user with this ID already exists.";
+        } else {
+            // ID does not exist, proceed with insertion
+            $stmt = $conn->prepare("INSERT INTO students (name, phonenumber, email, department_id, id, course_id, faculty, role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssssi", $name, $phonenumber, $email, $department_id, $studentid, $course_id, $faculty, $role_id);
+
+            if ($stmt->execute()) {
+                echo "Registration for $name successful!";
+                echo '<br><a href="register.php">Register another student</a>';
+                echo '<br><a href="admin_dashboard.php">Back</a>';
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+
+            $stmt->close();
+        }
+
+        $check_stmt->close();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "All fields are required.";
     }
-
-
-    // Close the statement
-    $stmt->close();
 }
 ?>
 
@@ -70,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <option value = "3">Robotic Mechanics and Control</option>
     </select><br>
 
-    <label for="course">Faculty:</label>
+    <label for="faculty">Faculty:</label>
     <select id="faculty" name = "faculty" required>
         <option value = ""Disabled Select>Select</option>
         <option value = "ENG">Engineering</option>

@@ -14,24 +14,23 @@ session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] != 3) { // Only Admin can delete
     header("Location: login.php");
     exit();
-
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])){
     $student_id = $_POST['id'];
 
     
     $stmt = $conn -> prepare("DELETE FROM students WHERE id=?");
-    $stmt->bind_param("i", $student_id);
+    $stmt->bind_param("s", $student_id);
 
     if ($stmt->execute()){
         echo "Record deleted successfully";
+        header("Location: student_records.php");
+        exit();
     }else{
         echo "Error deleting record" . $conn->error;
     }
     $stmt->close();
 }
-}
-$conn->close();
 
-header("Location: student_records.php");
-exit;
+$conn->close();
 ?>

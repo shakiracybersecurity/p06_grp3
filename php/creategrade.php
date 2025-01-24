@@ -56,22 +56,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $conn->close();
 ?>
 
+<!--form for creating grade-->
 <!-- HTML Form for Creating Grades -->
 <form method="POST">
     <label for="student_id">Student ID:</label>
     <input type="number" name="student_id" id="student_id" required><br>
 
-    <label for="course_id">Course ID:</label>
-    <input type="number" name="course_id" id="course_id" required><br>
+    <label for="course">Course:</label>
+    <select id="course" name = "course_id" required>
+        <option value = ""Disabled Select>Select</option>
+        <option value = "1">Robotic Engineering</option>
+        <option value = "2">Robotic Systems</option>
+        <option value = "3">Robotic Mechanics and Control</option>
+    </select><br>
 
     <label for="score">Score:</label>
-    <input type="number" step="0.01" name="score" id="score" required><br>
+    <input type="number" step="0.1" name="score" id="score" required><br>
 
     <label for="grade">Grade:</label>
-    <input type="text" name="grade" id="grade" required><br>
+    <select name="grade" id="grade" required>
+        <option value="A">A</option>
+        <option value="B+">B+</option>
+        <option value="B">B</option>
+        <option value="C+">C+</option>
+        <option value="C">C</option>
+        <option value="D+">D+</option>
+        <option value="D">D</option>
+        <option value="F">F</option>
+    </select><br>
 
     <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
     <button type="submit">Create Grade</button>
 </form>
-
 

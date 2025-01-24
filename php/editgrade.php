@@ -1,14 +1,11 @@
 <?php
-// Database connection details
+// Database connection
 $host = 'localhost';
-$dbname = 'robotic course management'; 
+$dbname = 'robotic course management';
 $user = 'root';
 $pass = '';
 
-// Create connection
 $conn = new mysqli($host, $user, $pass, $dbname);
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -18,54 +15,151 @@ if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
-// Handle POST request for updating grades
+// Get the grade ID from the URL
+$grade_id = $_GET['id'] ?? '';
+if (empty($grade_id)) {
+    die("Grade ID is required.");
+}
+
+// Fetch student and grade details
+$stmt = $conn->prepare("SELECT g.SCORE, g.GRADE, s.NAME AS student_name 
+                        FROM grades g
+                        LEFT JOIN students s ON g.STUDENT_ID = s.ID
+                        WHERE g.ID = ?");
+$stmt->bind_param("i", $grade_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$grade = $result->fetch_assoc();
+$stmt->close();
+
+if (!$grade) {
+    die("Grade not found.");
+}
+
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $new_score = $_POST['score'] ?? 0;
+    $new_grade = $_POST['grade'] ?? '';
 
-    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-    if (!$token || $token !== $_SESSION['token']) {
-        // return 405 http status code
-        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
-        exit;
-    }
-    $id = $_POST['id']; // Grade ID to update
-    $score = $_POST['score']; // New score
-    $grade = $_POST['grade']; // New grade
-
-    // Input validation (basic)
-    if (empty($id) || empty($score) || empty($grade)) {
-        echo "All fields are required.";
-    } else {
-        // Prepare statement to update grade details
-        $stmt = $conn->prepare("UPDATE grades SET SCORE = ?, GRADE = ? WHERE ID = ?");
-        $stmt->bind_param("dsi", $score, $grade, $id);
-
-        // Execute query
-        if ($stmt->execute()) {
-            echo "Grade successfully updated!";
+    if (!empty($new_score) && !empty($new_grade)) {
+        $update_stmt = $conn->prepare("UPDATE grades SET SCORE = ?, GRADE = ? WHERE ID = ?");
+        $update_stmt->bind_param("isi", $new_score, $new_grade, $grade_id);
+        if ($update_stmt->execute()) {
+            $success_message = "Grade updated successfully!";
         } else {
-            echo "Error updating grade: " . $stmt->error;
+            $error_message = "Failed to update grade.";
         }
-
-        // Close statement
-        $stmt->close();
+        $update_stmt->close();
+    } else {
+        $error_message = "All fields are required.";
     }
 }
 
-// Close the database connection
 $conn->close();
 ?>
 
-<!-- Update Grades Form -->
-<form method="POST">
-    <label for="id">Grade ID:</label>
-    <input type="number" name="id" id="id" required><br>
+<!-- Edit Grades Form -->
+<style>
+    /* Style for the form container */
+    form {
+        width: 50%;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
 
+    /* Heading Style */
+    h3 {
+        text-align: center;
+        color: #4CAF50;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* Label Style */
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    /* Input and Select Styles */
+    input[type="number"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    /* Submit Button Style */
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    /* Success or Error Message Style */
+    p {
+        text-align: center;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    p a {
+        color: #4CAF50;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    p a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<form method="POST">
+    <h3>You are editing <?php echo htmlspecialchars($grade['student_name']); ?>'s grade</h3>
+    
     <label for="score">New Score:</label>
-    <input type="text" name="score" id="score" required><br>
+    <input type="number" step="1" name="score" id="score" min="0" max="100" 
+           value="<?php echo htmlspecialchars($grade['SCORE']); ?>" required>
 
     <label for="grade">New Grade:</label>
-    <input type="text" name="grade" id="grade" required><br>  
+    <select name="grade" id="grade" required>
+        <option value="A" <?php echo $grade['GRADE'] == 'A' ? 'selected' : ''; ?>>A</option>
+        <option value="B+" <?php echo $grade['GRADE'] == 'B+' ? 'selected' : ''; ?>>B+</option>
+        <option value="B" <?php echo $grade['GRADE'] == 'B' ? 'selected' : ''; ?>>B</option>
+        <option value="C+" <?php echo $grade['GRADE'] == 'C+' ? 'selected' : ''; ?>>C+</option>
+        <option value="C" <?php echo $grade['GRADE'] == 'C' ? 'selected' : ''; ?>>C</option>
+        <option value="D+" <?php echo $grade['GRADE'] == 'D+' ? 'selected' : ''; ?>>D+</option>
+        <option value="D" <?php echo $grade['GRADE'] == 'D' ? 'selected' : ''; ?>>D</option>
+        <option value="F" <?php echo $grade['GRADE'] == 'F' ? 'selected' : ''; ?>>F</option>
+    </select>
+    
     <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
     <button type="submit">Update Grade</button>
-    
 </form>
+
+<!-- Confirmation or Error Messages -->
+<?php if (!empty($success_message)): ?>
+    <p><?php echo $success_message; ?> <a href="viewgrade.php">Return back to student list?</a></p>
+<?php elseif (!empty($error_message)): ?>
+    <p style="color: red;"><?php echo $error_message; ?></p>
+<?php endif; ?>
+

@@ -14,11 +14,23 @@ if ($conn->connect_error) {
 // Start session
 
 session_start();
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
 if (isset($_SESSION['username'])) {
     header("Location: dashboard.php");
     exit();}
 // Handle the login form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
+
     // Secure: Sanitize user inputs
     $role = $_POST['users'];
     $username = htmlspecialchars(trim($_POST['username']));
@@ -61,16 +73,17 @@ $conn->close();
 
 <!-- Login form -->
 <form method="POST">
+    
     Please Select a domain: <input type = "radio" name= "users" id ="students_id "value= "students"/>
     <label for = "students_id">Students</label>
     <input type = "radio" name= "users" id ="faculty_staff_id "value= "faculty"/>
     <label for = "faculty_staff_id">Staff</label>
     <input type = "radio" name= "users" id ="admin_id "value= "admins"/>
     <label for = "admin_id">Admin</label><br>
-    
     Username: <input type="text" name="username" required><br>
     Password: <input type="password" name="password" required><br>
     <a href="forgot.php">Forgot Password / First Time Login</a>
+    <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
     <input type="submit" value="Login">
 
     

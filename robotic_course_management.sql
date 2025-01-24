@@ -55,7 +55,7 @@ CREATE TABLE `class` (
   `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(50) DEFAULT NULL,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
-  `TEACHER_ID` varchar(50) DEFAULT NULL,
+  `FACULTY_ID` varchar(50) DEFAULT NULL,
   `MODULES_ID` varchar(50) DEFAULT NULL,
   `MODE` varchar(10) DEFAULT NULL,
   `DEPARTMENT_ID` int(11) DEFAULT NULL
@@ -65,8 +65,8 @@ CREATE TABLE `class` (
 -- Dumping data for table `class`
 --
 
-INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `TEACHER_ID`, `MODULES_ID`, `MODE`, `DEPARTMENT_ID`) VALUES
-(1, 'class1', NULL, NULL, NULL, 'term', 0),
+INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `FACULTY_ID`, `MODULES_ID`, `MODE`, `DEPARTMENT_ID`) VALUES
+(1, 'class 1', NULL, NULL, NULL, 'term', 0),
 (2, 'class 2', NULL, NULL, NULL, 'term', 5),
 (3, 'test 3', NULL, NULL, NULL, 'term', 6);
 
@@ -84,11 +84,19 @@ CREATE TABLE `course` (
   `CODE` varchar(50) NOT NULL,
   `START_DATE` date NOT NULL,
   `END_DATE` date NOT NULL,
-  `STAFF_ID` int(50) DEFAULT NULL,
+  `FACULTY_ID` int(50) DEFAULT NULL,
   `CLASS_ID` int(50) DEFAULT NULL,
   `STUDENT_ID` int(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `course` (`ID`, `NAME`, `CODE`, `START_DATE`, `END_DATE`, `FACULTY_ID`, `CLASS_ID`, `STUDENT_ID`) VALUES
+(1, 'Robotic Engineering', 'RE-01', '04-07-2025', '04-07-2028', NULL, NULL, NULL),
+(2, 'Robotic Systems', 'RS-01', '04-07-2025', '04-07-2028', NULL, NULL, NULL),
+(3, 'Robotic Mechanics and Control', 'RMC-01', '04-07-2025', '04-07-2028', NULL, NULL, NULL);
 -- --------------------------------------------------------
 
 --
@@ -99,7 +107,7 @@ CREATE TABLE `csrf` (
   `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
+  `FACULTY_ID` varchar(50) DEFAULT NULL,
   `TOKEN` varchar(50) DEFAULT NULL,
   `ISSUED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `EXPIRES_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
@@ -136,7 +144,7 @@ CREATE TABLE `error_logs` (
   `ERROR_TYPE` varchar(50) DEFAULT NULL,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
+  `FACULTY_ID` varchar(50) DEFAULT NULL,
   `OCCURED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -164,7 +172,7 @@ CREATE TABLE `faculty` (
 --
 
 INSERT INTO `faculty` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
-(1, 'faculty', NULL, NULL, NULL, '$2y$10$fNNYal8fxm2k.gP9AbCYbOlPBP/ZPGtvLzPhxSk61cHX1J1Alc0pa', 'facultypass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
+(1, 'staff', NULL, NULL, NULL, '$2y$10$fNNYal8fxm2k.gP9AbCYbOlPBP/ZPGtvLzPhxSk61cHX1J1Alc0pa', 'staffpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
 
 -- --------------------------------------------------------
 
@@ -234,7 +242,7 @@ CREATE TABLE `login_attempts` (
   `ID` int(11) NOT NULL,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
+  `FACULTY_ID` varchar(50) DEFAULT NULL,
   `IP_ADDRESS` varchar(50) DEFAULT NULL,
   `ATTEMPT_TIME` timestamp(6) NULL DEFAULT current_timestamp(6),
   `SUCCESS` tinyint(1) DEFAULT NULL
@@ -264,7 +272,7 @@ CREATE TABLE `modules` (
   `YEAR` year(4) DEFAULT NULL,
   `SEMESTER` varchar(50) DEFAULT NULL,
   `TERMS` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL
+  `FACULTY_ID` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -276,7 +284,7 @@ CREATE TABLE `modules` (
 CREATE TABLE `password_resets` (
   `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
+  `FACULTY_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
   `EMAIL` varchar(50) DEFAULT NULL,
   `RESET_TOKEN` varchar(50) DEFAULT NULL,
@@ -289,7 +297,7 @@ CREATE TABLE `password_resets` (
 -- Dumping data for table `password_resets`
 --
 
-INSERT INTO `password_resets` (`ID`, `STUDENT_ID`, `STAFF_ID`, `ADMIN_ID`, `EMAIL`, `RESET_TOKEN`, `RESET_LINK`, `TOKEN_EXPIRY`, `REQUESTED_AT`) VALUES
+INSERT INTO `password_resets` (`ID`, `STUDENT_ID`, `FACULTY_ID`, `ADMIN_ID`, `EMAIL`, `RESET_TOKEN`, `RESET_LINK`, `TOKEN_EXPIRY`, `REQUESTED_AT`) VALUES
 (1, '1', NULL, NULL, 'yuhaann@gmail.com', 'a61322efd175f7ab8c089c27e51235e2', NULL, '2025-01-21 10:54:04.000000', '2025-01-21 16:54:04.769762'),
 (2, NULL, NULL, NULL, 'yuhaann@gmail.com', '7cbc284a14a1f5327b7a596bd9959be27fede3b19335422ea2', NULL, '2025-01-22 02:07:53.000000', '2025-01-22 08:07:53.034908'),
 (3, '1', NULL, NULL, 'yuhaann@gmail.com', 'c894d7d7617ce6f9c8858deff989a661', NULL, '2025-01-22 02:08:47.000000', '2025-01-22 08:08:47.711307'),
@@ -306,7 +314,7 @@ CREATE TABLE `sensitive_data` (
   `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
+  `FACULTY_ID` varchar(50) DEFAULT NULL,
   `ENCRYPTED_DATA` blob DEFAULT NULL,
   `ENCRYPTION_KEY_ID` int(50) DEFAULT NULL,
   `CREATED_AT` timestamp(6) NULL DEFAULT current_timestamp(6),

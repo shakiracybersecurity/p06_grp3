@@ -31,18 +31,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
 
-    // Update course
-    $update_sql = "UPDATE course SET NAME = ?, CODE = ?, START_DATE = ?, END_DATE = ? WHERE ID = ?";
-    $update_stmt = $conn->prepare($update_sql);
-    $update_stmt->bind_param("ssssi", $name, $code, $start_date, $end_date, $id);
-
-    if ($update_stmt->execute()) {
-        header("Location: view_course.php");
-        exit();
+    // Validation: Ensure START_DATE is not later than END_DATE
+    if (strtotime($start_date) > strtotime($end_date)) {
+        echo "<p style='color: red;'>Error: Start Date cannot be later than End Date. Try again.</p>";
+    } elseif (strtotime($start_date) == strtotime($end_date)) {
+        echo "<p style='color: red;'>Error: Start Date cannot be the same as End Date. Try again.</p>";
     } else {
-        echo "Error: " . $update_stmt->error;
+        // Update course
+        $update_sql = "UPDATE course SET NAME = ?, CODE = ?, START_DATE = ?, END_DATE = ? WHERE ID = ?";
+        $update_stmt = $conn->prepare($update_sql);
+        $update_stmt->bind_param("ssssi", $name, $code, $start_date, $end_date, $id);
+
+        // Update button pressed redirection
+        if ($update_stmt->execute()) {
+            header("Location: view_course.php");
+            exit();
+        } else {
+            echo "Error: " . $update_stmt->error;
+        }
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html>

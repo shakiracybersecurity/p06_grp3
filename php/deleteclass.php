@@ -19,10 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: viewclass.php");
     } else {
         header("Location: viewclass.php");
-    }
-    
+    }    
 }
-
 ?>
 
 <form method="post"> 

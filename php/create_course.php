@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validate dates
     if (strtotime($start_date) > strtotime($end_date)) {
         $error = "Start date cannot be later than the end date.";
+    } elseif (strtotime($start_date) == strtotime($end_date)) {
+        echo "<p style='color: red;'>Error: Start Date cannot be the same as End Date. Try again.</p>";
     } else {
         // Insert course into the database
         $sql = "INSERT INTO course (NAME, CODE, START_DATE, END_DATE) VALUES (?, ?, ?, ?)";

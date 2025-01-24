@@ -44,8 +44,16 @@ $result = $conn->query($sql);
                 <td><?= $row['ID'] ?></td>
                 <td><?= htmlspecialchars($row['NAME']) ?></td>
                 <td><?= htmlspecialchars($row['CODE']) ?></td>
-                <td><?= $row['START_DATE'] ?></td>
-                <td><?= $row['END_DATE'] ?></td>
+                <td>
+                    <?= ($row['START_DATE'] !== '0000-00-00') 
+                        ? date("d-m-Y", strtotime($row['START_DATE'])) 
+                        : 'N/A'; ?>
+                </td>
+                <td>
+                    <?= ($row['END_DATE'] !== '0000-00-00') 
+                        ? date("d-m-Y", strtotime($row['END_DATE'])) 
+                        : 'N/A'; ?>
+                </td>
                 <td>
                     <a href="update_course.php?id=<?= $row['ID'] ?>">Edit</a>
                     <?php if ($_SESSION['role'] == 3): // Only Admin can delete ?>
@@ -55,6 +63,8 @@ $result = $conn->query($sql);
             </tr>
         <?php endwhile; ?>
     </table>
+    <br>
+    <a href="admin_dashboard.php">Back to Admin Dashboard</a>
 </body>
 </html>
 <?php $conn->close(); ?>

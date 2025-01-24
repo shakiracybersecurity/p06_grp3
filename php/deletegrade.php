@@ -13,9 +13,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+session_start();
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
 // Handle POST request for deleting grades
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id']; // Grade ID to delete
+
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
 
     // Input validation (basic)
     if (empty($id)) {
@@ -58,6 +70,6 @@ $conn->close();
 <form method="POST">
     <label for="id">Grade ID:</label>
     <input type="number" name="id" id="id" required><br>
-
+    <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
     <button type="submit">Delete Grade</button>
 </form>

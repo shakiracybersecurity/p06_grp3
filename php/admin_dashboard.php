@@ -12,18 +12,6 @@ echo $_SESSION['username'];
 //session_destroy()
 ?>
 
-<!-- 
-<a href="viewclass.php">View classes</a>
-<br>
-<a href="register.php">Create new student profiles</a>
-<br>
-<a href="creategrade.php">Enter Student's Grade</a>
-<br>
-<a href="viewgradetry.php">View student's grade</a>
-<br>
-<a href="view_course.php">Courses Dashboard</a>
-<br>
-<a href="logout.php">Logout</a> -->
 <html>
 <head>
 <style>

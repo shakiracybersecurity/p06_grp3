@@ -88,4 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <label for ="email"> Enter your email address:</label>
 <input type = "email"id ="email" name ="email" required>
 <br>
-<button type = "submit"> Send Reset Link </button> 
+<button type = "submit"> Send Reset Link </button>
+<br>
+<a href="login.php">Back to Login Page</a>

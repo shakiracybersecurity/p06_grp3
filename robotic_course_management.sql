@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admins` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(50) DEFAULT NULL,
   `EMAIL` varchar(50) DEFAULT NULL,
   `PASSWORD_HASH` char(60) DEFAULT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`ID`, `NAME`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
-(2, 'admin', NULL, '$2y$10$/tYny.o4tscn0gc0rOnOMeAEo2i/zRVexlc5mhF0jh4DSnhPsi85.', 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '3');
+(1, 'admin', NULL, '$2y$10$/tYny.o4tscn0gc0rOnOMeAEo2i/zRVexlc5mhF0jh4DSnhPsi85.', 'adminpass', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '3');
 
 -- --------------------------------------------------------
 
@@ -52,7 +52,7 @@ INSERT INTO `admins` (`ID`, `NAME`, `EMAIL`, `PASSWORD_HASH`, `PASSWORD_SET`, `C
 --
 
 CREATE TABLE `class` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(50) DEFAULT NULL,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `TEACHER_ID` varchar(50) DEFAULT NULL,
@@ -66,18 +66,20 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `TEACHER_ID`, `MODULES_ID`, `MODE`, `DEPARTMENT_ID`) VALUES
-(9, 'class1', NULL, NULL, NULL, 'term', 0),
-(12, 'class 2', NULL, NULL, NULL, 'term', 5),
-(13, 'test 3', NULL, NULL, NULL, 'term', 6);
+(1, 'class1', NULL, NULL, NULL, 'term', 0),
+(2, 'class 2', NULL, NULL, NULL, 'term', 5),
+(3, 'test 3', NULL, NULL, NULL, 'term', 6);
 
--- --------------------------------------------------------
+
+-- Indexes for dumped tables
+--
 
 --
 -- Table structure for table `course`
 --
 
 CREATE TABLE `course` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(50) DEFAULT NULL,
   `START_DATE` date DEFAULT NULL,
   `END_DATE` date DEFAULT NULL,
@@ -93,7 +95,7 @@ CREATE TABLE `course` (
 --
 
 CREATE TABLE `csrf` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
   `STAFF_ID` varchar(50) DEFAULT NULL,
@@ -109,7 +111,7 @@ CREATE TABLE `csrf` (
 --
 
 CREATE TABLE `department` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -118,8 +120,8 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`ID`, `NAME`) VALUES
-(5, 'dep 1'),
-(6, 'dep 2');
+(1, 'dep 1'),
+(2, 'dep 2');
 
 -- --------------------------------------------------------
 
@@ -128,7 +130,7 @@ INSERT INTO `department` (`ID`, `NAME`) VALUES
 --
 
 CREATE TABLE `error_logs` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `ERROR_MESSAGE` varchar(255) DEFAULT NULL,
   `ERROR_TYPE` varchar(50) DEFAULT NULL,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
@@ -144,7 +146,7 @@ CREATE TABLE `error_logs` (
 --
 
 CREATE TABLE `faculty` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(50) DEFAULT NULL,
   `EMAIL` varchar(50) DEFAULT NULL,
   `PHONE_NUMBER` int(8) DEFAULT NULL,
@@ -170,7 +172,7 @@ INSERT INTO `faculty` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PAS
 --
 
 CREATE TABLE `grades` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `COURSE_ID` varchar(50) DEFAULT NULL,
   `SCORE` int(11) DEFAULT NULL,
@@ -193,7 +195,7 @@ INSERT INTO `grades` (`ID`, `STUDENT_ID`, `COURSE_ID`, `SCORE`, `GRADE`, `ENTERE
 --
 
 CREATE TABLE `granted_permissions` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `PERMISSION_ID` varchar(50) DEFAULT NULL,
   `ROLE_DESCRIPTION` varchar(50) DEFAULT NULL,
   `PERMISSION_DESCRIPTION` varchar(50) NOT NULL
@@ -206,7 +208,7 @@ CREATE TABLE `granted_permissions` (
 --
 
 CREATE TABLE `hash_algorithms` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `ALGORITHM_NAME` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -217,7 +219,7 @@ CREATE TABLE `hash_algorithms` (
 --
 
 CREATE TABLE `login` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `PASSWORD_HASH` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -244,7 +246,7 @@ CREATE TABLE `login_attempts` (
 --
 
 CREATE TABLE `login_data` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `PASSWORD_HASH` varchar(50) DEFAULT NULL,
   `PASSWORD_SET` varchar(50) DEFAULT NULL,
   `HASH_ALGORITHM_ID` varchar(50) DEFAULT NULL
@@ -257,7 +259,7 @@ CREATE TABLE `login_data` (
 --
 
 CREATE TABLE `modules` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `YEAR` year(4) DEFAULT NULL,
   `SEMESTER` varchar(50) DEFAULT NULL,
   `TERMS` varchar(50) DEFAULT NULL,
@@ -271,7 +273,7 @@ CREATE TABLE `modules` (
 --
 
 CREATE TABLE `password_resets` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `STAFF_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
@@ -287,11 +289,11 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`ID`, `STUDENT_ID`, `STAFF_ID`, `ADMIN_ID`, `EMAIL`, `RESET_TOKEN`, `RESET_LINK`, `TOKEN_EXPIRY`, `REQUESTED_AT`) VALUES
-(17, '1', NULL, NULL, 'yuhaann@gmail.com', 'a61322efd175f7ab8c089c27e51235e2', NULL, '2025-01-21 10:54:04.000000', '2025-01-21 16:54:04.769762'),
-(18, NULL, NULL, NULL, 'yuhaann@gmail.com', '7cbc284a14a1f5327b7a596bd9959be27fede3b19335422ea2', NULL, '2025-01-22 02:07:53.000000', '2025-01-22 08:07:53.034908'),
-(19, '1', NULL, NULL, 'yuhaann@gmail.com', 'c894d7d7617ce6f9c8858deff989a661', NULL, '2025-01-22 02:08:47.000000', '2025-01-22 08:08:47.711307'),
-(20, '1', NULL, NULL, 'yuhaann@gmail.com', 'b53eb871fa5df6267cec5967f16957b2', NULL, '2025-01-23 02:14:39.000000', '2025-01-23 08:14:39.302553'),
-(21, '1', NULL, NULL, 'yuhaann@gmail.com', 'b44c04d613d316fc35e446584dffe465', NULL, '2025-01-23 02:44:54.000000', '2025-01-23 08:44:54.673185');
+(1, '1', NULL, NULL, 'yuhaann@gmail.com', 'a61322efd175f7ab8c089c27e51235e2', NULL, '2025-01-21 10:54:04.000000', '2025-01-21 16:54:04.769762'),
+(2, NULL, NULL, NULL, 'yuhaann@gmail.com', '7cbc284a14a1f5327b7a596bd9959be27fede3b19335422ea2', NULL, '2025-01-22 02:07:53.000000', '2025-01-22 08:07:53.034908'),
+(3, '1', NULL, NULL, 'yuhaann@gmail.com', 'c894d7d7617ce6f9c8858deff989a661', NULL, '2025-01-22 02:08:47.000000', '2025-01-22 08:08:47.711307'),
+(4, '1', NULL, NULL, 'yuhaann@gmail.com', 'b53eb871fa5df6267cec5967f16957b2', NULL, '2025-01-23 02:14:39.000000', '2025-01-23 08:14:39.302553'),
+(5, '1', NULL, NULL, 'yuhaann@gmail.com', 'b44c04d613d316fc35e446584dffe465', NULL, '2025-01-23 02:44:54.000000', '2025-01-23 08:44:54.673185');
 
 -- --------------------------------------------------------
 
@@ -300,7 +302,7 @@ INSERT INTO `password_resets` (`ID`, `STUDENT_ID`, `STAFF_ID`, `ADMIN_ID`, `EMAI
 --
 
 CREATE TABLE `sensitive_data` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `STUDENT_ID` varchar(50) DEFAULT NULL,
   `ADMIN_ID` varchar(50) DEFAULT NULL,
   `STAFF_ID` varchar(50) DEFAULT NULL,
@@ -317,7 +319,7 @@ CREATE TABLE `sensitive_data` (
 --
 
 CREATE TABLE `students` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(50) DEFAULT NULL,
   `PHONE NUMBER` int(8) DEFAULT NULL,
   `EMAIL` text DEFAULT NULL,
@@ -343,203 +345,6 @@ INSERT INTO `students` (`ID`, `NAME`, `PHONE NUMBER`, `EMAIL`, `PASSWORD_HASH`, 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `class`
---
-ALTER TABLE `class`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `course`
---
-ALTER TABLE `course`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `csrf`
---
-ALTER TABLE `csrf`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `department`
---
-ALTER TABLE `department`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `error_logs`
---
-ALTER TABLE `error_logs`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `faculty`
---
-ALTER TABLE `faculty`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `grades`
---
-ALTER TABLE `grades`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `granted_permissions`
---
-ALTER TABLE `granted_permissions`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `hash_algorithms`
---
-ALTER TABLE `hash_algorithms`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `login_data`
---
-ALTER TABLE `login_data`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `modules`
---
-ALTER TABLE `modules`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `sensitive_data`
---
-ALTER TABLE `sensitive_data`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `students`
---
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admins`
---
-ALTER TABLE `admins`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `class`
---
-ALTER TABLE `class`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `course`
---
-ALTER TABLE `course`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `csrf`
---
-ALTER TABLE `csrf`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `department`
---
-ALTER TABLE `department`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `error_logs`
---
-ALTER TABLE `error_logs`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `faculty`
---
-ALTER TABLE `faculty`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `grades`
---
-ALTER TABLE `grades`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `granted_permissions`
---
-ALTER TABLE `granted_permissions`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `hash_algorithms`
---
-ALTER TABLE `hash_algorithms`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `login`
---
-ALTER TABLE `login`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `login_data`
---
-ALTER TABLE `login_data`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `modules`
---
-ALTER TABLE `modules`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `password_resets`
---
-ALTER TABLE `password_resets`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
--- AUTO_INCREMENT for table `sensitive_data`
---
-ALTER TABLE `sensitive_data`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `students`
---
-ALTER TABLE `students`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

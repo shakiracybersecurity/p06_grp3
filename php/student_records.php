@@ -46,7 +46,7 @@ $_SESSION['csrf_token'] = $csrf_token;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-    if (!$submitted_token || $submitted_token !== $_SESSION['csrf_token']){
+    if (!$submitted_token || hash("sha256", $submitted_token)!== $csrf_token_hashed){
         header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
         exit("Invalid CSRF token.");
     }

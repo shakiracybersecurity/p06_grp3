@@ -57,7 +57,7 @@ li a:hover:not(.active) {
 <ul>
   <li><a href="viewclass.php">View classes</a></li>
   <li><a href="register.php">Create new student profiles</a></li>
-  <li><a href="viewgradetry.php">View student's grade</a></li>
+  <li><a href="viewgradetry.php">Grade details</a></li>
   <li><a href="view_course.php">Courses Dashboard</a></li>
   <li><a href="student_records.php"> View existing students</a></li>
   <li style="float:right"><a href="logout.php">Logout</a></li>

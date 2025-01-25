@@ -3,6 +3,10 @@ require "functions.php";
 
 $conn=db_connect();
 session_start();
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
 is_logged_in([3,2]);
 
 
@@ -21,6 +25,13 @@ $class_info = $result->fetch_assoc();
 $stmt->close();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
+
     // Secure: Sanitize user inputs
     $mode = $_POST['mode'];
     $classname = htmlspecialchars(trim($_POST['class']));
@@ -73,7 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endforeach; ?>
             </select>
             
-<br>       
+<br>   
+<input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">    
 <input type="submit" value="update">
 
 </form>

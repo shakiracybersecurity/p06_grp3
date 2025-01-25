@@ -18,6 +18,12 @@ if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
+// Allow only Admin (role_id = 3) or Faculty (role_id = 2) to access
+if (!in_array($_SESSION['role'], [2, 3])) {
+    header("Location: unauthorized.php");
+    exit();
+}
+
 // Fetch courses for the dropdown
 $course_result = $conn->query("SELECT ID, NAME FROM course");
 $courses = $course_result->fetch_all(MYSQLI_ASSOC);

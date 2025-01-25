@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo "your password has been reset!";
         echo "<br><a href='login.php'>log in here</a>";
-        echo $passHash;
     }else{
         echo "passwords do not match";
     }

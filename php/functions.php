@@ -16,7 +16,7 @@ function db_connect(){
 
 // check if the user is logged in and role of user
 function is_logged_in($allowed) {
-    if (!isset($_SESSION['username'])) {
+    if (!isset($_SESSION['role'])) {
     header("Location: login.php");
     exit();
 }elseif(!in_array($_SESSION['role'], $allowed)){
@@ -30,5 +30,18 @@ function can_delete(){
     }else{
         return FALSE;
     }
+}
+
+function checkSessionTimeout($timeout_duration = 30) {
+    if (isset($_SESSION['last_activity'])) {
+        $inactive_time = time() - $_SESSION['last_activity'];
+        if ($inactive_time > $timeout_duration) {
+            session_unset();
+            session_destroy();
+            header("Location: login.php");
+            exit();
+        }
+    }
+    $_SESSION['last_activity'] = time();
 }
 ?>

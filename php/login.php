@@ -14,6 +14,8 @@ if ($conn->connect_error) {
 // Start session
 
 session_start();
+$_SESSION['last_activity'] = time();
+
 if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
@@ -30,14 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
         exit;
     }
-    
-    if (!isset($_POST['users']) || !in_array($_POST['users'],['students', 'faculty', 'admins'])){
-        echo "Please select your role before logging in.";
-    } else {
-        $role = $_POST['users'];
-    
-    
+
     // Secure: Sanitize user inputs
+    $role = $_POST['users'];
     $username = htmlspecialchars(trim($_POST['username']));
     $password = htmlspecialchars(trim($_POST['password']));
 
@@ -46,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
-    
 
 // Check if the user exists
 if ($result->num_rows == 1) {
@@ -72,7 +68,7 @@ if ($result->num_rows == 1) {
 // Close the statement
 $stmt->close();
 }
-}
+
 // Close the database connection
 $conn->close();
 ?>
@@ -85,12 +81,11 @@ $conn->close();
     <input type = "radio" name= "users" id ="faculty_staff_id "value= "faculty"/>
     <label for = "faculty_staff_id">Staff</label>
     <input type = "radio" name= "users" id ="admin_id "value= "admins"/>
-    <label for = "admin_id">Admin</label><br>
+    <label for = "admin_id">Admin</label><br> 
     Username: <input type="text" name="username" required><br>
     Password: <input type="password" name="password" required><br>
     <a href="forgot.php">Forgot Password / First Time Login</a>
     <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
     <input type="submit" value="Login">
 
-    
 </form>

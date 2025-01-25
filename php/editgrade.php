@@ -15,6 +15,12 @@ if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
+// Allow only Admin (role_id = 3) or Faculty (role_id = 2) to access
+if (!in_array($_SESSION['role'], [2, 3])) {
+    header("Location: unauthorized.php");
+    exit();
+}
+
 // Get the grade ID from the URL
 $grade_id = $_GET['id'] ?? '';
 if (empty($grade_id)) {

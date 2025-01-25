@@ -11,6 +11,11 @@ if ($conn->connect_error) {
 
 // Start session and check role
 session_start();
+
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
 if (!isset($_SESSION['username']) || ($_SESSION['role'] != 2 && $_SESSION['role'] != 3)) {
     header("Location: login.php");
     exit();
@@ -26,6 +31,14 @@ $result = $stmt->get_result();
 $course = $result->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
+
     $name = $_POST['name'];
     $code = $_POST['code'];
     $start_date = $_POST['start_date'];
@@ -65,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         Code: <input type="text" name="code" value="<?= htmlspecialchars($course['CODE']) ?>" required><br>
         Start Date: <input type="date" name="start_date" value="<?= $course['START_DATE'] ?>" required><br>
         End Date: <input type="date" name="end_date" value="<?= $course['END_DATE'] ?>" required><br>
+        <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
         <button type="submit">Update</button>
     </form>
 </body>

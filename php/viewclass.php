@@ -13,7 +13,9 @@ if ($conn->connect_error) {
 session_start();
 
 require 'functions.php';
+checkSessionTimeout();
 is_logged_in([3,2]);
+
 
 if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
     $redirect = "admin_dashboard.php";

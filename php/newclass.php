@@ -17,6 +17,7 @@ if (empty($_SESSION['token'])) {
 
 require 'functions.php';
 is_logged_in([3,2]);
+checkSessionTimeout();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 

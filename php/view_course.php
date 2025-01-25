@@ -19,7 +19,9 @@ if (!isset($_SESSION['username']) || ($_SESSION['role'] != 2 && $_SESSION['role'
 // Fetch all courses
 $sql = "SELECT * FROM course";
 $result = $conn->query($sql);
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

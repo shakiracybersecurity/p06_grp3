@@ -164,7 +164,7 @@ $conn->close();
 
 <!-- Confirmation or Error Messages -->
 <?php if (!empty($success_message)): ?>
-    <p><?php echo $success_message; ?> <a href="viewgrade.php">Return back to student list?</a></p>
+    <p><?php echo $success_message; ?> <a href="viewgradetry.php">Return back to student list?</a></p>
 <?php elseif (!empty($error_message)): ?>
     <p style="color: red;"><?php echo $error_message; ?></p>
 <?php endif; ?>

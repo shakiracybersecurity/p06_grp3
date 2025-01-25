@@ -11,8 +11,44 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+
 // Start session
 session_start();
+if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] !=2)) { // Only Admin can delete
+    header("Location: login.php");
+    exit("Unauthorized access.");
+}
+
+$user_role = (int)$_SESSION['role']; // Cast to integer to match type
+$user_id = $_SESSION['id'];
+
+//Generate a CSRF token
+$csrf_token= bin2hex(random_bytes(32));
+$csrf_token_hashed= hash("sha256", $csrf_token);
+$issued_at = date("Y-m-d H:i:s");
+$expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
+
+//Store the token in the database
+$admin_id = ($user_role === 3) ? $user_id : null;
+$staff_id = ($user_role === 2) ? $user_id : null;
+
+$stmt = $conn->prepare("INSERT INTO csrf (TOKEN, ISSUED_AT, EXPIRES_AT, ADMIN_ID, STAFF_ID) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("sssii", $csrf_token_hashed, $issued_at, $expires_at, $admin_id, $staff_id);
+
+if (!$stmt->execute()){
+    die("Error inserting CSRF token: " . $stmt->error);
+}
+$stmt->close();
+
+$_SESSION['csrf_token'] = $csrf_token;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$submitted_token || $submitted_token !== $_SESSION['csrf_token']){
+        header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+        exit("Invalid CSRF token.");
+    }
+}
 
 // Handle the registration form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -92,6 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </select><br>
 <input type="submit" value="Register"><br>
 
+
+
+<input type = "hidden" name ="token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']);?>">
 
 </form>
 <a href="admin_dashboard.php" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Back</a>

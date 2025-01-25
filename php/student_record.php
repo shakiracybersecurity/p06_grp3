@@ -14,6 +14,42 @@ if ($conn->connect_error) {
 
 // Start session
 session_start();
+if (!isset($_SESSION['username']) || $_SESSION['role'] != 1) { // Only Admin can delete
+    header("Location: login.php");
+    exit("Unauthorized access.");
+}
+
+$user_role = (int)$_SESSION['role']; // Cast to integer to match type
+$user_id = $_SESSION['id'];
+
+//Generate a CSRF token
+$csrf_token= bin2hex(random_bytes(32));
+$csrf_token_hashed= hash("sha256", $csrf_token);
+$issued_at = date("Y-m-d H:i:s");
+$expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
+
+
+
+//Store the token in the database
+$student_id = ($user_role === 1) ? $user_id : null;
+
+$stmt = $conn->prepare("INSERT INTO csrf (TOKEN, ISSUED_AT, EXPIRES_AT, STUDENT_ID) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("sssi", $csrf_token_hashed, $issued_at, $expires_at, $student_id);
+
+if (!$stmt->execute()){
+    die("Error inserting CSRF token: " . $stmt->error);
+}
+$stmt->close();
+
+$_SESSION['csrf_token'] = $csrf_token;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$submitted_token || $submitted_token !== $_SESSION['csrf_token']){
+        header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+        exit("Invalid CSRF token.");
+    }
+}
 
 if(!isset($_SESSION['id'])){
     header ('Location:login.php');

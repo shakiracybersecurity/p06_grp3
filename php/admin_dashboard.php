@@ -20,7 +20,7 @@ body {margin:0;}
 
 <a href="viewclass.php">View classes</a>
 <br>
-<a href="register.php">Create new student profiles</a>
+<a href="CREATE.php">Create new student profiles</a>
 <br>
 <a href="creategrade.php">Enter Student's Grade</a>
 <br>
@@ -32,7 +32,6 @@ body {margin:0;}
 <a href="create_course.php">Courses Dashboard</a>
 
 <a href="view_course.php">Courses Dashboard</a>
-
 
 
 <br>
@@ -74,7 +73,7 @@ li a:hover:not(.active) {
 <body>
 <ul>
   <li><a href="viewclass.php">View classes</a></li>
-  <li><a href="register.php">Create new student profiles</a></li>
+  <li><a href="CREATE.php">Create new student profiles</a></li>
   <li><a href="creategrade.php">Enter Student's Grade</a></li>
   <li><a href="viewgradetry.php">View student's grade</a></li>
   <li><a href="view_course.php">Courses Dashboard</a></li>

@@ -58,7 +58,6 @@ if (!isset($_SESSION['username'])) {
     <ul>
         <li><a href="viewclass.php?embedded=true" target="contentFrame">View classes</a></li>
         <li><a href="register.php?embedded=true" target="contentFrame">Create new student profiles</a></li>
-        <li><a href="creategrade.php?embedded=true" target="contentFrame">Enter Student's Grade</a></li>
         <li><a href="viewgradetry.php?embedded=true" target="contentFrame">View student's grade</a></li>
         <li><a href="view_course.php?embedded=true" target="contentFrame">Courses Dashboard</a></li>
         <li><a href="student_records.php?embedded=true" target="contentFrame">View existing students</a></li>

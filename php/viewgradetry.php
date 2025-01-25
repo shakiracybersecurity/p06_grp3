@@ -47,13 +47,21 @@ if (!empty($search)) {
     $types .= "sss"; // Three strings
 }
 
+// Decode the grade filter to handle special characters like +
+$filter_grade = urldecode($_GET['filter_grade'] ?? '');
 
-
+// Query with exact matching and trimmed grades
 if (!empty($filter_grade)) {
-    $query .= " AND GRADE = ?";
+    $query .= " AND TRIM(GRADE) = ?";
     $params[] = &$filter_grade;
-    $types .= "s"; // One string
+    $types .= "s";
 }
+
+// Debugging for filters
+error_log("Filter Grade: " . $filter_grade);
+error_log("Query: $query | Params: " . json_encode($params));
+
+
 
 if (!empty($filter_course)) {
     $query .= " AND c.ID = ?";
@@ -234,6 +242,10 @@ function updateSearch(value) {
     window.location.href = query;
 }
 </script>
+
+<button onclick="location.href='creategrade.php'" style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    Enter New Student Grade
+</button>
 
 
 

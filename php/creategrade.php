@@ -18,6 +18,10 @@ if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
+// Fetch courses for the dropdown
+$course_result = $conn->query("SELECT ID, NAME FROM course");
+$courses = $course_result->fetch_all(MYSQLI_ASSOC);
+
 // Handle POST request for creating grades
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -63,13 +67,15 @@ $conn->close();
     <input type="number" name="student_id" id="student_id" required><br>
 
     <label for="course">Course:</label>
-    <select id="course" name = "course_id" required>
-        <option value = ""Disabled Select>Select</option>
-        <option value = "1">Robotic Engineering</option>
-        <option value = "2">Robotic Systems</option>
-        <option value = "3">Robotic Mechanics and Control</option>
+    <select id="course" name="course_id" required>
+        <?php foreach ($courses as $course): ?>
+            <option value="<?php echo $course['ID']; ?>">
+                <?php echo htmlspecialchars($course['NAME']); ?>
+            </option>
+        <?php endforeach; ?>
     </select><br>
 
+    
     <label for="score">Score:</label>
     <input type="number" step="0.1" name="score" id="score" required><br>
 

@@ -13,13 +13,20 @@ if ($conn->connect_error) {
 // Start session
 session_start();
 
-if (!isset($_SESSION['username']) || $_SESSION['role'] != 3) { // Only Admin can delete
+// Ensure only Admins can access
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit("Unauthorized access.");
 }
 
+// Role check for Admin access
+if ($_SESSION['role'] != 3) { // Role 3 is Admin
+    echo "Unauthorized access. Only admins can delete records.";
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
-    $student_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING);
+    $student_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 
     // Validate CSRF token
@@ -29,16 +36,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     }
 
     if ($student_id) {
-        // Delete the student
-        $stmt = $conn->prepare("DELETE FROM students WHERE id = ?");
-        $stmt->bind_param("s", $student_id);
+        // Delete related records from student_courses table
+        $stmt_courses = $conn->prepare("DELETE FROM student_courses WHERE student_id = ?");
+        $stmt_courses->bind_param("i", $student_id);
+        if (!$stmt_courses->execute()) {
+            echo "Error deleting related courses: " . $stmt_courses->error;
+            $stmt_courses->close();
+            exit();
+        }
+        $stmt_courses->close();
 
+        // Delete the student record
+        $stmt = $conn->prepare("DELETE FROM students WHERE id = ?");
+        $stmt->bind_param("i", $student_id);
         if ($stmt->execute()) {
-            echo "Record deleted successfully!";
-            header("Location: student_records.php");
+            // Display success message and redirect
+            echo "<script>alert('Record deleted successfully!'); window.location.href = 'student_records.php';</script>";
             exit();
         } else {
-            echo "Error deleting record: " . $stmt->error;
+            echo "Error deleting student: " . $stmt->error;
         }
         $stmt->close();
     } else {

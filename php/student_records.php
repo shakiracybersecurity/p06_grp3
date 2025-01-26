@@ -57,8 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 
  // Secure: Use prepared statements to prevent SQL injection
- $stmt = $conn->prepare("
-    SELECT 
+ $stmt = $conn->prepare("SELECT 
         students.id AS student_id, 
         students.name AS student_name, 
         students.phonenumber, 
@@ -95,8 +94,8 @@ if ($result->num_rows > 0) {
         echo "<td>
             <a href='update_student.php?id=" . $student['student_id'] . "'>Update</a>
             <form method='POST' action='delete_student.php' onsubmit='return confirm(\"Are you sure you want to delete this record?\");'>
-                <input type='hidden' name='id' value='" . $student['student_id'] . "'>
-                <input type='submit' name='delete' value='Delete'>
+            <input type='hidden' name='id' value='" . $student['student_id'] . "'>
+            <input type='submit' name='delete' value='Delete'>
             </form>
         </td>";
         echo "</tr>";

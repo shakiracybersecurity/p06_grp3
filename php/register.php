@@ -1,4 +1,4 @@
-<?php
+<?php 
 // Database connection details
 $host = 'localhost';
 $dbname = 'robotic course management';
@@ -11,14 +11,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 // Start session
 session_start();
 require "functions.php";
 
 checkSessionTimeout();
 
-if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] !=2)) { // Only Admin can delete
+if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 2)) { // Only Admin or Faculty can register
     header("Location: login.php");
     exit("Unauthorized access.");
 }
@@ -26,36 +25,23 @@ if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'
 $user_role = (int)$_SESSION['role']; // Cast to integer to match type
 $user_id = $_SESSION['id'];
 
-//Generate a CSRF token
-$csrf_token= bin2hex(random_bytes(32));
-$csrf_token_hashed= hash("sha256", $csrf_token);
-$issued_at = date("Y-m-d H:i:s");
-$expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
-
-//Store the token in the database
-$admin_id = ($user_role === 3) ? $user_id : null;
-$staff_id = ($user_role === 2) ? $user_id : null;
-
-$stmt = $conn->prepare("INSERT INTO csrf (TOKEN, ISSUED_AT, EXPIRES_AT, ADMIN_ID, STAFF_ID) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param("sssii", $csrf_token_hashed, $issued_at, $expires_at, $admin_id, $staff_id);
-
-if (!$stmt->execute()){
-    die("Error inserting CSRF token: " . $stmt->error);
+// Generate a CSRF token
+if (!isset($_SESSION['csrf_token'])) {
+    $csrf_token = bin2hex(random_bytes(32));
+    $_SESSION['csrf_token'] = $csrf_token;
 }
-$stmt->close();
 
-$_SESSION['csrf_token'] = $csrf_token;
+// Initialize registration status
+$registration_successful = false;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Validate CSRF token
     $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-    if (!$submitted_token || hash("sha256", $submitted_token)!== $csrf_token_hashed){
+    if (!$submitted_token || $submitted_token !== $_SESSION['csrf_token']) {
         header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
         exit("Invalid CSRF token.");
     }
-}
 
-// Handle the registration form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if all required inputs exist
     if (isset($_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['department_id'], $_POST['id'], $_POST['course_id'], $_POST['faculty'])) {
         // Sanitize inputs
@@ -75,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $check_stmt->store_result();
 
         if ($check_stmt->num_rows > 0) {
-            // ID already exists
             echo "Error: A user with this ID already exists.";
         } else {
             // ID does not exist, proceed with insertion
@@ -83,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param("sssssssi", $name, $phonenumber, $email, $department_id, $studentid, $course_id, $faculty, $role_id);
 
             if ($stmt->execute()) {
+                $registration_successful = true; // Set success flag
                 echo "Registration for $name successful!";
                 echo '<br><a href="register.php">Register another student</a>';
                 echo '<br><a href="admin_dashboard.php">Back</a>';
@@ -100,41 +86,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<?php if (!$registration_successful): ?>
 <!-- Registration form -->
 <form method="POST">
     <h1> Register new student</h1>
-    Name: <input type="text" id = "name" name="name" required><br>
-    Email: <input type="email" id ="email" name="email" required><br>
-    Phone Number : <input type ="tel" id = "phonenumber" name = "phonenumber" required><br>
-    Student ID : <input type ="text" id= "id" name="id" required><br>
+    Name: <input type="text" id="name" name="name" required><br>
+    Email: <input type="email" id="email" name="email" required><br>
+    Phone Number: <input type="tel" id="phonenumber" name="phonenumber" required><br>
+    Student ID: <input type="text" id="id" name="id" required><br>
 
     <label for="department">Department:</label> 
     <select id="department" name="department_id" required>
-        <option value ="" disabled select>Select</option>
-        <option value = "1">RBE/ENG</option>
-        <option value = "2"> RBS/IIT</option>
-        <option value = "3"> RMC/IIT</option>
+        <option value="" disabled selected>Select</option>
+        <option value="1">RBE/ENG</option>
+        <option value="2">RBS/IIT</option>
+        <option value="3">RMC/IIT</option>
     </select> <br>
     
     <label for="course">Course:</label>
-    <select id="course" name = "course_id" required>
-        <option value = ""Disabled Select>Select</option>
-        <option value = "1">Robotic Engineering</option>
-        <option value = "2">Robotic Systems</option>
-        <option value = "3">Robotic Mechanics and Control</option>
+    <select id="course" name="course_id" required>
+        <option value="" disabled selected>Select</option>
+        <option value="1">Robotic Engineering</option>
+        <option value="2">Robotic Systems</option>
+        <option value="3">Robotic Mechanics and Control</option>
     </select><br>
 
     <label for="faculty">Faculty:</label>
-    <select id="faculty" name = "faculty" required>
-        <option value = ""Disabled Select>Select</option>
-        <option value = "ENG">Engineering</option>
-        <option value = "IIT">Informatics and IT </option>
+    <select id="faculty" name="faculty" required>
+        <option value="" disabled selected>Select</option>
+        <option value="ENG">Engineering</option>
+        <option value="IIT">Informatics and IT</option>
     </select><br>
-<input type="submit" value="Register"><br>
 
-
-
-<input type = "hidden" name ="token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']);?>">
-
+    <input type="hidden" name="token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+    <input type="submit" value="Register"><br>
 </form>
-<a href="admin_dashboard.php" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Back</a>
+<?php endif; ?>

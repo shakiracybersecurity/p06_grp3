@@ -29,6 +29,7 @@ ul {
 
 
 
+
 <a href="viewclass.php">view classes</a>
 <br>
 <a href="create1.php">Create new student profiles</a>
@@ -43,6 +44,7 @@ ul {
 <br>
 
 <a href="logout.php">Logout</a>
+
 
 
 

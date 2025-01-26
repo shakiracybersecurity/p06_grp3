@@ -28,14 +28,8 @@ $result = $conn->query($sql);
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>View Courses</title>
-</head>
 <body>
-    <h2>View Courses</h2>
-    <!-- Create Course Button -->
-    <a href="create_course.php" style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Create Course</a>
-    <br><br>
+    <h2>Courses Available</h2>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -68,8 +62,10 @@ $result = $conn->query($sql);
                 </td>
             </tr>
         <?php endwhile; ?>
-    </table>
-    <br>
+    </table><br>
+    <!-- Create Course Button -->
+    <a href="create_course.php" style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Create Course</a>    
+    <br></br>
     <a href="admin_dashboard.php">Back to Admin Dashboard</a>
 </body>
 </html>

@@ -2,8 +2,8 @@
 session_start();
 require "functions.php";
 
-is_logged_in([3]);
 checkSessionTimeout();
+is_logged_in([3]);
 ?>
 
 <!DOCTYPE html>

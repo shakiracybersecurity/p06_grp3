@@ -32,7 +32,7 @@ function can_delete(){
     }
 }
 
-function checkSessionTimeout($timeout_duration = 30) {
+function checkSessionTimeout($timeout_duration = 300) {
     if (isset($_SESSION['last_activity'])) {
         $inactive_time = time() - $_SESSION['last_activity'];
         if ($inactive_time > $timeout_duration) {

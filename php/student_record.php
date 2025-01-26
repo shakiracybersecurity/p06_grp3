@@ -60,50 +60,52 @@ if(!isset($_SESSION['id'])){
     exit;
 }
 
-$student_id = $_SESSION['id'];
+$student_id = $_SESSION['id']; // Ensure this is set correctly from the session
 
- 
-// Secure: Use prepared statements to prevent SQL injection
- $stmt = $conn->prepare("SELECT 
- students.id AS student_id, 
- students.name AS student_name, 
- students.phonenumber, 
- students.email, 
- students.faculty, 
- students.class, 
- course.name AS course_name, 
- department.name AS department_name
+$stmt = $conn->prepare("SELECT 
+students.id AS student_id, 
+students.name AS student_name, 
+students.phonenumber, 
+students.email, 
+students.faculty, 
+GROUP_CONCAT(course.name SEPARATOR ', ') AS course_names, 
+department.name AS department_name
 FROM students
-LEFT JOIN course ON students.course_id = course.id
+LEFT JOIN student_courses ON students.id = student_courses.student_id
+LEFT JOIN course ON student_courses.course_id = course.id
 LEFT JOIN department ON students.department_id = department.id
-WHERE students.id = ?");
+WHERE students.id=?
+");
 
- $stmt->bind_param("i",$student_id);
- $stmt->execute();
- $result = $stmt->get_result();
+// Bind the student ID to the statement
+$stmt->bind_param("i", $student_id); // Use "i" for integer
+$stmt->execute();
+$result = $stmt->get_result();
 
+if ($result->num_rows > 0) {
+echo "<h1>Current Student Records</h1>";
+echo "<table border='1' cellpadding='10'>";
+echo "<tr>
+    <th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Courses</th><th>Department</th>
+</tr>";
 
-if ($result->num_rows >0){
-    echo "<h1>Your Record</h1>";
-    echo "<table border='1' cellpadding='10'>";
-    echo "<tr><th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Course</th><th>Department</th>";
-
-    //Display each record
-    $student = $result->fetch_assoc();
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($student['student_id']) . "</td>";
-        echo "<td>" . htmlspecialchars($student['student_name']) . "</td>";
-        echo "<td>" . htmlspecialchars($student['phonenumber']) . "</td>";
-        echo "<td>"  . htmlspecialchars($student['email'])."</td>";
-        echo "<td>"  . htmlspecialchars($student['faculty'])."</td>";
-        echo "<td>"  . htmlspecialchars($student['course_name']) . "</td>";
-        echo "<td>"   .htmlspecialchars($student['department_name']) . "</td>";
-
-    echo "</table>";
- } else{
-    echo"<p>No student records found.</p>";
+while ($student = $result->fetch_assoc()) {
+    echo "<tr>";
+    echo "<td>" . htmlspecialchars($student['student_id']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['student_name']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['phonenumber']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['email']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['faculty']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['course_names']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['department_name']) . "</td>";
+    echo "</tr>";
 }
-//close the statement and connection
+
+echo "</table>";
+} else {
+echo "<p>No student records found.</p>";
+}
+
 $stmt->close();
 $conn->close();
 

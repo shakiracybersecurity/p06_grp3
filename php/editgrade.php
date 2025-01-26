@@ -11,6 +11,10 @@ if ($conn->connect_error) {
 }
 
 session_start();
+require "functions.php";
+
+checkSessionTimeout();
+
 if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }

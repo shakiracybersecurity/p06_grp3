@@ -9,6 +9,7 @@ if (empty($_SESSION['token'])) {
 }
 
 is_logged_in([3]);
+checkSessionTimeout();
 
 $id = $_GET['id'];
 

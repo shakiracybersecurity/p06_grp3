@@ -11,6 +11,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 session_start();
+require "functions.php";
+
+checkSessionTimeout();
+
 if (!isset($_SESSION['username']) || $_SESSION['role'] != 3 ) { // Only Admin can delete
     header("Location: login.php");
     exit("Unauthorized access.");

@@ -11,6 +11,10 @@ if ($conn->connect_error) {
 
 // Start session and check role
 session_start();
+require "functions.php";
+
+checkSessionTimeout();
+
 if (!isset($_SESSION['username']) || ($_SESSION['role'] != 2 && $_SESSION['role'] != 3)) {
     header("Location: login.php");
     exit();

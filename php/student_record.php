@@ -14,6 +14,10 @@ if ($conn->connect_error) {
 
 // Start session
 session_start();
+require "functions.php";
+
+checkSessionTimeout();
+
 if (!isset($_SESSION['username']) || $_SESSION['role'] != 1) { // Only Admin can delete
     header("Location: login.php");
     exit("Unauthorized access.");

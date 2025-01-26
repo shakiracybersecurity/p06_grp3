@@ -7,8 +7,8 @@ if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
+checkSessionTimeout();
 is_logged_in([3,2]);
-
 
 $class_id = $_GET['id'];
 

@@ -208,6 +208,9 @@ $conn->close();
     }
 </style>
 
+<br>
+<a href="viewgradetry.php">Back to View Student Grades</a>
+
 <h3>Create Grade</h3>
 <form method="GET">
     <label for="search_name">Search Student by Name:</label>

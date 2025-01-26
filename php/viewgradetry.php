@@ -245,7 +245,7 @@ function updateSearch(value) {
 }
 </script>
 
-<button onclick="location.href='creategrade.php'" style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+<button onclick="location.href='creategrade.php'" style="padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
     Enter New Student Grade
 </button>
 

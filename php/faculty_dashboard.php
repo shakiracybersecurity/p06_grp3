@@ -27,25 +27,6 @@ ul {
   width: 100%;
 }
 
-
-
-<a href="viewclass.php">view classes</a>
-<br>
-<a href="register.php">Create new student profiles</a>
-<br>
-<a href="creategrade.php">Enter Student's Grade</a>
-<br>
-<a href="viewgradetry.php">View student's grade</a>
-<br>    
-<a href="view_course.php">Courses Dashboard</a>
-<br>
-<a href="student_records.php"> View existing students</a>
-<br>
-
-<a href="logout.php">Logout</a>
-
-
-
 li {
   float: left;
 }

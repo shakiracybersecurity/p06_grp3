@@ -75,10 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         Start Date: <input type="date" name="start_date" required><br>
         End Date: <input type="date" name="end_date" required><br>
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
+        <br>
         <button type="submit">Create Course</button>
     </form>
     <br>
-    <a href="view_course.php">Back to View Courses</a>
+    <a href="view_course.php">Back to Course Dashboard</a>
 </body>
 </html>
 <?php $conn->close(); ?>

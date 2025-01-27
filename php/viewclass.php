@@ -57,7 +57,7 @@ $stmt->close();
                 <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"> edit </a> </td> 
                 <?php 
                 if(can_delete()): ?>
-                <td><a href="deleteclass.php?id=<?php echo $class_info['id']; ?>"> delete </a>
+                <td><a href="deleteclass.php?id=<?php echo $class_info['id'] ?>" onclick="return confirm('Are you sure?')">Delete</a></td>
                 <?php endif ?>
             </tr>
         <?php endforeach; ?>

@@ -40,7 +40,7 @@ ul {
 <br>    
 <a href="view_course.php">Courses Dashboard</a>
 <br>
-<a href="student_records.php"> View existing students</a>
+<a href="read1.php"> View existing students</a>
 <br>
 
 <a href="logout.php">Logout</a>
@@ -75,7 +75,7 @@ li a:hover:not(.active) {
   <li><a href="create1.php">Create new student profiles</a></li>
   <li><a href="viewgradetry.php">Grade details</a></li>
   <li><a href="view_course.php">Courses Dashboard</a></li>
-  <li><a href="student_records.php"> View existing students</a></li>
+  <li><a href="read1.php"> View existing students</a></li>
   <li style="float:right"><a href="logout.php">Logout</a></li>
 </ul>
 

@@ -23,16 +23,25 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
+    $users = array('students', 'faculty', 'admins');
 
-    $stmt = $conn->prepare("SELECT email, id FROM students WHERE email= ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    foreach($users as $users){
+        $stmt = $conn->prepare("SELECT email, id FROM $users WHERE email= ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result ->num_rows ===1){
+            $role = $users;
+            break;
+        }
+    }
+    
+    
 // Start with PHPMailer class
 
 
     if ($result ->num_rows ===1){
-
         //token
         $length = 16;
         $token = bin2hex(random_bytes($length));
@@ -40,7 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $user = $result->fetch_assoc();
         $user_id = $user['id'];
-        $stmt=$conn->prepare("INSERT INTO password_resets (student_id, email, reset_token, token_expiry) VALUES (?, ?, ?, ?)");
+        if ($role == 'students'){
+            $stmt=$conn->prepare("INSERT INTO password_resets (student_id, email, reset_token, token_expiry) VALUES (?, ?, ?, ?)");
+        }elseif($role == 'faculty'){
+            $stmt=$conn->prepare("INSERT INTO password_resets (staff_id, email, reset_token, token_expiry) VALUES (?, ?, ?, ?)");
+        }elseif ($role == 'admins') {
+            $stmt=$conn->prepare("INSERT INTO password_resets (admin_id, email, reset_token, token_expiry) VALUES (?, ?, ?, ?)");
+        }
+        
         $stmt->bind_param("isss", $user_id,$email,$token,$token_expiry);
         $stmt -> execute();
 

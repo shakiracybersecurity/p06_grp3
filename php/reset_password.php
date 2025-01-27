@@ -5,13 +5,25 @@ session_start();
 
 $token = $_GET['token'];
 
-$stmt = $conn->prepare("SELECT student_id from password_resets WHERE RESET_TOKEN = ?");
+$stmt = $conn->prepare("SELECT student_id, staff_id, admin_id from password_resets WHERE RESET_TOKEN = ?");
 $stmt->bind_param("s", $token);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
-$user_id = $user['student_id'];
+
+if (!is_null($user['student_id'])) {
+    $role = 'students';
+    $user_id = $user['student_id'];
+}elseif (!is_null($user['staff_id'])) {
+    $role = 'faculty';
+    $user_id = $user['staff_id'];
+}elseif (!is_null($user['admin_id'])) {
+    $role = 'admins';
+    $user_id = $user['admin_id'];
+}
+
+//$user_id = $user['student_id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $pass = htmlspecialchars(trim($_POST['password']));
@@ -19,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if ($pass == $confpass){
         $passHash = password_hash($pass, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("UPDATE students SET password_hash = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE $role SET password_hash = ? WHERE id = ?");
         $stmt -> bind_param("si", $passHash, $user_id);
         $stmt -> execute();
 

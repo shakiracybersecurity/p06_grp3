@@ -1,4 +1,4 @@
-<?php 
+<?php  
 // Database connection details
 $host = 'localhost';
 $dbname = 'robotic course management';
@@ -7,7 +7,6 @@ $pass = '';      // Replace with your MySQL password
 
 // Connect to the database
 $conn = new mysqli($host, $user, $pass, $dbname);
-
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -31,24 +30,23 @@ if (!isset($_SESSION['csrf_token'])) {
 $csrf_token = $_SESSION['csrf_token'];
 
 // Query to get student records
-$stmt = $conn->prepare("
+$query = "
     SELECT 
         students.id AS student_id, 
         students.name AS student_name, 
         students.phonenumber, 
         students.email, 
         students.faculty, 
-        GROUP_CONCAT(course.name SEPARATOR ', ') AS course_names, 
-        department.name AS department_name
+        COALESCE(GROUP_CONCAT(course.name SEPARATOR ', '), 'No courses assigned') AS course_names, 
+        COALESCE(department.name, 'No department assigned') AS department_name
     FROM students
     LEFT JOIN student_courses ON students.id = student_courses.student_id
-    LEFT JOIN course ON student_courses.course_id = course.id
+    LEFT JOIN courses ON student_courses.course_id = courses.id
     LEFT JOIN department ON students.department_id = department.id
     GROUP BY students.id
-");
-$stmt->execute();
-$result = $stmt->get_result();
+";
 
+$result = $conn->query($query);
 if ($result->num_rows > 0) {
     echo "<h1>Current Student Records</h1>";
     echo "<table border='1' cellpadding='10'>";
@@ -68,7 +66,7 @@ if ($result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($student['department_name']) . "</td>";
         echo "<td>
             <a href='update_student.php?id=" . htmlspecialchars($student['student_id']) . "'>Update</a>
-            <form method='POST' action='delete_student.php' onsubmit=\"return confirm('Are you sure you want to delete this record?');\">
+            <form method='POST' action='delete_student.php' onsubmit=\"return confirm('Are you sure you want to delete this record?');\" style='display:inline;'>
                 <input type='hidden' name='id' value='" . htmlspecialchars($student['student_id']) . "'>
                 <input type='hidden' name='token' value='" . htmlspecialchars($csrf_token) . "'>
                 <input type='submit' name='delete' value='Delete'>
@@ -82,7 +80,6 @@ if ($result->num_rows > 0) {
     echo "<p>No student records found.</p>";
 }
 
-$stmt->close();
 $conn->close();
 
 // Redirect based on role
@@ -93,6 +90,3 @@ if ($_SESSION['role'] == 3) {
 }
 ?>
 <a href="<?php echo $redirect; ?>">Back</a>
-
-
-

@@ -25,37 +25,30 @@ if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'
 $user_role = (int)$_SESSION['role']; // Cast to integer to match type
 $user_id = $_SESSION['id'];
 
-//Generate a CSRF token
-$csrf_token= bin2hex(random_bytes(32));
-$csrf_token_hashed= hash("sha256", $csrf_token);
-$issued_at = date("Y-m-d H:i:s");
-$expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    $csrf_token_hashed = hash("sha256", $_SESSION['csrf_token']);
+    $issued_at = date("Y-m-d H:i:s");
+    $expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
-//Store the token in the database
-$admin_id = ($user_role === 3) ? $user_id : null;
-$staff_id = ($user_role === 2) ? $user_id : null;
+    // Use intermediate variables for bind_param
+    $admin_id = ($user_role === 3) ? $user_id : null;
+    $staff_id = ($user_role === 2) ? $user_id : null;
 
-$stmt = $conn->prepare("INSERT INTO csrf (TOKEN, ISSUED_AT, EXPIRES_AT, ADMIN_ID, STAFF_ID) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param("sssii", $csrf_token_hashed, $issued_at, $expires_at, $admin_id, $staff_id);
-
-if (!$stmt->execute()){
-    die("Error inserting CSRF token: " . $stmt->error);
-}
-$stmt->close();
-
-$_SESSION['csrf_token'] = $csrf_token;
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-    if (!$submitted_token || hash("sha256", $submitted_token)!== $csrf_token_hashed){
-        header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
-        exit("Invalid CSRF token.");
+    $stmt = $conn->prepare("INSERT INTO csrf (TOKEN, ISSUED_AT, EXPIRES_AT, ADMIN_ID, STAFF_ID) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssii", $csrf_token_hashed, $issued_at, $expires_at, $admin_id, $staff_id);
+    if (!$stmt->execute()) {
+        die("Error inserting CSRF token: " . $stmt->error);
     }
+    $stmt->close();
 }
+
 
 $student = null;
+$student_courses=[];
 if (isset($_GET['id'] )&& is_numeric($_GET['id'])){
     $student_id = intval($_GET['id']);
-    $stmt = $conn->prepare("SELECT id, name, phonenumber, email, course_id, faculty,department_id,class FROM students WHERE id = ?");
+    $stmt = $conn->prepare("SELECT id, name, phonenumber, email, faculty, department_id FROM students WHERE id = ?");
     $stmt->bind_param("i", $student_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -66,24 +59,46 @@ if (isset($_GET['id'] )&& is_numeric($_GET['id'])){
         echo "<p> No student records found.</p>";
     }
     $stmt ->close();
+
+    $stmt = $conn->prepare("SELECT course_id FROM student_courses WHERE student_id =?");
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($row = $result->fetch_assoc()){
+        $student_courses[] = $row['course_id'];
+    }
+    $stmt->close();
 }
+
 if($_SERVER["REQUEST_METHOD"]== 'POST' && isset($_POST['update'])){
     $name = $_POST['name'];
     $phonenumber=$_POST['phonenumber'];
     $email = $_POST['email'];
-    $course_id = $_POST['course_id'];
     $faculty = $_POST['faculty'];
     $department_id = $_POST['department_id'];
-    $class = $_POST['class'];
+    $selected_courses = $_POST['course_ids'] ?? [];
 
-    $stmt = $conn -> prepare("UPDATE students SET name=? , phonenumber=?, email=?, faculty=? WHERE id=?");
-    $stmt->bind_param("ssssi", $_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['faculty'],$_POST['id']);
+
+    $stmt = $conn -> prepare("UPDATE students SET name=? , phonenumber=?, email=?, faculty=?, department_id=? WHERE id=?");
+    $stmt->bind_param("ssssii", $_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['faculty'],$_POST['department_id'],$_POST['id']);
     if ($stmt->execute()){
         $_SESSION['message'] = "Student details updated successfully.";
     }else{
         $_SESSION['message']= "Update failed or no changes made:" . htmlspecialchars($stmt->error);
     }
     
+    $stmt->close();
+    
+    $stmt=$conn->prepare("DELETE FROM student_courses WHERE student_id = ?");
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $stmt->close();
+
+    $stmt = $conn->prepare("INSERT INTO student_courses (student_id, course_id) VALUES (?, ?)");
+    foreach ($selected_courses as $course_id){
+        $stmt->bind_param ("ii", $student_id, $course_id);
+        $stmt->execute();
+    }
     $stmt->close();
     header("Location: update_student.php?id=$student_id");
     exit;
@@ -103,9 +118,30 @@ $conn->close();
         <label>Name:</label><input type='text' name='name' value='<?= htmlspecialchars($student['name']) ?>'><br>
         <label>Phone Number:</label><input type='text' name='phonenumber' value='<?= htmlspecialchars($student['phonenumber']) ?>'><br>
         <label>Email:</label><input type='text' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
-        <label>Faculty:</label><input type='text' name='faculty' value='<?= htmlspecialchars($student['faculty']) ?>'><br>
+        
+        <label for="faculty">Faculty:</label>
+        <select id="faculty" name="faculty" required>
+        <option value="ENG" <?= $student['faculty'] == 'ENG' ? 'selected' : '' ?>>Engineering</option>
+        <option value="IIT" <?= $student['faculty'] == 'IIT' ? 'selected' : '' ?>>Informatics and IT</option>
+        </select><br>
+
+
+        <label for="department">Department:</label> 
+        <select id="department" name="department_id" required>
+        <option value="" disabled selected>Select</option>
+        <option value="1">RBE/ENG</option>
+        <option value="2">RBS/IIT</option>
+        <option value="3">RMC/IIT</option>
+        </select> <br>
+    
+        <label for="course">Assign Courses:</label><br>
+        <input type="checkbox" name="course_ids[]" value="1" id="course_1" <?= in_array(1, $student_courses) ? 'checked' : '' ?>>Robotic Engineering<br>
+        <input type="checkbox" name="course_ids[]" value="2" id="course_2" <?= in_array(2, $student_courses) ? 'checked' : '' ?>>Robotic Systems<br>
+        <input type="checkbox" name="course_ids[]" value="3" id="course_3" <?= in_array(3, $student_courses) ? 'checked' : '' ?>>Robotic Mechanics and Control<br>
+      
+
         <input type='submit' name='update' value='Update Details'>
-        <a href = "student_records.php">Back</a>
+        <a href = "read1.php">Back</a>
         <input type = "hidden" name ="token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']);?>">
     </form>
 <?php endif; ?>

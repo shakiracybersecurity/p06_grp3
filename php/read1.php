@@ -45,9 +45,9 @@ $stmt = $conn->prepare("
         ) AS course_names_with_codes, 
         GROUP_CONCAT(
             CASE 
-                WHEN NOW() < course.start_date THEN 'Upcoming'
-                WHEN NOW() BETWEEN course.start_date AND course.end_date THEN 'Active'
-                ELSE 'Completed'
+                WHEN NOW() < course.start_date THEN 'Start'
+                WHEN NOW() BETWEEN course.start_date AND course.end_date THEN 'In-Progress'
+                ELSE 'Ended'
             END ORDER BY course.name SEPARATOR ', '
         ) AS course_statuses
     FROM students

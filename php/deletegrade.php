@@ -1,20 +1,9 @@
 <?php
 // Database connection
-$host = 'localhost';
-$dbname = 'robotic course management'; // Ensure this matches your database name
-$user = 'root';
-$pass = '';
-
-// Create connection
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'functions.php';
+$conn = db_connect();
 
 session_start();
-require "functions.php";
 
 checkSessionTimeout();
 

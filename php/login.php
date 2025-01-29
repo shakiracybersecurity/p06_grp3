@@ -1,5 +1,5 @@
 <?php
-require 'db_connection.php';
+require 'functions.php';
 $conn = db_connect();
 
 // Start session

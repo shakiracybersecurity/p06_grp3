@@ -1,21 +1,13 @@
 <?php
 
-$host = 'localhost';
-$dbname = 'robotic course management'; // Updated for clarity
-$user = 'root';
-$pass = '';
-
-// Connect to the database
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'functions.php';
+$conn = db_connect();
 session_start();
 if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
-require 'functions.php';
+
 is_logged_in([3,2]);
 checkSessionTimeout();
 

@@ -5,7 +5,6 @@ $conn = db_connect();
 
 // Start session
 session_start();
-require "functions.php";
 
 checkSessionTimeout();
 

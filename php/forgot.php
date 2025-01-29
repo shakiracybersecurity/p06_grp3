@@ -171,7 +171,8 @@ button:hover {
            <br>
            <button type = "submit"> Send Reset Link </button>
            <br>
+        </form>   
 <a href="login.php"><button>Back to login page</button></a>
-</form>
+
 </div>
 </body>

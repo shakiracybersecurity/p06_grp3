@@ -81,6 +81,8 @@ li a:hover:not(.active) {
 }
 </style>
 </head>
+
+<!--
 <body>
 <ul>
   <li><a href="viewclass.php">View classes</a></li>
@@ -109,6 +111,7 @@ li a:hover:not(.active) {
         }
     </style>
 </head>
+-->
 <body>
     <ul>
 
@@ -118,12 +121,13 @@ li a:hover:not(.active) {
         <li><a href="view_course.php?embedded=true" target="contentFrame">Courses Dashboard</a></li>
         <li><a href="student_records.php?embedded=true" target="contentFrame">View existing students</a></li>
 
+        <!--
         <li><a href="viewclass.php" target="contentFrame">View classes</a></li>
         <li><a href="create1.php" target="contentFrame">Create new student profiles</a></li>
         <li><a href="viewgradetry.php" target="contentFrame">Grades Dashboard</a></li>
         <li><a href="view_course.php" target="contentFrame">Courses Dashboard</a></li>
         <li><a href="read1.php" target="contentFrame">View existing students</a></li>
-
+-->
         <li style="float:right"><a href="logout.php">Logout</a></li>
     </ul>
 

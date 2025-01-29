@@ -38,6 +38,10 @@ is_logged_in([1]);
         transition: 0.3s;
 
     }
+
+    .sidepanel a:hover{
+        color:#2c2e3a; 
+    }
     </style>
     <body>
         <div id="sidePanel" class=".sidepanel">

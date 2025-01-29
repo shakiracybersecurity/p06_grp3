@@ -119,7 +119,7 @@ li a:hover:not(.active) {
         <li><a href="create1.php?embedded=true" target="contentFrame">Create new student profiles</a></li>
         <li><a href="viewgradetry.php?embedded=true" target="contentFrame">Grade details</a></li>
         <li><a href="view_course.php?embedded=true" target="contentFrame">Courses Dashboard</a></li>
-        <li><a href="student_records.php?embedded=true" target="contentFrame">View existing students</a></li>
+        <li><a href="read1.php?embedded=true" target="contentFrame">View existing students</a></li>
 
         <!--
         <li><a href="viewclass.php" target="contentFrame">View classes</a></li>

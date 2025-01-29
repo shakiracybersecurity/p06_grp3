@@ -1,12 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
-} elseif ($_SESSION['role'] != 3) {
-    header("Location: login.php");
-    exit();
-}
+require "functions.php";
+checkSessionTimeout();
+is_logged_in([3]);
 ?>
 <!DOCTYPE html>
 <html>

@@ -82,18 +82,125 @@ $conn->close();
 ?>
 
 <!-- Login form -->
-<form method="POST">
-    <p>Please select a domain:</p>
-    <input type="radio" name="users" id="students_id" value="students" required>
-    <label for="students_id">Students</label>
-    <input type="radio" name="users" id="faculty_staff_id" value="faculty" required>
-    <label for="faculty_staff_id">Staff</label>
-    <input type="radio" name="users" id="admin_id" value="admins" required>
-    <label for="admin_id">Admin</label><br> 
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Robotic Management System</title>
+        <link rel="stylesheeet" href ="css/style.css">
+ <style>
+body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #b3b4bd;
+    background-size: cover;
+}
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.container{
+    margin-top: 0px;
+    margin:50px auto;
+    max-width: 500px;
+    height: 500px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
 
-    Username: <input type="text" name="username" required><br>
-    Password: <input type="password" name="password" required><br>
-    <a href="forgot.php">Forgot Password / First Time Login</a>
-    <input type="hidden" name="token" value="<?php echo htmlspecialchars($_SESSION['token']); ?>">
-    <input type="submit" value="Login">
-</form>
+form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+label{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+input[type="text"],
+input[type="password"]{
+    padding: 10px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid #2c2e3a;
+    color: #141619;
+    font-size: 13px;
+}
+.options label {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #2c2e3a;
+}
+input[type="radio"]{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid #2c2e3a;
+    color: #141619;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+.options input{
+    margin-right: 5px;
+    margin-top: 0px;
+}
+button {
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+button:hover {
+    margin-top: 20px;
+    background: #3b3ec0;
+    outline: 1px solid #fff;
+}
+</style>
+</head>
+ <body>
+    <div class="container">
+
+            <h2>Robotic Management System Login</h2>
+            <form method="POST">
+                Username: <input type="text" name="username" required placeholder="Username"><br>
+                Password: <input type="password" name="password" required placeholder="Password"><br>
+                
+                <div class="options">
+                 <p>Please select a domain:</p>
+                <input type="radio" name="users" id="students_id" value="students" required>
+                <label for="students_id">Students</label>
+                <input type="radio" name="users" id="faculty_staff_id" value="faculty" required>
+                <label for="faculty_staff_id">Staff</label>
+                <input type="radio" name="users" id="admin_id" value="admins" required>
+                <label for="admin_id">Admin</label><br> 
+    
+                <a href="forgot.php">Forgot Password / First Time Login</a><br>
+</div>
+
+                <input type="hidden" name="token" value="<?php echo htmlspecialchars($_SESSION['token']); ?>">
+                <br><button type="submit" value="Login">Login</button>
+            </form>
+</div>
+</div>
+</body>

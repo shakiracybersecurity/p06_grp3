@@ -1,4 +1,4 @@
-<?php 
+<?php  
 // Database connection details
 $host = 'localhost';
 $dbname = 'robotic course management';
@@ -17,13 +17,14 @@ require "functions.php";
 
 checkSessionTimeout();
 
-if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 2)) { // Only Admin or Faculty can access
+// Restrict access: Only Admin (role = 3) and Faculty (role = 2) can access
+if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 2)) {
     header("Location: login.php");
     exit("Unauthorized access.");
 }
 
-$user_role = (int)$_SESSION['role']; // Cast to integer to match type
 $user_id = $_SESSION['id'];
+$user_role = (int)$_SESSION['role']; // Cast role to integer
 
 // Generate CSRF token if not already set
 if (!isset($_SESSION['csrf_token'])) {
@@ -50,8 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $department_id = htmlspecialchars(trim($_POST['department_id']));
         $studentid = htmlspecialchars(trim($_POST['id']));
         $faculty = htmlspecialchars(trim($_POST['faculty']));
-        $course_ids = filter_input(INPUT_POST, 'course_ids', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
-        $role_id = 1;  // Default role is 1
+        $role_id = 1;  // Default role is 1 for students
+
+        $course_ids = filter_input(INPUT_POST, 'course_ids', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY); // Courses for faculty only
 
         // Validate phone number
         if (!preg_match('/^\d{8}$/', $phonenumber)) {
@@ -74,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $registration_successful = true; // Mark as successful
                     echo "Registration for $name successful!<br>";
 
-                    // Assign courses if selected
-                    if (!empty($course_ids)) {
+                    // Only Faculty can assign courses
+                    if ($user_role == 2 && !empty($course_ids)) {
                         $assign_stmt = $conn->prepare("INSERT INTO student_courses (student_id, course_id) VALUES (?, ?)");
                         foreach ($course_ids as $course_id) {
                             $assign_stmt->bind_param("ii", $studentid, $course_id);
@@ -84,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $assign_stmt->close();
                         echo "Courses assigned successfully!<br>";
                     }
-                    echo '<a href="register.php">Register another student</a><br>';
                 } else {
                     echo "Error: " . $register_stmt->error;
                 }
@@ -99,14 +100,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+// Fetch all courses
+$courses = $conn->query("SELECT id, name FROM course");
 
-$courses = $conn->query("SELECT * FROM course");
 ?>
 
 <!-- Display the form only if registration was not successful -->
 <?php if (!$registration_successful): ?>
 <form method="POST">
-    <h1> Register new student</h1>
+    <h1>Register New Student</h1>
     Name: <input type="text" id="name" name="name" required><br>
     Email: <input type="email" id="email" name="email" required><br>
     Phone Number: <input type="tel" id="phonenumber" name="phonenumber" required pattern="\d{8}" title="Phone number must be 8 digits"><br>
@@ -118,13 +120,8 @@ $courses = $conn->query("SELECT * FROM course");
         <option value="1">RBE/ENG</option>
         <option value="2">RBS/IIT</option>
         <option value="3">RMC/IIT</option>
-    </select> <br>
+    </select><br>
     
-    <label for="course">Assign Courses:</label><br>
-    <input type="checkbox" name="course_ids[]" value="1" id="course_1">Robotic Engineering<br>
-    <input type="checkbox" name="course_ids[]" value="2" id="course_2">Robotic Systems<br>
-    <input type="checkbox" name="course_ids[]" value="3" id="course_3">Robotic Mechanics and Control<br>
-
     <label for="faculty">Faculty:</label>
     <select id="faculty" name="faculty" required>
         <option value="" disabled selected>Select</option>
@@ -132,9 +129,19 @@ $courses = $conn->query("SELECT * FROM course");
         <option value="IIT">Informatics and IT</option>
     </select><br>
 
-    <input type="hidden" name="token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+    <?php if ($user_role == 2): // Show course assignment only for faculty ?>
+        <label for="course">Assign Courses:</label><br>
+        <?php while ($course = $courses->fetch_assoc()): ?>
+            <input type="checkbox" name="course_ids[]" value="<?= $course['id'] ?>"> <?= htmlspecialchars($course['name']) ?><br>
+        <?php endwhile; ?>
+    <?php endif; ?>
+
+    <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <input type="submit" value="Register"><br>
 </form>
 <?php endif; ?>
 
-<a href="admin_dashboard.php" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Back</a>
+<a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>" 
+   style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+    Back
+</a>

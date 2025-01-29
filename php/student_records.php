@@ -71,6 +71,7 @@ if ($result->num_rows > 0) {
                 <input type='hidden' name='token' value='" . htmlspecialchars($csrf_token) . "'>
                 <input type='submit' name='delete' value='Delete'>
             </form>
+            
         </td>";
         echo "</tr>";
     }

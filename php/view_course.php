@@ -21,7 +21,7 @@ if (!isset($_SESSION['username']) || ($_SESSION['role'] != 2 && $_SESSION['role'
 }
 
 // Fetch all courses
-$sql = "SELECT * FROM course";
+$sql = "SELECT ID, NAME, CODE, START_DATE, END_DATE, STATUS FROM course";
 $result = $conn->query($sql);
 
 ?>
@@ -37,6 +37,7 @@ $result = $conn->query($sql);
             <th>Code</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -55,7 +56,9 @@ $result = $conn->query($sql);
                         : 'N/A'; ?>
                 </td>
                 <td>
-                    <a href="update_course.php?id=<?= $row['ID'] ?>">Edit</a>
+                    <?= htmlspecialchars($row['STATUS']) ?></td>
+                <td>
+                    <a href="update1.php?id=<?= $row['ID'] ?>">Edit</a>
                     <?php if ($_SESSION['role'] == 3): // Only Admin can delete ?>
                         | <a href="delete_course.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
                     <?php endif; ?>

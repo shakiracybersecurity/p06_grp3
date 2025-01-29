@@ -2,10 +2,8 @@
 // Database connection details
 $host = 'localhost';
 $dbname = 'robotic course management';
-$user = 'root';  // Replace with your MySQL username
-$pass = '';      // Replace with your MySQL password
-
-// Connect to the database
+$user = 'root';
+$pass = '';
 $conn = new mysqli($host, $user, $pass, $dbname);
 
 if ($conn->connect_error) {
@@ -18,7 +16,7 @@ require "functions.php";
 
 checkSessionTimeout();
 
-if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 2)) { // Only Admin or Faculty can access
+if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 2)) {
     header("Location: login.php");
     exit("Unauthorized access.");
 }
@@ -44,11 +42,8 @@ $stmt = $conn->prepare("
             ORDER BY course.name SEPARATOR ', '
         ) AS course_names_with_codes, 
         GROUP_CONCAT(
-            CASE 
-                WHEN NOW() < course.start_date THEN 'Start'
-                WHEN NOW() BETWEEN course.start_date AND course.end_date THEN 'In-Progress'
-                ELSE 'Ended'
-            END ORDER BY course.name SEPARATOR ', '
+            course.status 
+            ORDER BY course.name SEPARATOR ', '
         ) AS course_statuses
     FROM students
     LEFT JOIN student_courses ON students.id = student_courses.student_id
@@ -96,10 +91,6 @@ $stmt->close();
 $conn->close();
 
 // Redirect based on role
-if ($_SESSION['role'] == 3) {
-    $redirect = "admin_dashboard.php";
-} elseif ($_SESSION['role'] == 2) {
-    $redirect = "faculty_dashboard.php";
-}
+$redirect = ($_SESSION['role'] == 3) ? "admin_dashboard.php" : "faculty_dashboard.php";
 ?>
 <a href="<?php echo $redirect; ?>">Back</a>

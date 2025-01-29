@@ -174,6 +174,7 @@ button {
 button:hover {
     margin-top: 20px;
     background: #3b3ec0;
+    color: white;
     outline: 1px solid #fff;
 }
 </style>

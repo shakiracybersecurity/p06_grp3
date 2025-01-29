@@ -16,6 +16,7 @@ is_logged_in([1]);
         body {
             margin: 0;
             font-family: sans-serif;
+            background-color:#b3b4bd;
         }
 
         /* Side Panel Styling */

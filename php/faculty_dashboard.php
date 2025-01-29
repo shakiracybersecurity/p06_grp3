@@ -7,83 +7,112 @@ is_logged_in([2]);
 
 
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style>
-body {margin:0;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color:#b3b4bd;
+        }
 
-.active {
-  background-color:rgb(128, 129, 110);
-}
+        /* Side Panel Styling */
+        .sidepanel {
+            height: 100%; /* Full-height */
+            width: 0; /* Initial width is 0 */
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #141619; /* Dark background */
+            overflow-x: hidden; /* Disable horizontal scroll */
+            transition: 0.5s; /* Smooth transition */
+            padding-top: 60px; /* Space from top */
+        }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: rgb(51,51,51);
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
+        .sidepanel a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #b3b4bd;
+            display: block;
+            transition: 0.3s;
+        }
 
+        .sidepanel a:hover {
+            color: #2c2e3a;
+        }
 
+        .sidepanel .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
 
+        /* Open Button Styling */
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #0a21c0;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            transition: 0.3s;
+        }
 
-<a href="viewclass.php">view classes</a>
-<br>
-<a href="create1.php">Create new student profiles</a>
-<br>
-<a href="creategrade.php">Enter Student's Grade</a>
-<br>
-<a href="viewgradetry.php">View student's grade</a>
-<br>    
-<a href="view_course.php">Courses Dashboard</a>
-<br>
-<a href="read1.php"> View existing students</a>
-<br>
-<a href="view_assignments.php"> View Student Course Assignments</a>
-<br>
+        .openbtn:hover {
+            background-color: #050a44;
+        }
 
-<a href="logout.php">Logout</a>
-
-
-
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover:not(.active) {
-  background-color: rgb(214, 204, 188);
-}
-
-.active {
-  background-color:rgb(255, 255, 255);
-}
-</style>
+        /* Main Content */
+        .maincontent {
+            margin-left: 0; /* Start with no margin */
+            transition: margin-left 0.5s; /* Smooth transition */
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-<ul>
-  <li><a href="viewclass.php">View classes</a></li>
-  <li><a href="create1.php">Create new student profiles</a></li>
-  <li><a href="viewgradetry.php">Grade details</a></li>
-  <li><a href="view_course.php">Courses Dashboard</a></li>
-  <li><a href="read1.php"> View existing students</a></li>
-  <li><a href="view_assignments.php"> View Student Course Assignments</a><li>
-  <li style="float:right"><a href="logout.php">Logout</a></li>
-</ul>
+     <!-- Side Panel -->
+     <div id="sidePanel" class="sidepanel">
+        <button class="closebtn" onclick="toggleSidePanel()">×</button>
+        <a href="viewclass.php">View classes</a>
+        <a href="create1.php">Create new student profiles</a>
+        <a href="viewgradetry.php">Grade details</a>
+        <a href="view_course.php">Courses Dashboard</a>
+        <a href="read1.php"> View existing students</a>
+        <a href="view_assignments.php"> View Student Course Assignments</a>
+        <a href="logout.php">Logout</a>
+    </div>
+        <!-- Main Content -->
+        <div id="maincontent" class="maincontent">
+        <button class="openbtn" onclick="toggleSidePanel()">☰ Open Panel</button>
+        <h1>Welcome</h1>
+        <p>This is the main content area. Click the button to toggle the side panel.</p>
+    </div>
+    <script>
+        function toggleSidePanel() {
+            const sidePanel = document.getElementById("sidePanel");
+            const mainContent = document.getElementById("maincontent");
 
-<div style="padding:20px;margin-top:30px;background-color:rgb(148, 214, 201);height:1500px;">
-
+            if (sidePanel.style.width === "250px") {
+                sidePanel.style.width = "0";
+                mainContent.style.marginLeft = "0";
+            } else {
+                sidePanel.style.width = "250px";
+                mainContent.style.marginLeft = "250px";
+            }
+        }
+    </script>
 </body>
 </html>
 

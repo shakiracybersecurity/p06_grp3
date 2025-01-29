@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
         $stmt->bind_param("i", $student_id);
         if ($stmt->execute()) {
             // Display success message and redirect
-            echo "<script>alert('Record deleted successfully!'); window.location.href = 'read1.php';</script>";
+            echo "<script>alert('Student deleted successfully!'); window.location.href = 'read1.php';</script>";
             exit();
         } else {
             echo "Error deleting student: " . $stmt->error;

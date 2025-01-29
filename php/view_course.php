@@ -61,7 +61,7 @@ $result = $conn->query($sql);
     <!-- Create Course Button -->
     <a href="create_course.php" style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Create Course</a>    
     <br></br>
-    <a href="admin_dashboard.php">Back to Admin Dashboard</a>
+    <a href="admin_dashboard.php">Back</a>
 </body>
 </html>
 <?php $conn->close(); ?>

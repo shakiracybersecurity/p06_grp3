@@ -96,14 +96,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!-- Login form -->
-<form method="POST">
-<title>Forgot Password</title>
-<h2>Forgot Password</h2>
-<?php if (isset($error)) {echo $error;}?>
-<?php if (isset($success)){echo $success; }?>
-<label for ="email"> Enter your email address:</label>
-<input type = "email"id ="email" name ="email" required>
-<br>
-<button type = "submit"> Send Reset Link </button>
-<br>
-<a href="login.php">Back to Login Page</a>
+<!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Forgot Password</title>
+ <style>
+</style>
+</head>
+<body>
+    <div class = "container">
+        <h2> Forgot Password/ First Time Login</h2>
+        <form method="POST">
+            <?php if (isset($error)) {echo $error;}?>
+            <?php if (isset($success)){echo $success; }?>
+           <label for ="email"> Enter your email address:</label>
+           <input type = "email"id ="email" name ="email" required>
+           <br>
+           <button type = "submit"> Send Reset Link </button>
+           <br>
+<a href="login.php"><button>Back to login page</button></a>
+</body>

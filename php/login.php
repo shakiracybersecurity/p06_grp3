@@ -88,14 +88,13 @@ $conn->close();
         <meta charset="UTF-8">
         <meta name ="viewport" content="width=device-width, initial-scale=1.0">
         <title> Robotic Management System</title>
-        <link rel="stylesheeet" href ="css/style.css">
  <style>
 body{
     margin: 0;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #b3b4bd;
+    background-image: url('background.jpeg');
     background-size: cover;
 }
 *{

@@ -56,6 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
 
+        if (empty($user['password_hash'])){ //first time users redirected to forgot password page
+            header("Location: forgot.php");
+            echo "no pass";
+            exit();
+        }
         // Secure: Verify hashed password stored in password_hash column
         if (password_verify($password, $user['password_hash'])) {
             // Secure: Regenerate session ID

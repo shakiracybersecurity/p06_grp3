@@ -6,18 +6,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-
-// Database connection details
-$host = 'localhost';
-$dbname = 'robotic course management'; // Updated for clarity
-$user = 'root';
-$pass = '';
-
-// Connect to the database
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db_connection.php';
+$conn = db_connect();
 
 session_start();
 
@@ -103,6 +93,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <meta name ="viewport" content="width=device-width, initial-scale=1.0">
         <title> Forgot Password</title>
  <style>
+    body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('background.jpeg');
+    background-size: cover;
+}
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.container{
+    margin-top: 0px;
+    margin:50px auto;
+    max-width: 500px;
+    height: 500px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+label{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+input[type="text"]{
+    padding: 10px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid #2c2e3a;
+    color: #141619;
+    font-size: 13px;
+}
+button {
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: 1px solid #2c2e3a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+button:hover {
+    margin-top: 20px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
 </style>
 </head>
 <body>
@@ -111,10 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST">
             <?php if (isset($error)) {echo $error;}?>
             <?php if (isset($success)){echo $success; }?>
-           <label for ="email"> Enter your email address:</label>
-           <input type = "email"id ="email" name ="email" required>
+           <label for ="email"> Enter your Email Address:</label>
+           <input type = "email"id ="email" name ="email"required placeholder="Email Address">
            <br>
            <button type = "submit"> Send Reset Link </button>
            <br>
 <a href="login.php"><button>Back to login page</button></a>
+</form>
+</div>
 </body>

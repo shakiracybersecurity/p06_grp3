@@ -1,15 +1,6 @@
 <?php
-// Database connection details
-$host = 'localhost';
-$dbname = 'robotic course management';
-$user = 'root';
-$pass = '';
-
-// Connect to the database
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db_connection.php';
+$conn = db_connect();
 
 // Start session
 session_start();
@@ -165,7 +156,7 @@ button {
     background: #fff;
     color: black;
     padding: 10px;
-    border: none;
+    border: 1px solid #2c2e3a;
     border-radius: 10px;
     cursor: pointer;
     margin-top: 15px;

@@ -10,12 +10,8 @@ if (empty($_SESSION['token'])) {
 checkSessionTimeout();
 is_logged_in([3,2]);
 
-try {
-    $class_id = $_GET['id'];
+$class_id = $_GET['id'];
 
-} catch (Exception $e) {
-    header("Location: viewgrade.php");
-}
 $stmt = $conn->prepare("SELECT class.id as class_id , class.name as classname, class.mode, department.name as depname, department.id as dep_id
                         FROM class LEFT JOIN department ON class.department_id=department.id WHERE class.id = ?
                         UNION

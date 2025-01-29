@@ -1,17 +1,10 @@
 <?php
 // Database connection
-$host = 'localhost';
-$dbname = 'robotic course management';
-$user = 'root';
-$pass = '';
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'functions.php';
+$conn = db_connect();
 
 // Start session and check role
 session_start();
-require "functions.php";
 
 checkSessionTimeout();
 

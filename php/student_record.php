@@ -72,7 +72,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-echo "<h1>Current Student Records</h1>";
+echo "<h1>Your Records</h1>";
 echo "<table border='1' cellpadding='10'>";
 echo "<tr>
     <th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Courses</th><th>Department</th>
@@ -99,7 +99,60 @@ $stmt->close();
 $conn->close();
 
 ?>
-<a href="student_dashboard.php">Back</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Record</title>
+<style>
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+    body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#b3b4bd; 
+    background-size: cover;
+    
+}
+    table {
+        border-collapse: collapse;
+        width: 80%; /* Adjust width as needed */
+        max-width: 1000px; /* Optional: limit table width */
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        }
+    th, td{
+        padding: 15px;
+        text-align: center;
+    }
+    th{
+        background-color: #0a21c0;
+         color: white;
+    }
+    button {
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: 1px solid #2c2e3a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    }
+    button:hover {
+    margin-top: 20px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
+    </style>
+<a href="student_dashboard.php"><button>Back</button></a>
 <br>
 
 

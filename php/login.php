@@ -63,10 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: dashboard.php");
             exit();
         } else {
-            echo "Invalid username or password.";
+            echo '<p style="color: white;">Invalid username or password.</p>';
         }
     } else {
-        echo "Invalid username or password.";
+        echo '<p style="color: white;">Invalid username or password.</p>';
     }
 
     // Close the statement

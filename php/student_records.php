@@ -1,7 +1,6 @@
 <?php  
 // Database connection details
 require 'functions.php';
-$conn = db_connect();
 
 // Start session
 session_start();
@@ -81,4 +80,5 @@ if ($_SESSION['role'] == 3) {
     $redirect = "faculty_dashboard.php";
 }
 ?>
+
 <a href="<?php echo $redirect; ?>">Back</a>

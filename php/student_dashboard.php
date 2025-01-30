@@ -85,6 +85,7 @@ is_logged_in([1]);
     <div id="sidePanel" class="sidepanel">
         <button class="closebtn" onclick="toggleSidePanel()">×</button>
         <a href="student_record.php">Your Own Record</a>
+        <a href="student_resetpass.php">Change your Password</a>
         <a href="logout.php">Logout</a>
     </div>
 

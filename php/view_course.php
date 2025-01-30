@@ -25,20 +25,22 @@ $result = $conn->query($sql);
 <html>
     <style>
         *{
-    margin: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
     }
+
     body{
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color:#b3b4bd; 
-    background-size: cover;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color:#b3b4bd; 
+        background-size: cover;
     }
-    table {
+
+    table{
         margin-left: auto;
         margin-right: auto;
         border-collapse: collapse;
@@ -47,25 +49,27 @@ $result = $conn->query($sql);
         background-color: #ffffff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         border: 1px solid;
-      
-        }
-        th, td{
+    }
+
+    th, td{
         padding: 15px;
         text-align: center;
-        border: 1px solid;
-        
+        border: 1px solid;  
     }
+
     th{
         background-color: #0a21c0;
-         color: white;
+        color: white;
     }
+
     h2{
-    text-align: center;
-    color: #2c2e3a;
-    margin-top: 30px;
-    margin-bottom: 20px;
+        text-align: center;
+        color: #2c2e3a;
+        margin-top: 30px;
+        margin-bottom: 20px;
     }
-    button {
+
+    button{
         background: #fff;
         color: black;
         padding: 10px;
@@ -73,10 +77,11 @@ $result = $conn->query($sql);
         border-radius: 10px;
         cursor: pointer;
         margin-top: 15px;
+        margin-left: 15px;
         border: none;
     }
 
-    button:hover {
+    button:hover{
         margin-top: 15px;
         background: #3b3ec0;
         color: white;
@@ -84,7 +89,7 @@ $result = $conn->query($sql);
     }
     </style>
 <body>
-<a href="admin_dashboard.php"><button>Back</button></a>
+<a href="admin_dashboard.php"><button>Back to Main</button></a>
     <h2>Courses Available</h2>
     <table border="1">
         <tr>
@@ -126,9 +131,7 @@ $result = $conn->query($sql);
         <?php endwhile; ?>
     </table><br>
     <!-- Create Course Button -->
-    <a href="create_course.php"><button>Create Course</button></a>    
-    <br></br>
-
+    <a href="create_course.php"><button style="background-color:rgb(21, 128, 6); display: inline-block;">Create Course</button></a>    
 </body>
 </html>
 <?php $conn->close(); ?>

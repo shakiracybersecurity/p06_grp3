@@ -131,11 +131,13 @@ $conn->close();
         max-width: 1000px; /* Optional: limit table width */
         background-color: #ffffff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
+        margin-left: auto;
+        margin-right: auto;
         }
     th, td{
         padding: 15px;
         text-align: center;
+        border: 1px solid;
     }
     th{
         background-color: #0a21c0;
@@ -151,7 +153,7 @@ $conn->close();
     margin-top: 15px;
     }
     button:hover {
-    margin-top: 20px;
+    margin-top: 15px;
     background: #3b3ec0;
     color: white;
     outline: 1px solid #fff;

@@ -51,19 +51,23 @@ if(!isset($_SESSION['id'])){
 
 $student_id = $_SESSION['id']; // Ensure this is set correctly from the session
 
-$stmt = $conn->prepare("SELECT 
-students.id AS student_id, 
-students.name AS student_name, 
-students.phonenumber, 
-students.email, 
-students.faculty, 
-GROUP_CONCAT(course.name SEPARATOR ', ') AS course_names, 
-department.name AS department_name
-FROM students
-LEFT JOIN student_courses ON students.id = student_courses.student_id
-LEFT JOIN course ON student_courses.course_id = course.id
-LEFT JOIN department ON students.department_id = department.id
-WHERE students.id=?
+$stmt = $conn->prepare("
+    SELECT 
+        students.id AS student_id, 
+        students.name AS student_name, 
+        students.phonenumber, 
+        students.email, 
+        students.faculty, 
+        GROUP_CONCAT(CONCAT(course.name, ' (', student_courses.status, ')') SEPARATOR ', ') AS course_info, 
+        IFNULL(GROUP_CONCAT(CONCAT(grades.score, ' (', grades.grade, ')') SEPARATOR ', '), 'No Grade') AS grade_info, 
+        department.name AS department_name
+    FROM students
+    LEFT JOIN student_courses ON students.id = student_courses.student_id
+    LEFT JOIN course ON student_courses.course_id = course.id
+    LEFT JOIN grades ON student_courses.student_id = grades.student_id AND student_courses.course_id = grades.course_id
+    LEFT JOIN department ON students.department_id = department.id
+    WHERE students.id=?
+    GROUP BY students.id
 ");
 
 // Bind the student ID to the statement
@@ -76,7 +80,7 @@ if ($result->num_rows > 0) {
     echo "<h2>Your Records</h2>";
     echo "<table border='1' cellpadding='10'>";
     echo "<tr>
-    <th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Courses</th><th>Department</th>
+    <th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Courses and Status</th><th>Department</th><th>Grades</th>
 </tr>";
 
 while ($student = $result->fetch_assoc()) {
@@ -86,8 +90,9 @@ while ($student = $result->fetch_assoc()) {
     echo "<td>" . htmlspecialchars($student['phonenumber']) . "</td>";
     echo "<td>" . htmlspecialchars($student['email']) . "</td>";
     echo "<td>" . htmlspecialchars($student['faculty']) . "</td>";
-    echo "<td>" . htmlspecialchars($student['course_names']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['course_info']) . "</td>";
     echo "<td>" . htmlspecialchars($student['department_name']) . "</td>";
+    echo "<td?" . htmlspecialchars($student['grade_info']) . "</td>";
     echo "</tr>";
 }
 

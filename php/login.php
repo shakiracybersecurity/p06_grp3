@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $role = $_POST['users'] ?? ''; // Default to empty string if not set
 
     if (!in_array($role, $valid_roles)) {
-        echo "Invalid user role selected.";
+        $msg = "Invalid user role selected.";
         exit;
     }
 
@@ -49,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (empty($user['password_hash'])){ //first time users redirected to forgot password page
             header("Location: forgot.php");
-            echo "no pass";
             exit();
         }
         // Secure: Verify hashed password stored in password_hash column
@@ -63,10 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: dashboard.php");
             exit();
         } else {
-            echo '<p style="color: white;">Invalid username or password.</p>';
+            $msg = 'Invalid username or password.</p>';
         }
     } else {
-        echo '<p style="color: white;">Invalid username or password.</p>';
+        $msg = 'Invalid username or password.</p>';
     }
 
     // Close the statement
@@ -176,7 +175,7 @@ button:hover {
 </head>
  <body>
     <div class="container">
-
+            <?php if (isset($msg)) {echo $msg;}?>
             <h2>Robotic Management System Login</h2>
             <form method="POST">
                 Username: <input type="text" name="username" required placeholder="Username"><br>

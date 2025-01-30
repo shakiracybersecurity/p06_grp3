@@ -5,12 +5,17 @@ session_start();
 
 $token = $_GET['token'];
 
-$stmt = $conn->prepare("SELECT student_id, staff_id, admin_id from password_resets WHERE RESET_TOKEN = ?");
+$stmt = $conn->prepare("SELECT student_id, staff_id, admin_id, token_expiry from password_resets WHERE RESET_TOKEN = ?");
 $stmt->bind_param("s", $token);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
+
+$now = date("Y-m-d H:i:s"); 
+if ($now > $user['token_expiry']){ //checks if the reset token is expired
+    header("Location: expired.php");
+}
 
 if (isset($user['student_id'])) {
     $role = 'students';
@@ -25,7 +30,6 @@ if (isset($user['student_id'])) {
     header("Location: expired.php");
 }
 
-//$user_id = $user['student_id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $pass = htmlspecialchars(trim($_POST['password']));
@@ -45,20 +49,99 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         header("Location: reset_success.php");
     }else{
-        echo "passwords do not match";
+        $error = "passwords do not match!";
     }
 }
 ?>
 
+<!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Reset Password</title>
+ <style>
+    body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('background.jpeg');
+    background-size: cover;
+}
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.container{
+    margin-top: 0px;
+    margin:50px auto;
+    max-width: 500px;
+    height: 500px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+label{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+input[type="text"]{
+    padding: 10px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid #2c2e3a;
+    color: #141619;
+    font-size: 13px;
+}
+button {
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: 1px solid #2c2e3a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+button:hover {
+    margin-top: 20px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
+</style>
+</head>
+<body>
+<div class = "container">
 <form method="POST">
-<title>Password reset</title>
-<h2>Password Reset</h2>
-<?php if (isset($error)) {echo $error;}?>
-<?php if (isset($success)){echo $success; }?>
-<label for ="password"> enter new password:</label>
-<input type = "password" id ="password" name ="password" required><br>
-<label for ="conf_password"> confirm password:</label>
-<input type = "password" id ="conf_password" name ="conf_password" required>
-<br>
-<button type = "submit"> Reset </button> 
+    <h2>Password Reset</h2>
+    
+    <?php if (isset($success)){echo $success; }?>
+    <label for ="password"> enter new password:</label>
+    <input type = "password" id ="password" name ="password" required><br>
+    <label for ="conf_password"> confirm password:</label>
+    <input type = "password" id ="conf_password" name ="conf_password" required>
+    <br>
+    <?php if (isset($error)) {echo $error;}?>
+    <button type = "submit"> Reset </button> 
+</div>
+</Body>
+</html>
 

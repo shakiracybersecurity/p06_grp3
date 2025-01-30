@@ -74,13 +74,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // send the message
         if(!$mail->send()){
-            echo 'Message could not be sent.';
+            $msg = 'Message could not be sent.';
             echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            echo 'Message has been sent, please check your inbox';
+            $msg = 'Message has been sent, please check your inbox!';
         }    
 }else{
-    echo "email is not registered";
+    $msg = "email is not registered";
 }
 }
 ?>
@@ -162,6 +162,7 @@ button:hover {
 </head>
 <body>
     <div class = "container">
+        <?php if (isset($msg)) {echo $msg;}?>
         <h2> Forgot Password/ First Time Login</h2>
         <form method="POST">
             <?php if (isset($error)) {echo $error;}?>
@@ -169,6 +170,7 @@ button:hover {
            <label for ="email"> Enter your Email Address:</label>
            <input type = "email"id ="email" name ="email"required placeholder="Email Address">
            <br>
+           
            <button type = "submit"> Send Reset Link </button>
            <br>
         </form>   

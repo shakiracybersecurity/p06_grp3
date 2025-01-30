@@ -98,18 +98,131 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST['update'])) {
 }
 $conn->close();
 ?>
+<html>
+    <style>
+body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#050a44;
+    background-size: cover;
+    }
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
+    form {
+        width: 50%;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+     /* Heading Style */
+     h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    }
+    /* Label Style */
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    /* Input and Select Styles */
+    input[type="text"], input[type="tel"], input[type="email"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .options label {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 15px;
+    color: #2c2e3a;
+    }
+    input[type="checkbox"]{
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        border: 1px solid #2c2e3a;
+        color: #141619;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+.options input{
+    margin-right: 5px;
+    margin-top: 10px;
+}
+input[type="submit"] {
+        display: block;
+        width: 100%;
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 15px;
+    }
+    .back-button {
+    border: none;
+    outline: none;
+    background-color:#050a44;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100px;
+  
+    }
+    button:hover{
+    margin-top: 0px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
 
+input[type="submit"]:hover {
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
+
+</style>
 <?php if (isset($_SESSION['message'])) : ?>
-    <p><?= $_SESSION['message']; ?></p>
+    <p style="color: #fff;"><?= $_SESSION['message']; ?></p>
     <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
+
 <?php if (isset($student)) : ?>
-    <h1>Update Student Record</h1>
+    <div class="back-button">
+    <a href="read1.php"><button>Back</button></a>
+</div>
     <form method="POST">
+    <h2>Update Student Record</h2>
         <input type='hidden' name='id' value='<?= htmlspecialchars($student['id']) ?>'>
         <label>Name:</label><input type='text' name='name' value='<?= htmlspecialchars($student['name']) ?>'><br>
-        <label>Phone Number:</label><input type='text' name='phonenumber' value='<?= htmlspecialchars($student['phonenumber']) ?>'><br>
+        <label>Phone Number:</label><input type='tel' name='phonenumber'pattern="\d{8}" title="Phone number must be 8 digits" value='<?= htmlspecialchars($student['phonenumber']) ?>'><br>
         <label>Email:</label><input type='text' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
         
         <label for="faculty">Faculty:</label>
@@ -134,7 +247,6 @@ $conn->close();
         <?php endwhile; ?>
 
         <input type='submit' name='update' value='Update Details'>
-        <a href="read1.php">Back</a>
         <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['csrf_token']); ?>">
     </form>
 <?php endif; ?>

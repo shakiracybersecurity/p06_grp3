@@ -96,10 +96,112 @@ $conn->close();
 <html>
 <head>
     <title>Update Course</title>
+    <style>
+        body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#050a44;
+    background-size: cover;
+    }
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
+    .container{
+    margin-top: 0px;
+    margin:50px auto;
+    max-width: 500px;
+    height: 500px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+
+    h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    }
+      /* Label Style */
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+     /* Input and Select Styles */
+     input[type="text"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    input[type="date"], select{
+    width: 300px; /* Adjust width */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    margin-bottom: 20px;
+    }
+    select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    button {
+        display: block;
+        width: 100%;
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 15px;
+    }
+      
+    button:hover {
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
+.back-button {
+    border: none;
+    outline: none;
+    background-color:#050a44;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100px;
+    display:flex;
+  
+    }
+    a{
+    text-decoration: none;
+    }
+    </style>
 </head>
+<div class="back-button">
+<a href="view_course.php"><button>Back to Courses</button></a>
+</div>
 <body>
-    <h2>Update Course</h2>
+<div class="container">
     <form method="POST">
+    <h2>Update Course</h2>
         <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['token']) ?>">
 
         <!-- Course Details -->
@@ -122,7 +224,7 @@ $conn->close();
         <?php endif; ?>
 
         <button type="submit">Update</button>
+        </div>
     </form>
-    <a href="view_course.php">Back to Courses</a>
 </body>
 </html>

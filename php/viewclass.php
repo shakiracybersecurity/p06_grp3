@@ -31,6 +31,11 @@ $stmt->close();
         <meta name ="viewport" content="width=device-width, initial-scale=1.0">
         <title> View Classes</title>
  <style>
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
     body{
     margin-left: auto;
     margin-right: auto;
@@ -61,6 +66,12 @@ $stmt->close();
         background-color: #0a21c0;
          color: white;
     }
+    h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    }
     button {
         background: #fff;
         color: black;
@@ -69,7 +80,9 @@ $stmt->close();
         border-radius: 10px;
         cursor: pointer;
         margin-top: 15px;
-}
+        border: none;
+    }
+
     button:hover {
         margin-top: 15px;
         background: #3b3ec0;
@@ -79,6 +92,8 @@ $stmt->close();
     </style>
     </head>
     <body>
+    <a href="<?php echo $redirect; ?>"><button>Back</button></a>
+    <h2> Current Classes </h2>
 <table>
     <thead>
         <tr>
@@ -110,6 +125,6 @@ $stmt->close();
 </table>
         <div class = "button">
             <a href="newclass.php"><button>Add classes</button></a>
-            <a href="<?php echo $redirect; ?>"><button>Back</button></a>
         </div>
-
+                </body>
+                </html> 

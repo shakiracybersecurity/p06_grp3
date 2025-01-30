@@ -84,6 +84,30 @@ $conn->close();
 
 <!-- Style for Form and Search Results -->
 <style>
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
+     body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#2c2e3a;
+    background-size: cover;
+    }
+    .container{
+    margin-top: 0px;
+    margin:50px auto;
+    max-width: 500px;
+    height: 900px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+    }
     form {
         width: 50%;
         margin: 20px auto;
@@ -94,17 +118,16 @@ $conn->close();
         font-family: Arial, sans-serif;
     }
 
-    h3 {
-        text-align: center;
-        color: #4CAF50;
-        font-size: 24px;
-        margin-bottom: 20px;
+    h1{
+    text-align: center;
+    color: #050A44;
+    margin-top: 30px;
+    margin-bottom: 20px;
     }
 
-    label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
+    label{
+    font-size: 15px;
+    margin-bottom: 2px;
     }
 
     input[type="number"],
@@ -117,6 +140,10 @@ $conn->close();
         border-radius: 5px;
         font-size: 16px;
         box-sizing: border-box;
+        padding: 10px;
+        margin-top: 8px;
+        background: transparent;
+        color: #141619;
     }
 
     .search-results {
@@ -152,32 +179,35 @@ $conn->close();
         align-self: center;
         padding: 10px 20px;
         font-size: 14px;
-        color: white;
-        background-color: #4CAF50;
-        border: none;
+        color: black;
+        background-color: #fff;
+        border: 1px solid #2c2e3a;
         border-radius: 5px;
         cursor: pointer;
     }
 
     .search-results button:hover {
-        background-color: #45a049;
+        background-color: #3b3ec0;
     }
 
     button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: 1px solid #2c2e3a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    display:flex;
     }
-
     button:hover {
-        background-color: #45a049;
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+    }
+    a {
+        text-decoration: none;
     }
 
     p {
@@ -187,7 +217,7 @@ $conn->close();
     }
 
     p a {
-        color: #4CAF50;
+        color: #fff;
         text-decoration: none;
         font-weight: bold;
     }
@@ -198,10 +228,9 @@ $conn->close();
 </style>
 
 <br>
-<a href="viewgradetry.php">Back to View Student Grades</a>
-
-<h3>Create Grade</h3>
+<a href="viewgradetry.php"><button>Back to View Student Grades</button></a>
 <form method="GET">
+<h1>Create Grade</h1>
     <label for="search_name">Search Student by Name:</label>
     <input type="text" name="search_name" id="search_name" placeholder="Enter student name">
     <button type="submit">Search</button>
@@ -222,7 +251,7 @@ $conn->close();
 
 <form method="POST">
     <label for="student_id">Student ID:</label>
-    <input type="number" name="student_id" id="student_id" required><br>
+    <input type="number" name="student_id" id="student_id" required placeholder="Student ID"><br>
 
     <label for="course">Course:</label>
     <select id="course" name="course_id" required>
@@ -256,7 +285,7 @@ $conn->close();
 <?php if (!empty($success_message)): ?>
     <p><?php echo $success_message; ?> <a href="viewgradetry.php">Return back to student list?</a></p>
 <?php elseif (!empty($error_message)): ?>
-    <p style="color: red;"><?php echo $error_message; ?></p>
+    <p style="color: white;"><?php echo $error_message; ?></p>
 <?php endif; ?>
 
 <script>

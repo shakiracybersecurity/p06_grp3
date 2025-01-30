@@ -210,6 +210,7 @@ button:hover {
     </style>
 </head>
 <body>
+<a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
 <!-- Display the form only if registration was not successful -->
 <?php if (!$registration_successful): ?>
     <div class="container">
@@ -252,7 +253,6 @@ button:hover {
 </body>
         </form>
 <?php endif; ?>
-<a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
         </body>
         </form>
         </html>

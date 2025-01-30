@@ -64,7 +64,8 @@ $stmt = $conn->prepare("
     FROM students
     LEFT JOIN student_courses ON students.id = student_courses.student_id
     LEFT JOIN course ON student_courses.course_id = course.id
-    LEFT JOIN grades ON student_courses.student_id = grades.student_id AND student_courses.course_id = grades.course_id
+    LEFT JOIN grades ON students.id = grades.student_id 
+                      AND (student_courses.course_id = grades.course_id OR students.grade_id = grades.id) 
     LEFT JOIN department ON students.department_id = department.id
     WHERE students.id=?
     GROUP BY students.id
@@ -92,7 +93,7 @@ while ($student = $result->fetch_assoc()) {
     echo "<td>" . htmlspecialchars($student['faculty']) . "</td>";
     echo "<td>" . htmlspecialchars($student['course_info']) . "</td>";
     echo "<td>" . htmlspecialchars($student['department_name']) . "</td>";
-    echo "<td?" . htmlspecialchars($student['grade_info']) . "</td>";
+    echo "<td>" . htmlspecialchars($student['grade_info']) . "</td>";
     echo "</tr>";
 }
 

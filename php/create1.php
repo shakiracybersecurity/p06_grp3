@@ -183,10 +183,10 @@ $courses = $conn->query("SELECT id, name FROM course");
         margin-bottom: 20px;
     }
     select:focus {
-                outline: none;
-                border-color: #007bff;
-                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            }
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
 
     button {
         background: #fff;

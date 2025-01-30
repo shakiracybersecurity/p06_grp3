@@ -28,6 +28,14 @@ if (!$course_id || !is_numeric($course_id)) {
 }
 
 $stmt = $conn->prepare("SELECT * FROM course WHERE ID = ?");
+$departments = [];
+$dept_stmt = $conn->prepare("SELECT NAME FROM department");
+$dept_stmt->execute();
+$dept_result = $dept_stmt->get_result();
+while ($dept_row = $dept_result->fetch_assoc()) {
+    $departments[] = $dept_row['NAME'];
+}
+$dept_stmt->close();
 $stmt->bind_param("i", $course_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -50,19 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Gather form inputs
     $name = $_POST['name'] ?? '';
     $code = $_POST['code'] ?? '';
+    $department_name = $_POST['department_name'] ?? '';
     $start_date = $_POST['start_date'] ?? '';
     $end_date = $_POST['end_date'] ?? '';
     $status = $_POST['status'] ?? '';
 
     // Validate inputs
-    if (empty($name) || empty($code) || empty($start_date) || empty($end_date)) {
+    if (empty($name) || empty($code) || empty($department_name) || empty($start_date) || empty($end_date)) {
         echo "<p style='color: red;'>Please fill in all fields.</p>";
     } elseif (strtotime($start_date) > strtotime($end_date)) {
         echo "<p style='color: red;'>Error: Start Date cannot be later than End Date.</p>";
     } else {
-        // Update course details (name, code, start_date, end_date)
-        $stmt = $conn->prepare("UPDATE course SET NAME = ?, CODE = ?, START_DATE = ?, END_DATE = ? WHERE ID = ?");
-        $stmt->bind_param("ssssi", $name, $code, $start_date, $end_date, $course_id);
+        // Update course details (name, code, department, start_date, end_date)
+        $stmt = $conn->prepare("UPDATE course SET NAME = ?, CODE = ?, DEPARTMENT_NAME = ?, START_DATE = ?, END_DATE = ? WHERE ID = ?");
+        $stmt->bind_param("sssssi", $name, $code, $department_name, $start_date, $end_date, $course_id);
 
         if (!$stmt->execute()) {
             echo "<p style='color: red;'>Error updating course: " . $stmt->error . "</p>";
@@ -114,7 +123,7 @@ $conn->close();
     margin-top: 0px;
     margin:50px auto;
     max-width: 500px;
-    height: 500px;
+    height: 550px;
     background-color: #fff;
     padding: 30px;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
@@ -207,6 +216,16 @@ $conn->close();
         <!-- Course Details -->
         Name: <input type="text" name="name" value="<?= htmlspecialchars($course['NAME']) ?>" required><br>
         Code: <input type="text" name="code" value="<?= htmlspecialchars($course['CODE']) ?>" required><br>
+        Department: 
+        <select name="department_name" required>
+            <option value="">Select Department</option>
+            <?php foreach ($departments as $dept): ?>
+                <option value="<?= htmlspecialchars($dept) ?>" 
+                    <?= $dept == $course['DEPARTMENT_NAME'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($dept) ?>
+                </option>
+            <?php endforeach; ?>
+        </select><br>
         Start Date: <input type="date" name="start_date" value="<?= htmlspecialchars($course['START_DATE']) ?>" required><br>
         End Date: <input type="date" name="end_date" value="<?= htmlspecialchars($course['END_DATE']) ?>" required><br>
 

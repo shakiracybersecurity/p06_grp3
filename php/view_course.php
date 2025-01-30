@@ -16,7 +16,7 @@ if (!isset($_SESSION['username']) || ($_SESSION['role'] != 2 && $_SESSION['role'
 $sql = "SELECT course.ID, course.NAME, course.CODE, course.START_DATE, course.END_DATE, 
                course.STATUS, department.NAME AS DEPARTMENT_NAME 
         FROM course 
-        LEFT JOIN department ON course.DEPARTMENT_ID = department.ID";
+        LEFT JOIN department ON course.DEPARTMENT_NAME = department.NAME";
 $result = $conn->query($sql);
 
 ?>

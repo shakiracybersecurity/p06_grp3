@@ -77,7 +77,7 @@ INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `TEACHER_ID`, `MODULES_ID`, `MO
 CREATE TABLE `course` (
   `ID` int(11) NOT NULL,
   `NAME` varchar(50) DEFAULT NULL,
-  `DEPARTMENT_ID` int(11) DEFAULT NULL,
+  `DEPARTMENT_NAME` varchar(50) DEFAULT NULL,
   `START_DATE` date DEFAULT NULL,
   `END_DATE` date DEFAULT NULL,
   `CODE` varchar(50) DEFAULT NULL,
@@ -88,10 +88,10 @@ CREATE TABLE `course` (
 -- Dumping data for table `course`
 --
 
-INSERT INTO `course` (`ID`, `NAME`, `DEPARTMENT_ID`, `START_DATE`, `END_DATE`, `CODE`, `status`) VALUES
-(1, 'Robotic Engineering', 1, '2025-01-01', '2025-04-01', 'CRE25', 'start'),
-(2, 'Robotic Systems', 2, '2025-01-01', '2025-04-01', 'CRS25', 'ended'),
-(3, 'Robotic Mechanics and Control', 3, '2025-01-01', '2025-04-01', 'CRMC25', 'start');
+INSERT INTO `course` (`ID`, `NAME`, `DEPARTMENT_NAME`, `START_DATE`, `END_DATE`, `CODE`, `status`) VALUES
+(1, 'Robotic Engineering', 'RBE/ENG', '2025-01-01', '2025-04-01', 'CRE25', 'start'),
+(2, 'Robotic Systems', 'RBS/IIT', '2025-01-01', '2025-04-01', 'CRS25', 'ended'),
+(3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'start');
 
 --
 -- Triggers `course`

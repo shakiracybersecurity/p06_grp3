@@ -12,8 +12,11 @@ if (!isset($_SESSION['username']) || ($_SESSION['role'] != 2 && $_SESSION['role'
     exit();
 }
 
-// Fetch all courses
-$sql = "SELECT ID, NAME, CODE, START_DATE, END_DATE, STATUS FROM course";
+// Fetch all courses + department
+$sql = "SELECT course.ID, course.NAME, course.CODE, course.START_DATE, course.END_DATE, 
+               course.STATUS, department.NAME AS DEPARTMENT_NAME 
+        FROM course 
+        LEFT JOIN department ON course.DEPARTMENT_ID = department.ID";
 $result = $conn->query($sql);
 
 ?>
@@ -88,6 +91,7 @@ $result = $conn->query($sql);
             <th>ID</th>
             <th>Name</th>
             <th>Code</th>
+            <th>Department</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Status</th>
@@ -98,6 +102,7 @@ $result = $conn->query($sql);
                 <td><?= $row['ID'] ?></td>
                 <td><?= htmlspecialchars($row['NAME']) ?></td>
                 <td><?= htmlspecialchars($row['CODE']) ?></td>
+                <td><?= isset($row['DEPARTMENT_NAME']) ? htmlspecialchars($row['DEPARTMENT_NAME']) : 'N/A' ?></td>
                 <td>
                     <?= ($row['START_DATE'] !== '0000-00-00') 
                         ? date("d-m-Y", strtotime($row['START_DATE'])) 
@@ -108,6 +113,7 @@ $result = $conn->query($sql);
                         ? date("d-m-Y", strtotime($row['END_DATE'])) 
                         : 'N/A'; ?>
                 </td>
+            
                 <td>
                     <?= htmlspecialchars($row['STATUS']) ?></td>
                 <td>

@@ -114,10 +114,10 @@ $stmt->close();
                 <td><?php echo htmlspecialchars($class_info['classname']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['mode']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['depname']); ?></td>
-                <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"><button>Edit</button> </a> </td> 
+                <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"><button>Edit</button> </a> <br>
                 <?php 
                 if(can_delete()): ?>
-                <td><a href="deleteclass.php?id=<?php echo $class_info['id'] ?>" onclick="return confirm('Are you sure?')">Delete</a></td>
+                <a href="deleteclass.php?id=<?php echo $class_info['id'] ?>" onclick="return confirm('Are you sure?')"><button>Delete</button></a></td>
                 <?php endif ?>
             </tr>
         <?php endforeach; ?>

@@ -113,7 +113,7 @@ $result = $conn->query($sql);
                 <td>
                     <a href="update1.php?id=<?= $row['ID'] ?>"><button>Edit</button></a>
                     <?php if ($_SESSION['role'] == 3): // Only Admin can delete ?>
-                        | <a href="delete_course.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="delete_course.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure?')"><button>Delete</button></a>
                     <?php endif; ?>
                 </td>
             </tr>

@@ -154,7 +154,7 @@ $conn->close();
     }
 
     p a {
-        color: #4CAF50;
+        color:#fff;
         text-decoration: none;
         font-weight: bold;
     }

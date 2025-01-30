@@ -56,20 +56,113 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 ?>
+<style>
+body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#050a44;
+    background-size: cover;
+    }
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
+    form {
+        width: 50%;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+     /* Heading Style */
+     h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    }
 
-<a href="viewclass.php">back</a> <br>
+    /* Label Style */
+ 
+    /* Input and Select Styles */
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    input[type="radio"]{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid #2c2e3a;
+    color: #141619;
+    font-size: 13px;
+    margin-bottom: 20px;
+    }
+    .options input{
+    margin-right: 5px;
+    margin-top: 10px;
+    }   
+    select{
+    width: 300px; /* Adjust width */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    margin-bottom: 20px;
+    }
+    select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+   input[type="submit"], button {
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: 1px solid #2c2e3a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    display:flex;
+    }
+    input[type="submit"]:hover, button:hover {
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+    }
+    a {
+        text-decoration: none;
+    }
+    </style>
+
+<a href="viewclass.php"><button>Back</button></a> <br>
 
 <form method="POST">
-    class name: <input type="text" name="class" value = "<?php echo $class_info['classname'];?>" required ><br>
+    <h2> Edit class </h2>
+    Class name: <input type="text" name="class" value = "<?php echo $class_info['classname'];?>" required ><br>
 
-    class mode:
+    Class mode:
     <input type = "radio" name= "mode" id ="semester" value= "semester" <?php if($class_info['mode'] == "semester"){echo "checked";}?>/>
     <label for = "semester">Semester</label>
     <input type = "radio" name= "mode" id ="term" value= "term" <?php if($class_info['mode'] == "term"){echo "checked";}?>/>
     <label for = "term">Term</label>
     <br>
 
-    department:  
+    Department:  
     <select name="department" id="department">
         <?php 
             $stmt = $conn->prepare("select id, name from department");

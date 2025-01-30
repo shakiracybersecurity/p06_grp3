@@ -5,9 +5,9 @@ require 'functions.php';
 $conn = db_connect();
 
 // Ensure student is logged in
-//if (!isset($_SESSION['id'])) {
-//    die("Access denied. Please log in.");
-//}
+if (!isset($_SESSION['id'])) {
+    die("Access denied. Please log in.");
+}
 
 $student_id = $_SESSION['id'];
 $error = $success = '';
@@ -125,7 +125,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 1px solid #2c2e3a;
             border-radius: 10px;
             cursor: pointer;
-            margin-bottom: 15px;
+            width: 100%;
+            margin-top: 15px;
         }
         .back-button:hover {
             background: #3b3ec0;
@@ -135,9 +136,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-
-    <!-- Back Button -->
-    <a href="student_dashboard.php"><button class="back-button">Back</button></a>
 
     <!-- Change Password Form -->
     <div class="container">
@@ -150,6 +148,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="confirm_password" placeholder="Confirm New Password" required>
             <button type="submit">Update Password</button>
         </form>
+
+        <!-- Back Button (Now Below the Form) -->
+        <a href="student_dashboard.php"><button class="back-button">Back</button></a>
     </div>
 
 </body>

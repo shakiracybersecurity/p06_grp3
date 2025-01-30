@@ -68,6 +68,19 @@ $conn->close();
 <!-- Edit Grades Form -->
 <style>
     /* Style for the form container */
+    body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#050a44;
+    background-size: cover;
+    }
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
     form {
         width: 50%;
         margin: 30px auto;
@@ -79,11 +92,11 @@ $conn->close();
     }
 
     /* Heading Style */
-    h3 {
-        text-align: center;
-        color: #4CAF50;
-        font-size: 24px;
-        margin-bottom: 20px;
+    h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
     }
 
     /* Label Style */
@@ -103,24 +116,47 @@ $conn->close();
         font-size: 16px;
         box-sizing: border-box;
     }
-
+    
+    select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
     /* Submit Button Style */
     button {
         display: block;
         width: 100%;
+        background: #fff;
+        color: black;
         padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
         cursor: pointer;
+        margin-top: 15px;
         text-align: center;
+        font-size: 15px;
+    }
+    .back-button {
+    border: none;
+    outline: none;
+    background-color:#050a44;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100px;
+  
     }
 
+a{
+    text-decoration: none;
+}
+    
     button:hover {
-        background-color: #45a049;
-    }
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
 
     /* Success or Error Message Style */
     p {
@@ -139,9 +175,11 @@ $conn->close();
         text-decoration: underline;
     }
 </style>
-
+<div class="back-button">
+<a href="viewgradetry.php"><button>Back</button></a>
+</div>
 <form method="POST">
-    <h3>You are editing <?php echo htmlspecialchars($grade['student_name']); ?>'s grade</h3>
+    <h2>You are editing <?php echo htmlspecialchars($grade['student_name']); ?>'s grade</h2>
     
     <label for="score">New Score:</label>
     <input type="number" step="1" name="score" id="score" min="0" max="100" 

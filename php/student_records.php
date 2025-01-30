@@ -38,6 +38,8 @@ $query = "
 
 $result = $conn->query($query);
 if ($result->num_rows > 0) {
+echo "<a href=\"" . $redirect . "\">Back</a>";
+
     echo "<h1>Current Student Records</h1>";
     echo "<table border='1' cellpadding='10'>";
     echo "<tr>

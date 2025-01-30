@@ -87,26 +87,42 @@ $courses = $course_result->fetch_all(MYSQLI_ASSOC);
 
 <style>
     /* Style for the table container */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 16px;
-        text-align: left;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
     }
+    body{
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#b3b4bd; 
+    background-size: cover;
+    }
+    table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+        width: 95%; /* Adjust width as needed */
+        max-width: 1000px; /* Optional: limit table width */
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: 1px solid;
+      
+        }
 
     /* Header styles */
-    thead tr {
-        background-color: #4CAF50;
-        color: white;
+    th, td{
+        padding: 15px;
+        text-align: center;
+        border: 1px solid;
+        
     }
-
-    th, td {
-        padding: 12px 15px;
-        border: 1px solid #ddd;
+    th{
+        background-color: #0a21c0;
+         color: white;
     }
 
     /* Alternating row colors */
@@ -118,38 +134,67 @@ $courses = $course_result->fetch_all(MYSQLI_ASSOC);
         background-color: #ffffff;
     }
 
-    /* Hover effect */
-    tbody tr:hover {
-        background-color: #f1f1f1;
-        cursor: pointer;
-    }
-
     /* Total Students count */
     p {
         font-weight: bold;
         text-align: right;
         margin-right: 10px;
+        color: #050a44;
     }
 
     /* Filters */
-    select, input[type="text"] {
-        padding: 5px;
-        margin: 10px 5px;
-        font-size: 14px;
+    select{
+    width: 200px; /* Adjust width */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    margin-bottom: 20px;
     }
-
+    select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    input[type="text"]{
+    padding: 10px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 15px;
+    background: white;
+    border: 1px solid #2c2e3a;
+    color: #141619;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
     a {
         text-decoration: none;
-        color: #4CAF50;
+        color: #2c2e3a;
         font-weight: bold;
     }
 
     a:hover {
-        color: #45a049;
+        color: #141619;
     }
+    button {
+        background: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        border: none;
+}
+    button:hover {
+        margin-top: 15px;
+        background: #3b3ec0;
+        color: white;
+        outline: 1px solid #fff;
+}
 </style>
 
-<a href="<?php echo $redirect; ?>">Back to dashboard</a> <br>
+<a href="<?php echo $redirect; ?>"><button>Back </button></a> <br>
 <br>
 
 <!-- Search and Filter Links -->
@@ -182,7 +227,7 @@ $courses = $course_result->fetch_all(MYSQLI_ASSOC);
             </option>
         <?php endforeach; ?>
     </select>
-    <a href="?">Reset Filters</a>
+    <a href="?"><button>Reset Filters</button></a>
 </div>
 
 <!-- Table with CSS Styling -->
@@ -208,9 +253,9 @@ $courses = $course_result->fetch_all(MYSQLI_ASSOC);
                 <td><?php echo htmlspecialchars($grade['SCORE']); ?></td>
                 <td><?php echo htmlspecialchars($grade['GRADE']); ?></td>
                 <td>
-                    <a href="editgrade.php?id=<?php echo $grade['ID']; ?>">edit</a> 
+                    <a href="editgrade.php?id=<?php echo $grade['ID']; ?>"><button>Edit</button></a> 
                     <?php if (can_delete()): ?>
-                    | <a href="deletegrade.php?id=<?php echo $grade['ID']; ?>">delete</a>
+                        <a href="deletegrade.php?id=<?php echo $grade['ID']; ?>"><button>Delete</button></a>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -218,6 +263,9 @@ $courses = $course_result->fetch_all(MYSQLI_ASSOC);
     </tbody>
 </table>
 
+<button onclick="location.href='creategrade.php'" >
+    Enter New Student Grade
+</button>
 <p>Total Students: <?php echo $count; ?></p>
 
 <script>
@@ -237,9 +285,6 @@ function updateSearch(value) {
 }
 </script>
 
-<button onclick="location.href='creategrade.php'" style="padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-    Enter New Student Grade
-</button>
 
 
 

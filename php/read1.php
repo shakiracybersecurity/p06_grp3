@@ -46,8 +46,11 @@ $stmt = $conn->prepare("
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Redirect based on role
+$redirect = ($_SESSION['role'] == 3) ? "admin_dashboard.php" : "faculty_dashboard.php";
 if ($result->num_rows > 0) {
-    echo "<h1>Current Student Records</h1>";
+    echo '<a href="' . $redirect . '"><button>Back</button></a>';
+    echo "<h2>Current Student Records</h2>";
     echo "<table border='1' cellpadding='10'>";
     echo "<tr>
         <th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Courses</th><th>Statuses</th><th>Department</th><th>Actions</th>
@@ -64,7 +67,7 @@ if ($result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($student['course_statuses']) . "</td>";
         echo "<td>" . htmlspecialchars($student['department_name']) . "</td>";
         echo "<td>
-            <a href='update_student.php?id=" . htmlspecialchars($student['student_id']) . "'>Update</a>
+            <a href='update_student.php?id=" . htmlspecialchars($student['student_id']) . "'><button>Update</button></a>
             <form method='POST' action='delete_student.php' onsubmit=\"return confirm('Are you sure you want to delete this record?');\">
                 <input type='hidden' name='id' value='" . htmlspecialchars($student['student_id']) . "'>
                 <input type='hidden' name='token' value='" . htmlspecialchars($csrf_token) . "'>
@@ -82,7 +85,69 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conn->close();
 
-// Redirect based on role
-$redirect = ($_SESSION['role'] == 3) ? "admin_dashboard.php" : "faculty_dashboard.php";
+
 ?>
-<a href="<?php echo $redirect; ?>">Back</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Record</title>
+<style>
+    *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+    body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#b3b4bd; 
+    background-size: cover;
+    
+}
+    table {
+        border-collapse: collapse;
+        width: 80%; /* Adjust width as needed */
+        max-width: 1000px; /* Optional: limit table width */
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-left: auto;
+        margin-right: auto;
+        }
+    th, td{
+        padding: 15px;
+        text-align: center;
+        border: 1px solid;
+    }
+    h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    }
+    th{
+        background-color: #0a21c0;
+         color: white;
+    }
+    button, input[type="submit"]{
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: 1px solid #2c2e3a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 0px;
+    border: none;
+    }
+    button:hover,input[type="submit"]:hover {
+    margin-top: 0px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
+
+    </style>  
+

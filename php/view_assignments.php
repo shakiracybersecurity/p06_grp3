@@ -30,7 +30,8 @@ INNER JOIN course ON student_courses.course_id = course.id
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
-    echo "<h1>Course Assignments</h1>";
+    echo "<a href=\"faculty_dashboard.php\"><button>Back</button></a>";
+    echo "<h2>Course Assignments</h2>";
     echo "<table border='1' cellpadding='10'>";
     echo "<tr>
         <th>Student Name</th>
@@ -69,4 +70,70 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
-<a href = "faculty_dashboard.php">Back</a>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Record</title>
+<style>
+        *{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    }
+    body{
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#b3b4bd; 
+    background-size: cover;
+    }
+    table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+        width: 80%; /* Adjust width as needed */
+        max-width: 1000px; /* Optional: limit table width */
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: 1px solid;
+      
+        }
+        th, td{
+        padding: 15px;
+        text-align: center;
+        border: 1px solid;
+        
+    }
+    th{
+        background-color: #0a21c0;
+         color: white;
+    }
+    h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    }
+    button {
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        border: none;
+    }
+
+    button:hover {
+        margin-top: 15px;
+        background: #3b3ec0;
+        color: white;
+        outline: 1px solid #fff;
+    }
+    </style>
+    </head>
+</html>

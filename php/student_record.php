@@ -72,9 +72,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-echo "<h1>Your Records</h1>";
-echo "<table border='1' cellpadding='10'>";
-echo "<tr>
+    echo "<a href=\"student_dashboard.php\"><button>Back</button></a>";
+    echo "<h2>Your Records</h2>";
+    echo "<table border='1' cellpadding='10'>";
+    echo "<tr>
     <th>ID</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Faculty</th><th>Courses</th><th>Department</th>
 </tr>";
 
@@ -126,11 +127,19 @@ $conn->close();
         max-width: 1000px; /* Optional: limit table width */
         background-color: #ffffff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
+        margin-left: auto;
+        margin-right: auto;
         }
     th, td{
         padding: 15px;
         text-align: center;
+        border: 1px solid;
+    }
+    h2{
+    text-align: center;
+    color: #2c2e3a;
+    margin-top: 30px;
+    margin-bottom: 20px;
     }
     th{
         background-color: #0a21c0;
@@ -144,16 +153,16 @@ $conn->close();
     border-radius: 10px;
     cursor: pointer;
     margin-top: 15px;
+    border: none;
     }
     button:hover {
-    margin-top: 20px;
+    margin-top: 15px;
     background: #3b3ec0;
     color: white;
     outline: 1px solid #fff;
 }
-    </style>
-<a href="student_dashboard.php"><button>Back</button></a>
+    </style>  
 <br>
-
-
+</head>
+</html>
 

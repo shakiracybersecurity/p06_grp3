@@ -7,7 +7,7 @@ if (empty($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 
-
+//check session timeout and users role
 is_logged_in([3,2]); 
 checkSessionTimeout();
 

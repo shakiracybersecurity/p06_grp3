@@ -96,7 +96,7 @@ function registerStudent($post_data, $user_role){
                 $assign_stmt->execute();
             }
             $assign_stmt->close();
-            $message = "Courses assigned successfully!<br>";
+            $message = "Courses assigned  and student registered successfully!<br>";
         }
      return $message;
     }else{

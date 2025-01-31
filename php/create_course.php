@@ -119,21 +119,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
         }
 
-        button[type="submit"] {
-            background-color: #27ae60;
-            color: white;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #219a52;
-        }
+        button[type="submit"]{
+        display: block;
+        width: 100%;
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 15px;
+        margin-left: 10px;
+    }
+      
+    button[type="submit"]:hover {
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
+button {
+        display: block;
+        width: 100%;
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 15px;
+        margin-left: -50px;
+    }
+      
+    button:hover {
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+}
 
         .back-link {
             display: block;
@@ -155,7 +182,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
+<a href="view_course.php" class="back-link"><button>Back to Course Dashboard</button></a>
 <body>
+
     <div class="container">
         <h2>Create New Course</h2>
         
@@ -194,7 +223,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit">Create Course</button>
         </form>
 
-        <a href="view_course.php" class="back-link">Back to Course Dashboard</a>
     </div>
 </body>
 </html>

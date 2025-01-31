@@ -257,7 +257,7 @@ button:hover {
     margin-top: 0px;
     margin:50px auto;
     max-width: 500px;
-    height: 550px;
+    height: 600px;
     background-color: #fff;
     padding: 30px;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
@@ -343,6 +343,7 @@ button:hover {
 <body>
 <!-- Display Student Records -->
 <?php if ($action == 'read'): ?>
+    <a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
     <h2>Current Student Records</h2>
 
     <?php if ($student_records && $student_records->num_rows > 0): ?>
@@ -387,6 +388,7 @@ button:hover {
 
 
 <?php if ($action == 'create'): ?>
+    <a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
     <div class="container">
     <h1>Register New Student</h1>
 

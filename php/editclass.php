@@ -3,9 +3,12 @@ require "functions.php";
 
 $conn=db_connect();
 session_start();
-if (empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
+// Generate and store a new CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_plain'])) {
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32)); // Store plain token
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT); // Store hashed token
 }
+
 
 checkSessionTimeout();
 is_logged_in([3,2]);
@@ -26,12 +29,22 @@ $class_info = $result->fetch_assoc();
 $stmt->close();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING); //csrf token
-    if (!$token || $token !== $_SESSION['token']) {
-        // return 405 http status code
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    
+    // Validate CSRF token
+    if (!$token || !password_verify($token, $_SESSION['csrf_hash'])) {
         header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
         exit;
-    } 
+    }
+
+    // CSRF token is valid - Now unset it to prevent reuse
+    unset($_SESSION['csrf_plain']);
+    unset($_SESSION['csrf_hash']);
+
+    // Regenerate new CSRF token for next request
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32));
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT);
+
 
     // Secure: Sanitize user inputs
     $mode = $_POST['mode'];
@@ -212,7 +225,7 @@ body{
             </select>
             
 <br>   
-<input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">    
+<input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['csrf_plain'] ?? '') ?>">  
 <input type="submit" value="update">
 
 </form>

@@ -20,5 +20,4 @@ $stmt -> execute();
 $stmt -> close();
 header("Location: viewclass.php");
     
-//ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 ?>

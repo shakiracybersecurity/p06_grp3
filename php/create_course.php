@@ -54,9 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Create Course</title>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Robotic Management System</title>
     <style>
         * {
             margin: 0;
@@ -80,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 100%;
             max-width: 500px;
             margin-top: 50px;
+            height: 700px;
         }
 
         h2 {

@@ -20,19 +20,30 @@ if (!isset($_SESSION['csrf_token'])) {
 // Get action from URL
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 
-//Handle form submission
-$registration_message = "";
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $registration_message = registerStudent($_POST, $user_role);
-}
+if ($action == "create") {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign_courses'])) {
+        $student_id = intval($_POST['student_id']);
+        $course_ids = $_POST['course_ids'] ?? []; // Array of selected course IDs
 
-//Fetch courses for registration dropdown (only if action=create)
-if($action == 'create'){
-    $courses = $conn->query("SELECT id, name FROM course");
-}
+        // Call the function to assign courses
+        $message = assignCoursesToStudent($student_id, $course_ids, $conn);
 
+        echo "<script>
+            alert('$message');
+            window.location.href = 'view_assignments.php';
+        </script>";
+        exit();
+    }
+
+    // Fetch students for the dropdown
+    $students_result = $conn->query("SELECT id, name FROM students");
+
+    // Fetch courses for the checkboxes
+    $courses_result = $conn->query("SELECT id, name FROM course");
+}
 // Fetch student records for display (only if action = read)
 $student_records = null; // Initialize variable to avoid undefined variable error
+
 
 if ($action == 'read') {
     $student_records = getStudentRecords();
@@ -107,9 +118,9 @@ form{
     margin-top: 20px;
 }
 label{
-    font-size: 15px;
-    margin-bottom: 2px;
-}
+        font-size: 15px;
+        margin-bottom: 2px;
+    }
 input[type="text"],
 input[type="email"], input[type="tel"]{
     padding: 10px;
@@ -122,24 +133,24 @@ input[type="email"], input[type="tel"]{
     font-size: 15px;
 }
 .options label {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    font-size: 15px;
-    color: #2c2e3a;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        font-size: 15px;
+        color: #2c2e3a;
 }
 input[type="checkbox"]{
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: transparent;
-    border: 1px solid #2c2e3a;
-    color: #141619;
-    font-size: 13px;
-    margin-bottom: 20px;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        border: 1px solid #2c2e3a;
+        color: #141619;
+        font-size: 13px;
+        margin-bottom: 20px;
 }
 .options input{
-    margin-right: 5px;
-    margin-top: 10px;
+        margin-right: 5px;
+        margin-top: 10px;
 }
 select{
     width: 300px; /* Adjust width */
@@ -176,6 +187,23 @@ button:hover {
    a {
         text-decoration: none;
     }
+    input[type="submit"], button {
+    background: #fff;
+    color: black;
+    padding: 10px;
+    border: 1px solid #2c2e3a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    display:flex;
+    }
+    input[type="submit"]:hover, button:hover {
+    margin-top: 15px;
+    background: #3b3ec0;
+    color: white;
+    outline: 1px solid #fff;
+    }
+    </style>
 <?php endif; ?>
 <?php if ($action == 'read'): ?>
     <style>
@@ -390,49 +418,36 @@ button:hover {
 <?php if ($action == 'create'): ?>
     <a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
     <div class="container">
-    <h1>Register New Student</h1>
+        <h2>Assign Courses to Student</h2>
+        <form method="POST" action="">
+            <!-- Dropdown to select a student -->
+            <label for="student_id">Select Student:</label><br>
+            <select name="student_id" id="student_id" required>
+                <option value="">-- Select Student --</option>
+                <?php while ($student = $students_result->fetch_assoc()): ?>
+                    <option value="<?php echo $student['id']; ?>">
+                        <?php echo $student['name']; ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+            <br><br>
 
-    <?php if (!empty($registration_message)): ?>
-        <p claass ="message"><?= $registration_message; ?></p>
-    <?php endif; ?>
+            <div class = "options">
+            <!-- Checkboxes to select courses -->
+            <label>Select Courses:</label><br>
+            <?php while ($course = $courses_result->fetch_assoc()): ?>
+                <input type="checkbox" name="course_ids[]" value="<?php echo $course['id']; ?>">
+                <?php echo $course['name']; ?><br>
+            <?php endwhile; ?>
+            <br>
+            </div>
 
-    <form method="POST">
-  
-    Name: <input type="text" id="name" name="name" required placeholder="Name"><br>
-    Email: <input type="email" id="email" name="email" required placeholder="Email"><br>
-    Phone Number: <input type="tel" id="phonenumber" name="phonenumber" required placeholder="Phone Number" pattern="\d{8}" title="Phone number must be 8 digits"><br>
-    Student ID: <input type="text" id="id" name="id" required placeholder="Student"><br>
-    
-    <div class = "dropdown">
-    <label for="department">Department:</label> 
-    <select id="department" name="department_id" required>
-        <option value="" disabled selected>Select</option>
-        <option value="1">RBE/ENG</option>
-        <option value="2">RBS/IIT</option>
-        <option value="3">RMC/IIT</option>
-    </select><br>
-    
-    <label for="faculty">Faculty:</label>
-    <select id="faculty" name="faculty" required>
-        <option value="" disabled selected>Select</option>
-        <option value="ENG">Engineering</option>
-        <option value="IIT">Informatics and IT</option>
-    </select><br>
-</div>
-<div class = "options">
-    <?php if ($user_role == 2): // Show course assignment only for faculty ?>
-        <label for="course">Assign Courses:</label><br>
-        <?php while ($course = $courses->fetch_assoc()): ?>
-            <input type="checkbox" name="course_ids[]" value="<?= $course['id'] ?>"> <?= htmlspecialchars($course['name']) ?><br>
-        <?php endwhile; ?>
-    <?php endif; ?>
-
-    <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-    <button type="submit" value="Register">Register<br>
-        </div>
-</div>
-</body>
+            <!-- Submit Button -->
+            <input type="submit" name="assign_courses" value="Assign Courses">
         </form>
+    </div>
+</body>
+</html>
 <?php endif; ?>
         </body>
         </form>

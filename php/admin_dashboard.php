@@ -95,6 +95,7 @@ is_logged_in([3]);
         <a href="viewgradetry.php">Grade details</a>
         <a href="view_course.php">Courses Dashboard</a>
         <a href="assignments.php?action=read"> View existing students</a>
+        <a href="view_assignments.php"> View Student Course Assignments</a>
         <a href="logout.php">Logout</a>
     </div>
 

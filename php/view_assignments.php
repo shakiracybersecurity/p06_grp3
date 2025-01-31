@@ -5,6 +5,7 @@ $conn = db_connect();
 
 
 session_start();
+is_logged_in([3,2]);
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate token if not already set
 }
@@ -13,11 +14,6 @@ if (!isset($_SESSION['csrf_token'])) {
 
 checkSessionTimeout();
 
-// Only Faculty can delete course assignments
-if (!isset($_SESSION['username']) || $_SESSION['role'] != 2) {
-    header("Location: login.php");
-    exit();
-}
 
 // Corrected Query
 $query = "

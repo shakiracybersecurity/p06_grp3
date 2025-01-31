@@ -90,6 +90,8 @@ is_logged_in([3]);
         <a href="register_student.php">Create new student profiles</a>
         <a href="creategrade.php">Enter Student's Grade</a>
         <a href="viewgradetry.php">View student's grade</a>
+        <a href="assignments.php?action=create">Create new student profiles</a>
+        <a href="assignment.php?action=create">Create new student profiles</a>
         <a href="viewgradetry.php">Grade details</a>
         <a href="view_course.php">Courses Dashboard</a>
         <a href="assignments.php?action=read"> View existing students</a>

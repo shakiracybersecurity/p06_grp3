@@ -13,10 +13,11 @@ if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
 }elseif($_SESSION['role'] == 2) 
     $redirect = "faculty_dashboard.php";
 
-$stmt = $conn->prepare("SELECT class.id, class.name as classname, class.mode, department.name as depname, faculty.name as teacher
+$stmt = $conn->prepare("SELECT class.id, class.name as classname, class.mode, department.name as depname, faculty.name as teacher, modules.name as modulename
                         FROM class 
                         LEFT JOIN department ON class.department_id=department.id
                         LEFT JOIN faculty ON class.teacher_id=faculty.id
+                        LEFT JOIN modules on class.modules_id=modules.id
                         ");
 $stmt -> execute();
 $result = $stmt->get_result();
@@ -101,6 +102,7 @@ $stmt->close();
             <th>NAME</th>
             <th>MODE</th>
             <th>DEPARTMENT</th>
+            <th>MODULE</th>
             <th>TEACHER</th>
             <th>ACTIONS</th>
         </tr>
@@ -115,6 +117,7 @@ $stmt->close();
                 <td><?php echo htmlspecialchars($class_info['classname']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['mode']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['depname']); ?></td>
+                <td><?php echo htmlspecialchars($class_info['modulename']); ?></td>
                 <td><?php echo htmlspecialchars($class_info['teacher']); ?></td>
                 <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"><button>Edit</button> </a> <br>
                 <?php 

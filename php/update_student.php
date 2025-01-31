@@ -216,7 +216,7 @@ input[type="submit"]:hover {
 
 <?php if (isset($student)) : ?>
     <div class="back-button">
-    <a href="read1.php"><button>Back</button></a>
+    <a href="assignments.php?action=read"><button>Back</button></a>
 </div>
     <form method="POST">
     <h2>Update Student Record</h2>

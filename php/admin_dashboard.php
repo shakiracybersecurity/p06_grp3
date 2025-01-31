@@ -87,7 +87,6 @@ is_logged_in([3]);
   <div id="sidePanel" class="sidepanel">
         <button class="closebtn" onclick="toggleSidePanel()">×</button>
         <a href="viewclass.php">View classes</a>
-
         <a href="assignments.php?action=create">Create new student profiles</a>
         <a href="creategrade.php">Enter Student's Grade</a>
         <a href="viewgradetry.php">View student's grade</a>

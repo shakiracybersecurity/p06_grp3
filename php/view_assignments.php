@@ -55,7 +55,7 @@ if ($result->num_rows > 0) {
         // Check if the course can be deleted
         if (!in_array($row['course_status'], ['start', 'in-progress'])) {
             echo "<td>
-                <form method='POST' action='delete1.php' onsubmit=\"return confirm('Are you sure you want to delete this assignment?');\">
+                <form method='POST' action='delete_assignment.php' onsubmit=\"return confirm('Are you sure you want to delete this assignment?');\">
                 <input type='hidden' name='student_id' value='" . htmlspecialchars($row['student_id']) . "'>
                 <input type='hidden' name='course_id' value='" . htmlspecialchars($row['course_id']) . "'>
                 <input type='hidden' name='csrf_token' value='" . htmlspecialchars($_SESSION['csrf_token']) . "'>

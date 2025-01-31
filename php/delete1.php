@@ -7,11 +7,9 @@ $conn = db_connect();
 session_start();
 
 checkSessionTimeout();
+is_logged_in([3,2])
 
-if (!isset($_SESSION['username']) || $_SESSION['role'] != 2) { // Only Faculty can delete assignments
-    header("Location: login.php");
-    exit();
-}
+//Restrict access: Only Admin (role=3) and Faculty (role = 2) can access
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     $student_id = intval($_POST['student_id']);

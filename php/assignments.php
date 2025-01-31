@@ -59,6 +59,20 @@ if ($action == 'update'){
 
     $department = getDepartments(); //Fetch departments
 }
+
+//Handle delete assignment
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
+    $student_id = intval($_POST['student_id']);
+    $course_id = intval($_POST['course_id']);
+
+    //Call the delete function and store the return message in the session
+    $_SESSION ['message'] = deleteCourseAssignment($student_id, $course_id);
+
+    //Redirect to prevent form resubmission
+    header("Location: view_assignments.php")
+    exit();
+}
+$conn -> close();
 ?>
 
  <!DOCTYPE html>
@@ -479,4 +493,4 @@ button:hover {
     </form>
 </body>
 </html>
-
+<?php endif; ?>

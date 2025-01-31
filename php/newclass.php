@@ -8,7 +8,7 @@ if (empty($_SESSION['token'])) {
 }
 
 
-is_logged_in([3,2]);
+is_logged_in([3,2]); 
 checkSessionTimeout();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -24,11 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mode = $_POST['mode'];
     $classname = htmlspecialchars(trim($_POST['class']));
     $dep = $_POST['department'];
+    $teacher = $_POST['teacher'];
 
     // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id, teacher_id) VALUES (?, ?, ?, ?)");
     if ($stmt) {
-        $stmt->bind_param("ssi", $classname, $mode, $dep);
+        $stmt->bind_param("ssii", $classname, $mode, $dep, $teacher);
         
         if ($stmt->execute()) {
             echo "class added!";
@@ -180,7 +181,21 @@ a {
             <option value= "<?php echo $department['id']; ?>"> <?php echo $department['name'] ?> </option>
             <?php endforeach; ?>
     </select>
-            
+    
+    Teacher:
+    <select name="teacher" id="teacher" required>
+        <option value = "" disabled selected hidden> please choose </option>
+        <?php 
+            $stmt = $conn->prepare("select id, name from faculty");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $teacher = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            foreach ($teacher as $teacher): ?>
+            <option value= "<?php echo $teacher['id']; ?>"> <?php echo $teacher['name'] ?> </option>
+            <?php endforeach; ?>
+    </select>
+   
 <br>
 <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">                
 <input type="submit" value="add">

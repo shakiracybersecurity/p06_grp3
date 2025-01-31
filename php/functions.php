@@ -206,36 +206,45 @@ function updateCourses($course_id, $post_data, $user_role){
     return "Course updated successfully.";
 }
 
-function deleteAssignment($student_id, $course_id){
-    global $conn;
+function deleteAssignment($student_id, $post_data, $course_id) { 
+    global $conn;  // Use the global database connection
 
-    $student_id = intval($_POST['student_id']);
-    $course_id = intval($_POST['course_id']);
+      // Debugging outputs - Check CSRF token
+      echo "SESSION TOKEN: " . $_SESSION['csrf_token'] . "<br>";
+      echo "POST TOKEN: " . $post_data['token'] . "<br>";
 
-    // Fetch course status
+    // Convert IDs to integers
+    $student_id = intval($student_id);
+    $course_id = intval($course_id);
+
+    // Prepare to fetch the course status
     $stmt = $conn->prepare("SELECT status FROM course WHERE id = ?");
+    if (!$stmt) {
+        return "Error preparing statement: " . $conn->error;
+    }
     $stmt->bind_param("i", $course_id);
     $stmt->execute();
     $stmt->bind_result($status);
     $stmt->fetch();
     $stmt->close();
 
-    // Allow deletion only if the course is not active
-    if (!in_array($status, ['start', 'in-progress', 'ended'])) {
+    // Check if the course status allows deletion
+    if (in_array($status, ['start', 'in-progress', 'ended'])) {
         return "Cannot delete course assignment. The course is currently active.";
-    
     }
 
+    // Prepare to delete the course assignment
     $stmt = $conn->prepare("DELETE FROM student_courses WHERE student_id = ? AND course_id = ?");
+    if (!$stmt) {
+        return "Error preparing statement: " . $conn->error;
+    }
     $stmt->bind_param("ii", $student_id, $course_id);
-
     if ($stmt->execute()) {
         $stmt->close();
-        return  "Course assignment deleted successfully.";
-    }else{
+        return "Course assignment deleted successfully.";
+    } else {
         $error = $stmt->error;
         $stmt->close();
         return "Error deleting course assignment: " . $error;
     }
 }
-?>

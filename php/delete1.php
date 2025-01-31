@@ -1,15 +1,9 @@
 <?php
-// Database connection
-require 'functions.php';
-$conn = db_connect();
-
-// Start session and check role
+// Ensure the session is started
 session_start();
+require 'functions.php';
 
-checkSessionTimeout();
-is_logged_in([3,2])
-
-//Restrict access: Only Admin (role=3) and Faculty (role = 2) can access
+$conn = db_connect();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     $student_id = intval($_POST['student_id']);
@@ -24,23 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     $stmt->close();
 
     // Allow deletion only if the course is not active
-    if (!in_array($status, ['start', 'in-progress', 'ended'])) {
+    if (!in_array($status, ['start', 'in-progress'])) {
         $stmt = $conn->prepare("DELETE FROM student_courses WHERE student_id = ? AND course_id = ?");
         $stmt->bind_param("ii", $student_id, $course_id);
-
-        if ($stmt->execute()) {
-            $_SESSION['message'] = "Course assignment deleted successfully.";
-        } else {
-            $_SESSION['message'] = "Error deleting course assignment: " . $stmt->error;
-        }
-
+        $stmt->execute();
         $stmt->close();
+        echo "Assignment deleted successfully.";
     } else {
-        $_SESSION['message'] = "Cannot delete course assignment. The course is currently active.";
+        echo "Cannot delete assignment. The course is currently active.";
     }
-
-    header("Location: view_assignments.php");
-    exit();
 }
 
 $conn->close();

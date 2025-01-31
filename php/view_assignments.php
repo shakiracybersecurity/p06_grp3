@@ -3,8 +3,13 @@
 require 'functions.php';
 $conn = db_connect();
 
-// Start session and check role
+
 session_start();
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate token if not already set
+}
+
+
 
 checkSessionTimeout();
 
@@ -48,13 +53,14 @@ if ($result->num_rows > 0) {
         
 
         // Check if the course can be deleted
-        if (!in_array($row['course_status'], ['start', 'in-progress', 'ended'])) {
+        if (!in_array($row['course_status'], ['start', 'in-progress'])) {
             echo "<td>
                 <form method='POST' action='delete1.php' onsubmit=\"return confirm('Are you sure you want to delete this assignment?');\">
-                    <input type='hidden' name='student_id' value='" . htmlspecialchars($row['student_id']) . "'>
-                    <input type='hidden' name='course_id' value='" . htmlspecialchars($row['course_id']) . "'>
-                    <input type='submit' name='delete' value='Delete'>
-                </form>
+                <input type='hidden' name='student_id' value='" . htmlspecialchars($row['student_id']) . "'>
+                <input type='hidden' name='course_id' value='" . htmlspecialchars($row['course_id']) . "'>
+                <input type='hidden' name='csrf_token' value='" . htmlspecialchars($_SESSION['csrf_token']) . "'>
+                <input type='submit' name='delete' value='Delete'>
+            </form>
             </td>";
         } else {
             echo "<td>Cannot Delete (Active Course)</td>";
@@ -117,7 +123,7 @@ $conn->close();
     margin-top: 30px;
     margin-bottom: 20px;
     }
-    button {
+    button, input[type="submit"] {
         background: #fff;
         color: black;
         padding: 10px;
@@ -128,7 +134,7 @@ $conn->close();
         border: none;
     }
 
-    button:hover {
+    button:hover, input[type="submit"]:hover {
         margin-top: 15px;
         background: #3b3ec0;
         color: white;

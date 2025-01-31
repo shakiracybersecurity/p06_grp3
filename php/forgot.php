@@ -10,8 +10,29 @@ require 'functions.php';
 $conn = db_connect();
 
 session_start();
+// Generate and store a new CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_plain'])) {
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32)); // Store plain token
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT); // Store hashed token
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    
+    // Validate CSRF token
+    if (!$token || !password_verify($token, $_SESSION['csrf_hash'])) {
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
+
+    // CSRF token is valid - Now unset it to prevent reuse
+    unset($_SESSION['csrf_plain']);
+    unset($_SESSION['csrf_hash']);
+
+    // Regenerate new CSRF token for next request
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32));
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT);
+
     $email = trim($_POST['email']);
     $users = array('students', 'faculty', 'admins');
 
@@ -171,6 +192,7 @@ button:hover {
            <input type = "email"id ="email" name ="email"required placeholder="Email Address">
            <br>
            
+           <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['csrf_plain'] ?? '') ?>">
            <button type = "submit"> Send Reset Link </button>
            <br>
         </form>   

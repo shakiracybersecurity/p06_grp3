@@ -6,8 +6,10 @@ $conn = db_connect();
 session_start();
 $_SESSION['last_activity'] = time();
 
-if (empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
+// Generate and store a new CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_plain'])) {
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32)); // Store plain token
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT); // Store hashed token
 }
 
 if (isset($_SESSION['username'])) {
@@ -18,12 +20,21 @@ if (isset($_SESSION['username'])) {
 // Handle the login form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-    if (!$token || $token !== $_SESSION['token']) {
-        // Return 405 HTTP status code
+    
+    // Validate CSRF token
+    if (!$token || !password_verify($token, $_SESSION['csrf_hash'])) {
         header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
         exit;
     }
 
+    // CSRF token is valid - Now unset it to prevent reuse
+    unset($_SESSION['csrf_plain']);
+    unset($_SESSION['csrf_hash']);
+
+    // Regenerate new CSRF token for next request
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32));
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT);
+    
     // Validate `users` input
     $valid_roles = ['students', 'faculty', 'admins'];
     $role = $_POST['users'] ?? ''; // Default to empty string if not set
@@ -193,7 +204,7 @@ button:hover {
                 <a href="forgot.php">Forgot Password / First Time Login</a><br>
 </div>
 
-                <input type="hidden" name="token" value="<?php echo htmlspecialchars($_SESSION['token']); ?>">
+                <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['csrf_plain'] ?? '') ?>">
                 <br><button type="submit" value="Login">Login</button>
             </form>
 </div>

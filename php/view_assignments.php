@@ -138,4 +138,5 @@ $conn->close();
     }
     </style>
     </head>
+    <a href = "assignments.php?action=create"><button>Assign a student</button></a>
 </html>

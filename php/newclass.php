@@ -25,11 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $classname = htmlspecialchars(trim($_POST['class']));
     $dep = $_POST['department'];
     $teacher = $_POST['teacher'];
+    $module = $_POST['module'];
 
     // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id, teacher_id) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id, teacher_id, modules_id) VALUES (?, ?, ?, ?, ?)");
     if ($stmt) {
-        $stmt->bind_param("ssii", $classname, $mode, $dep, $teacher);
+        $stmt->bind_param("ssiii", $classname, $mode, $dep, $teacher, $module);
         
         if ($stmt->execute()) {
             echo "class added!";
@@ -193,6 +194,21 @@ a {
             $stmt->close();
             foreach ($teacher as $teacher): ?>
             <option value= "<?php echo $teacher['id']; ?>"> <?php echo $teacher['name'] ?> </option>
+            <?php endforeach; ?>
+    </select>
+
+    <br>
+    Module:
+    <select name="module" id="module" required>
+        <option value = "" disabled selected hidden> please choose </option>
+        <?php 
+            $stmt = $conn->prepare("select id, name from modules");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $module = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            foreach ($module as $module): ?>
+            <option value= "<?php echo $module['id']; ?>"> <?php echo $module['name'] ?> </option>
             <?php endforeach; ?>
     </select>
    

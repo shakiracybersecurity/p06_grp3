@@ -12,38 +12,41 @@ is_logged_in([3,2]);
 
 $class_id = $_GET['id'];
 
-$stmt = $conn->prepare("SELECT class.id as class_id , class.name as classname, class.mode, department.name as depname, department.id as dep_id
-                        FROM class LEFT JOIN department ON class.department_id=department.id WHERE class.id = ?
-                        UNION
-                        SELECT class.id as class_id , class.name as classname, class.mode, department.name as depname, department.id as dep_id
-                        FROM department RIGHT JOIN class ON class.department_id=department.id 
-                         ");
+$stmt = $conn->prepare("SELECT class.id as class_id , class.name as classname, class.mode, department.name as depname,
+                        department.id as dep_id, faculty.name as teacher, faculty.id as teacher_id, modules.name as modulename, modules.id as module_id
+                        FROM class 
+                        LEFT JOIN department ON class.department_id=department.id 
+                        LEFT JOIN faculty ON class.teacher_id=faculty.id
+                        LEFT JOIN modules on class.modules_id=modules.id WHERE class.id = ?
+                         "); //select to be displayed in the form the already selected options for the class
 $stmt->bind_param("i", $class_id);
-$stmt -> execute();
+$stmt -> execute(); 
 $result = $stmt->get_result();
 $class_info = $result->fetch_assoc();
 $stmt->close();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING); //csrf token
     if (!$token || $token !== $_SESSION['token']) {
         // return 405 http status code
         header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
         exit;
-    }
+    } 
 
     // Secure: Sanitize user inputs
     $mode = $_POST['mode'];
     $classname = htmlspecialchars(trim($_POST['class']));
     $dep = $_POST['department'];
+    $teacher = $_POST['teacher'];
+    $module = $_POST['module'];
 
     // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
     if ($stmt) {
-        $stmt->bind_param("ssii", $classname, $mode, $dep, $class_id);
+        $stmt->bind_param("ssiiii", $classname, $mode, $dep, $teacher, $module, $class_id);
         
         if ($stmt->execute()) {
-            header("Location: viewclass.php");
+            header("Location: viewclass.php"); //goes back to view class if update is successful
         } else {
             echo "Error during registration.";
         }
@@ -56,7 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 ?>
-<style>
+<!-- css -->
+<style> 
 body{
     margin: 0;
     justify-content: center;
@@ -174,6 +178,36 @@ body{
             <option value= "<?php echo $department['id'];?>" 
             <?php if ($class_info['dep_id']== $department['id']){echo "selected";}?>> 
                 <?php echo $department['name'] ?> </option>
+            <?php endforeach; ?>
+            </select><br>
+
+    Teacher:  
+    <select name="teacher" id="teacher">
+        <?php 
+            $stmt = $conn->prepare("select id, name from faculty");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $teacher = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            foreach ($teacher as $teacher): ?>
+            <option value= "<?php echo $teacher['id'];?>" 
+            <?php if ($class_info['teacher_id']== $teacher['id']){echo "selected";}?>> 
+                <?php echo $teacher['name'] ?> </option>
+            <?php endforeach; ?>
+            </select><br>
+
+    Module:  
+    <select name="module" id="module">
+        <?php 
+            $stmt = $conn->prepare("select id, name from modules");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $module = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            foreach ($module as $module): ?>
+            <option value= "<?php echo $module['id'];?>" 
+            <?php if ($class_info['module_id']== $module['id']){echo "selected";}?>> 
+                <?php echo $module['name'] ?> </option>
             <?php endforeach; ?>
             </select>
             

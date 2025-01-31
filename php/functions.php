@@ -16,10 +16,10 @@ function db_connect(){
 
 // check if the user is logged in and role of user
 function is_logged_in($allowed) {
-    if (!isset($_SESSION['role'])) {
+    if (!isset($_SESSION['role'])) { //check if user is logged in
     header("Location: login.php");
     exit();
-}elseif(!in_array($_SESSION['role'], $allowed)){
+}elseif(!in_array($_SESSION['role'], $allowed)){ //check if the users role is allowed on this page
     header("Location: login.php");
     exit();
 }}
@@ -32,17 +32,17 @@ function can_delete(){
     }
 }
 
-function checkSessionTimeout($timeout_duration = 300) {
+function checkSessionTimeout($timeout_duration = 300) { //5 mins before users session is expires and they have to re-login
     if (isset($_SESSION['last_activity'])) {
-        $inactive_time = time() - $_SESSION['last_activity'];
-        if ($inactive_time > $timeout_duration) {
+        $inactive_time = time() - $_SESSION['last_activity']; //how long the user has been inactive
+        if ($inactive_time > $timeout_duration) { //checks if user has been inactive longer than allowed duration (5mins)
             session_unset();
             session_destroy();
             header("Location: login.php");
             exit();
         }
     }
-    $_SESSION['last_activity'] = time();
+    $_SESSION['last_activity'] = time(); //sets users last activity time
 }
 
 function registerStudent($post_data, $user_role){

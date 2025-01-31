@@ -101,7 +101,7 @@ label{
     font-size: 18px;
     margin-bottom: 5px;
 }
-input[type="text"]{
+input[type="password"]{
     padding: 10px;
     margin-top: 25px;
     border: none;

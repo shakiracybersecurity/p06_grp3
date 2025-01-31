@@ -7,8 +7,10 @@ session_start();
 
 checkSessionTimeout();
 
-if (empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
+// Generate and store a new CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_plain'])) {
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32)); // Store plain token
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT); // Store hashed token
 }
 
 // Allow only Admin (role_id = 3) or Faculty (role_id = 2) to access
@@ -36,13 +38,22 @@ if (!empty($search_name)) {
 
 // Handle POST request for creating grades
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-    if (!$token || $token !== $_SESSION['token']) {
-        // return 405 http status code
+    
+    // Validate CSRF token
+    if (!$token || !password_verify($token, $_SESSION['csrf_hash'])) {
         header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
         exit;
     }
+
+    // CSRF token is valid - Now unset it to prevent reuse
+    unset($_SESSION['csrf_plain']);
+    unset($_SESSION['csrf_hash']);
+
+    // Regenerate new CSRF token for next request
+    $_SESSION['csrf_plain'] = bin2hex(random_bytes(32));
+    $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT);
+
     $student_id = $_POST['student_id']; // ID of the student
     $course_id = $_POST['course_id']; // ID of the course
     $score = $_POST['score']; // Score
@@ -277,7 +288,7 @@ $conn->close();
         <option value="F">F</option>
     </select><br>
 
-    <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
+    <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['csrf_plain'] ?? '') ?>">
     <button type="submit">Create Grade</button>
 </form>
 

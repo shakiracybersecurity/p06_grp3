@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2025 at 05:41 PM
+-- Generation Time: Jan 31, 2025 at 05:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,7 +66,8 @@ CREATE TABLE `class` (
 
 INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `TEACHER_ID`, `MODULES_ID`, `MODE`, `DEPARTMENT_ID`) VALUES
 (12, 'class 2', NULL, NULL, NULL, 'term', 5),
-(13, 'test 3', NULL, NULL, NULL, 'term', 6);
+(13, 'test 3', NULL, NULL, NULL, 'term', 6),
+(14, 'class5', NULL, '1', '3', 'term', 3);
 
 -- --------------------------------------------------------
 
@@ -581,11 +582,20 @@ CREATE TABLE `login_data` (
 
 CREATE TABLE `modules` (
   `ID` int(11) NOT NULL,
+  `NAME` varchar(50) NOT NULL,
   `YEAR` year(4) DEFAULT NULL,
   `SEMESTER` varchar(50) DEFAULT NULL,
   `TERMS` varchar(50) DEFAULT NULL,
   `STAFF_ID` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `modules`
+--
+
+INSERT INTO `modules` (`ID`, `NAME`, `YEAR`, `SEMESTER`, `TERMS`, `STAFF_ID`) VALUES
+(1, 'module 1', NULL, NULL, NULL, NULL),
+(3, 'module 2', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -807,7 +817,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `course`
@@ -867,7 +877,7 @@ ALTER TABLE `login_data`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `password_resets`

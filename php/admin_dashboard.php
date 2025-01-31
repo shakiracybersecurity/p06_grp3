@@ -87,11 +87,11 @@ is_logged_in([3]);
   <div id="sidePanel" class="sidepanel">
         <button class="closebtn" onclick="toggleSidePanel()">×</button>
         <a href="viewclass.php">View classes</a>
-        <a href="create1.php">Create new student profiles</a>
+        <a href="assignment.php?action=create">Create new student profiles</a>
         <a href="creategrade.php">Enter Student's Grade</a>
         <a href="viewgradetry.php">View student's grade</a>
         <a href="view_course.php">Courses Dashboard</a>
-        <a href="read1.php"> View existing students</a>
+        <a href="assignment.php?action=create"> View existing students</a>
         <a href="logout.php">Logout</a>
     </div>
 

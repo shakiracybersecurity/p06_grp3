@@ -23,11 +23,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         $stmt->bind_param("ii", $student_id, $course_id);
         $stmt->execute();
         $stmt->close();
-        echo "Assignment deleted successfully.";
+         // Success message as a JavaScript alert
+        echo "<script>
+        alert('Assignment deleted successfully.');
+        window.location.href = 'view_assignments.php'; // Redirect after showing the alert
+        </script>";
     } else {
-        echo "Cannot delete assignment. The course is currently active.";
-    }
+    // Failure message as a JavaScript alert
+        echo "<script>
+        alert('Cannot delete assignment. The course is currently active.');
+        window.location.href = 'view_assignments.php'; // Redirect back
+        </script>";
 }
-
+}
 $conn->close();
 ?>

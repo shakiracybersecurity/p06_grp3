@@ -1,3 +1,7 @@
-your password has been reset!
-<br>
-<a href='login.php'>click here to return to login page</a>
+
+<?php
+echo "<script>
+    alert('Your password has been reset!');
+    window.location.href = 'login.php'; // Redirect to the login page
+</script>";
+?>

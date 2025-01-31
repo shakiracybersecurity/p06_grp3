@@ -96,7 +96,7 @@ function registerStudent($post_data, $user_role){
                 $assign_stmt->execute();
             }
             $assign_stmt->close();
-            $message = "Courses assigned successfully!<br>";
+            $message = "Courses assigned  and student registered successfully!<br>";
         }
      return $message;
     }else{
@@ -155,17 +155,21 @@ function getDepartments(){
     global $conn;
     $departments = [];
     
+    // Prepare and execute the query
     $dept_stmt = $conn->prepare("SELECT NAME FROM department");
     $dept_stmt->execute();
     $dept_result = $dept_stmt->get_result();
 
+    // Fetch department names
     while ($dept_row = $dept_result->fetch_assoc()) {
         $departments[] = $dept_row['NAME'];
     }
 
-    $stmt->close();
+    // Close the statement
+    $dept_stmt->close(); // Corrected from $stmt->close()
     return $departments;
 }
+
 
 function updateCourses($course_id, $post_data, $user_role){
     global $conn;

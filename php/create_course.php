@@ -120,47 +120,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         button[type="submit"]{
-        display: block;
-        width: 100%;
-        background: #fff;
-        color: black;
-        padding: 10px;
-        border: 1px solid #2c2e3a;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 15px;
-        text-align: center;
-        font-size: 15px;
-        margin-left: 10px;
-    }
-      
-    button[type="submit"]:hover {
-    margin-top: 15px;
-    background: #3b3ec0;
-    color: white;
-    outline: 1px solid #fff;
-}
-button {
-        display: block;
-        width: 100%;
-        background: #fff;
-        color: black;
-        padding: 10px;
-        border: 1px solid #2c2e3a;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 15px;
-        text-align: center;
-        font-size: 15px;
-        margin-left: -50px;
-    }
-      
-    button:hover {
-    margin-top: 15px;
-    background: #3b3ec0;
-    color: white;
-    outline: 1px solid #fff;
-}
+            display: block;
+            width: 100%;
+            background: #fff;
+            color: black;
+            padding: 10px;
+            border: 1px solid #2c2e3a;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 15px;
+            margin-left: 10px;
+        }
+
+        button[type="submit"]:hover {
+            margin-top: 15px;
+            background: #3b3ec0;
+            color: white;
+            outline: 1px solid #fff;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background: #fff;
+            color: black;
+            padding: 10px;
+            border: 1px solid #2c2e3a;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 15px;
+            margin-left: -50px;
+        }
+
+        button:hover {
+            margin-top: 15px;
+            background: #3b3ec0;
+            color: white;
+            outline: 1px solid #fff;
+        }
 
         .back-link {
             display: block;

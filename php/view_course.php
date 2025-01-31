@@ -122,7 +122,7 @@ $result = $conn->query($sql);
                 <td>
                     <?= htmlspecialchars($row['STATUS']) ?></td>
                 <td>
-                    <a href="update1.php?id=<?= $row['ID'] ?>"><button>Edit</button></a>
+                    <a href="assignments.php?action=update&id=<?= $row['ID'] ?>"><button>Edit</button></a>
                     <?php if ($_SESSION['role'] == 3): // Only Admin can delete ?>
                         <a href="delete_course.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure?')"><button>Delete</button></a>
                     <?php endif; ?>
@@ -131,7 +131,7 @@ $result = $conn->query($sql);
         <?php endwhile; ?>
     </table><br>
     <!-- Create Course Button -->
-    <a href="create_course.php"><button style="background-color:rgb(21, 128, 6); display: inline-block;">Create Course</button></a>    
+    <a href="create_course.php"><button>Create Course</button></a>    
 </body>
 </html>
 <?php $conn->close(); ?>

@@ -341,7 +341,6 @@ button:hover {
     </style>
 </head>
 <body>
-<a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
 <!-- Display Student Records -->
 <?php if ($action == 'read'): ?>
     <h2>Current Student Records</h2>

@@ -223,15 +223,15 @@ input[type="submit"]:hover {
         </select><br>
         
         Department: 
-<select name="department_id" required>
-    <option value="">Select Department</option>
-    <?php foreach ($departments as $dept): ?>
-        <option value="<?= htmlspecialchars($dept['id']) ?>" 
-        <?= ($student['department_id'] == $dept['id']) ? 'selected' : '' ?>>
-            <?= htmlspecialchars($dept['name']) ?>
-        </option>
-    <?php endforeach; ?>
-</select><br>
+        <select name="department_id" required>
+         <option value="">Select Department</option>
+            <?php foreach ($departments as $dept): ?>
+                <option value="<?= htmlspecialchars($dept['id']) ?>" 
+                <?= ($student['department_id'] == $dept['id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($dept['name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select><br>
 
 
     

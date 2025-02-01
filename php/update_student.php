@@ -50,11 +50,38 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST['update'])) {
     $faculty = trim($_POST['faculty']);
     $department_id = (int)$_POST['department_id']; // Ensure this is an integer
     $selected_courses = $_POST['course_ids'] ?? [];
+    
+    // Validate name (letters, spaces, and hyphens only)
+    if (!preg_match("/^[a-zA-Z\s\-]+$/", $name)) {
+        $_SESSION['message'] = "Invalid name format. Only letters, spaces, and hyphens are allowed.";
+        header("Location: update_student.php?id=$student_id");
+        exit;
+    }
 
+    // Validate phone number (exactly 8 digits)
+    if (!preg_match('/^\d{8}$/', $phonenumber)) {
+        $_SESSION['message'] = "Invalid phone number. It must be exactly 8 digits.";
+        header("Location: update_student.php?id=$student_id");
+        exit;
+    }
 
-    // Update student details
+    // Check if the email already exists for another student
+    $stmt = $conn->prepare("SELECT id FROM students WHERE email = ? AND id != ?");
+    $stmt->bind_param("si", $email, $student_id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $_SESSION['message'] = "Error: This email is already in use by another student.";
+        header("Location: update_student.php?id=$student_id");
+        exit;
+    }
+    $stmt->close();
+
+    // Proceed with updating student details
     $stmt = $conn->prepare("UPDATE students SET name=?, phonenumber=?, email=?, faculty=?, department_id=? WHERE id=?");
     $stmt->bind_param("ssssii", $name, $phonenumber, $email, $faculty, $department_id, $student_id);
+
     if ($stmt->execute()) {
         $_SESSION['message'] = "Student details updated successfully.";
     } else {
@@ -213,7 +240,7 @@ input[type="submit"]:hover {
         <input type='hidden' name='id' value='<?= htmlspecialchars($student['id']) ?>'>
         <label>Name:</label><input type='text' name='name' value='<?= htmlspecialchars($student['name']) ?>'><br>
         <label>Phone Number:</label><input type='tel' name='phonenumber'pattern="\d{8}" title="Phone number must be 8 digits" value='<?= htmlspecialchars($student['phonenumber']) ?>'><br>
-        <label>Email:</label><input type='text' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
+        <label>Email:</label><input type='email' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
         
         <label for="faculty">Faculty:</label>
         <select id="faculty" name="faculty" required>

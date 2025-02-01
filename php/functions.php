@@ -153,9 +153,10 @@ function getCourseDetails($course_id){
 
 function getDepartments(){
     global $conn;
-    $departments = [];
     
     // Prepare and execute the query
+    $stmt = $conn->prepare("SELECT * FROM course WHERE ID = ?");
+    $departments = [];
     $dept_stmt = $conn->prepare("SELECT NAME FROM department");
     $dept_stmt->execute();
     $dept_result = $dept_stmt->get_result();
@@ -166,8 +167,7 @@ function getDepartments(){
     }
 
     // Close the statement
-    $dept_stmt->close(); // Corrected from $stmt->close()
-    return $departments;
+    $dept_stmt->close();
 }
 
 

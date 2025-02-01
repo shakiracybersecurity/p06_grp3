@@ -1,11 +1,26 @@
 <?php
-// Database connection details
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Include database functions
 require 'functions.php';
 $conn = db_connect();
 
-session_start();
+// Ensure database connection is established
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 
+// Start session and check session variables
+session_start();
 checkSessionTimeout();
+
+// Allow only Admin (role_id = 3) or Faculty (role_id = 2) to access
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], [2, 3])) {
+    header("Location: unauthorized.php");
+    exit();
+}
 
 // Generate and store a new CSRF token if it doesn't exist
 if (empty($_SESSION['csrf_plain'])) {
@@ -13,14 +28,11 @@ if (empty($_SESSION['csrf_plain'])) {
     $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT); // Store hashed token
 }
 
-// Allow only Admin (role_id = 3) or Faculty (role_id = 2) to access
-if (!in_array($_SESSION['role'], [2, 3])) {
-    header("Location: unauthorized.php");
-    exit();
-}
-
 // Fetch courses for the dropdown
 $course_result = $conn->query("SELECT ID, NAME FROM course");
+if (!$course_result) {
+    die("Error fetching courses: " . $conn->error);
+}
 $courses = $course_result->fetch_all(MYSQLI_ASSOC);
 
 // Search for students by name (optional)
@@ -36,21 +48,17 @@ if (!empty($search_name)) {
     $stmt->close();
 }
 
-// Handle POST request for creating grades
+// Handle grade creation form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-    
+    $token = htmlspecialchars($_POST['token'] ?? '', ENT_QUOTES, 'UTF-8');
+
     // Validate CSRF token
     if (!$token || !password_verify($token, $_SESSION['csrf_hash'])) {
-        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
-        exit;
+        die("Error: CSRF token verification failed.");
     }
 
-    // CSRF token is valid - Now unset it to prevent reuse
-    unset($_SESSION['csrf_plain']);
-    unset($_SESSION['csrf_hash']);
-
     // Regenerate new CSRF token for next request
+    unset($_SESSION['csrf_plain'], $_SESSION['csrf_hash']);
     $_SESSION['csrf_plain'] = bin2hex(random_bytes(32));
     $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT);
 
@@ -63,29 +71,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($student_id) || empty($course_id) || empty($score) || empty($grade)) {
         $error_message = "All fields are required.";
     } else {
-        // Check if a grade record already exists for this student and course
-        $check_stmt = $conn->prepare("SELECT ID FROM grades WHERE STUDENT_ID = ? AND COURSE_ID = ?");
-        $check_stmt->bind_param("ii", $student_id, $course_id);
-        $check_stmt->execute();
-        $check_stmt->store_result();
-        if ($check_stmt->num_rows > 0) {
-            $error_message = "A grade record already exists for this student under the selected course.";
+        // Check if student ID exists before proceeding
+        $student_check_stmt = $conn->prepare("SELECT ID FROM students WHERE ID = ?");
+        $student_check_stmt->bind_param("i", $student_id);
+        $student_check_stmt->execute();
+        $student_check_stmt->store_result();
+
+        if ($student_check_stmt->num_rows === 0) { 
+            $error_message = "Unable to create grade: Invalid Student ID entered"; // Set error message
+            $student_check_stmt->close();
         } else {
-            // Prepare the SQL statement to insert data securely
-            $stmt = $conn->prepare("INSERT INTO grades (STUDENT_ID, COURSE_ID, SCORE, GRADE) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("iids", $student_id, $course_id, $score, $grade); // i = integer, d = double, s = string
+            // Proceed only if the student ID is valid
+            $student_check_stmt->close(); // Close here instead of inside the if-block
 
-            // Execute the statement
-            if ($stmt->execute()) {
-                $success_message = "Grade successfully added!";
+            // Check if a grade record already exists for this student and course
+            $check_stmt = $conn->prepare("SELECT ID FROM grades WHERE STUDENT_ID = ? AND COURSE_ID = ?");
+            $check_stmt->bind_param("ii", $student_id, $course_id);
+            $check_stmt->execute();
+            $check_stmt->store_result();
+
+            if ($check_stmt->num_rows > 0) {
+                $error_message = "A grade record already exists for this student under the selected course.";
             } else {
-                $error_message = "Error adding grade: " . $stmt->error;
-            }
+                // Prepare the SQL statement to insert data securely
+                $stmt = $conn->prepare("INSERT INTO grades (STUDENT_ID, COURSE_ID, SCORE, GRADE) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("iids", $student_id, $course_id, $score, $grade);
 
-            // Close the statement
-            $stmt->close();
+                if ($stmt->execute()) {
+                    $success_message = "Grade successfully added!";
+                } else {
+                    $error_message = "Error adding grade: " . $stmt->error;
+                }
+
+                $stmt->close();
+            }
+            $check_stmt->close();
         }
-        $check_stmt->close();
+        
     }
 }
 
@@ -100,29 +122,25 @@ $conn->close();
         <title> Robotic Management System</title>
 <!-- Style for Form and Search Results -->
 <style>
-    *{
-    margin: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+    * {
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
     }
-     body{
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color:#2c2e3a;
-    background-size: cover;
+    body {
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #2c2e3a;
+        background-size: cover;
     }
-    .container{
-    margin-top: 0px;
-    margin:50px auto;
-    max-width: 500px;
-    height: 900px;
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: 1px solid #fff;
+    .container {
+        margin: 50px auto;
+        max-width: 500px;
+        height: auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
     }
     form {
         width: 50%;
@@ -130,123 +148,44 @@ $conn->close();
         padding: 20px;
         border-radius: 10px;
         background-color: #f9f9f9;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-family: Arial, sans-serif;
     }
-
-    h1{
-    text-align: center;
-    color: #050A44;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    h1 {
+        text-align: center;
+        color: #050A44;
+        margin-bottom: 20px;
     }
-
-    label{
-    font-size: 15px;
-    margin-bottom: 2px;
-    }
-
-    input[type="number"],
-    input[type="text"],
-    select {
+    input, select {
         width: 100%;
         padding: 10px;
         margin-bottom: 15px;
-        border: 1px solid #ddd;
         border-radius: 5px;
-        font-size: 16px;
-        box-sizing: border-box;
-        padding: 10px;
-        margin-top: 8px;
-        background: transparent;
-        color: #141619;
     }
-
     .search-results {
-        width: 40%;
+        width: 50%;
         margin: 10px auto;
         padding: 15px;
         background-color: #f9f9f9;
-        border: 1px solid #ddd;
         border-radius: 8px;
-        font-size: 16px;
     }
-
-    .search-results h4 {
-        margin-bottom: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    .search-results .student-details {
-        margin-bottom: 15px;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .student-details span {
-        margin-bottom: 5px;
-    }
-
-    .search-results button {
-        align-self: center;
-        padding: 10px 20px;
-        font-size: 14px;
-        color: black;
-        background-color: #fff;
-        border: 1px solid #2c2e3a;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .search-results button:hover {
-        background-color: #3b3ec0;
-    }
-
     button {
-    background: #fff;
-    color: black;
-    padding: 10px;
-    border: 1px solid #2c2e3a;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 15px;
-    display:flex;
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
     }
     button:hover {
-    margin-top: 15px;
-    background: #3b3ec0;
-    color: white;
-    outline: 1px solid #fff;
-    }
-    a {
-        text-decoration: none;
-    }
-
-    p {
-        text-align: center;
-        font-size: 16px;
-        margin-top: 20px;
-    }
-
-    p a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    p a:hover {
-        text-decoration: underline;
+        background: #3b3ec0;
+        color: white;
     }
 </style>
 
 <br>
 <a href="viewgradetry.php"><button>Back to View Student Grades</button></a>
+
 <form method="GET">
-<h1>Create Grade</h1>
+    <h1>Create Grade</h1>
     <label for="search_name">Search Student by Name:</label>
     <input type="text" name="search_name" id="search_name" placeholder="Enter student name">
     <button type="submit">Search</button>
@@ -256,7 +195,7 @@ $conn->close();
     <div class="search-results">
         <h4>Search Results:</h4>
         <?php foreach ($students as $student): ?>
-            <div class="student-details">
+            <div>
                 <span><strong>Name:</strong> <?php echo htmlspecialchars($student['NAME']); ?></span>
                 <span><strong>ID:</strong> <?php echo htmlspecialchars($student['ID']); ?></span>
                 <button onclick="selectStudent('<?php echo $student['ID']; ?>')">Select</button>
@@ -267,7 +206,7 @@ $conn->close();
 
 <form method="POST">
     <label for="student_id">Student ID:</label>
-    <input type="number" name="student_id" id="student_id" required placeholder="Student ID"><br>
+    <input type="number" name="student_id" id="student_id" required><br>
 
     <label for="course">Course:</label>
     <select id="course" name="course_id" required>
@@ -297,15 +236,18 @@ $conn->close();
     <button type="submit">Create Grade</button>
 </form>
 
-<!-- Confirmation Message -->
-<?php if (!empty($success_message)): ?>
-    <p><?php echo $success_message; ?> <a href="viewgradetry.php">Return back to student list?</a></p>
-<?php elseif (!empty($error_message)): ?>
-    <p style="color: white;"><?php echo $error_message; ?></p>
-<?php endif; ?>
-
 <script>
     function selectStudent(studentId) {
         document.getElementById('student_id').value = studentId;
     }
 </script>
+
+<!-- Confirmation Message -->
+<?php if (!empty($success_message)): ?>
+    <p style="color: white;">
+        <?php echo $success_message; ?> 
+        <a href="viewgradetry.php" style="color: darkcyan;">Return back to student list?</a>
+    </p>
+<?php elseif (!empty($error_message)): ?>
+    <p style="color: #B22222 ;"><?php echo $error_message; ?></p>
+<?php endif; ?>

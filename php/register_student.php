@@ -33,61 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit("Invalid CSRF token.");
     }
 
-    // Check if all required inputs exist
-    if (isset($_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['department_id'], $_POST['id'], $_POST['faculty'])) {
-        // Sanitize inputs
-        $name = htmlspecialchars(trim($_POST['name']));
-        $phonenumber = htmlspecialchars(trim($_POST['phonenumber']));
-        $email = htmlspecialchars(trim($_POST['email']));
-        $department_id = htmlspecialchars(trim($_POST['department_id']));
-        $studentid = htmlspecialchars(trim($_POST['id']));
-        $faculty = htmlspecialchars(trim($_POST['faculty']));
-        $role_id = 1;  // Default role is 1 for students
+    // Use the `registerStudent` function to handle registration
+    $message = registerStudent($_POST, $_SESSION['role']);
 
-        $course_ids = filter_input(INPUT_POST, 'course_ids', FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY); // Courses for faculty only
-
-        // Validate phone number
-        if (!preg_match('/^\d{8}$/', $phonenumber)) {
-            echo "Invalid phone number. It must be exactly 8 digits.<br>";
-        } else {
-            // Check if the student ID already exists
-            $check_stmt = $conn->prepare("SELECT id FROM students WHERE id = ?");
-            $check_stmt->bind_param("s", $studentid);
-            $check_stmt->execute();
-            $check_stmt->store_result();
-
-            if ($check_stmt->num_rows > 0) {
-                echo "Error: A user with this ID already exists.";
-            } else {
-                // Register the student
-                $register_stmt = $conn->prepare("INSERT INTO students (name, phonenumber, email, department_id, id, faculty, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $register_stmt->bind_param("ssssssi", $name, $phonenumber, $email, $department_id, $studentid, $faculty, $role_id);
-
-                if ($register_stmt->execute()) {
-                    $registration_successful = true; // Mark as successful
-                    echo "Registration for $name successful!<br>";
-
-                    // Only Faculty can assign courses
-                    if ($user_role == 2 && !empty($course_ids)) {
-                        $assign_stmt = $conn->prepare("INSERT INTO student_courses (student_id, course_id) VALUES (?, ?)");
-                        foreach ($course_ids as $course_id) {
-                            $assign_stmt->bind_param("ii", $studentid, $course_id);
-                            $assign_stmt->execute();
-                        }
-                        $assign_stmt->close();
-                        echo "Courses assigned successfully!<br>";
-                    }
-                } else {
-                    echo "Error: " . $register_stmt->error;
-                }
-
-                $register_stmt->close();
-            }
-
-            $check_stmt->close();
-        }
+    // Check if registration was successful
+    if (strpos($message, "successful") !== false) {
+        $registration_successful = true;
+        echo "<script>
+            alert('$message');
+            window.location.href = 'assignments.php?action=read';
+        </script>";
     } else {
-        echo "All fields are required.";
+        echo "<script>
+            alert('$message');
+        </script>";
     }
 }
 

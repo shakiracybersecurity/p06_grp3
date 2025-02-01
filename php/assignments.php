@@ -461,9 +461,9 @@ button:hover {
 <div class="container">
     <form method="POST">
     <h2>Update Course</h2>
-        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['token']) ?>">
+        <input type='hidden' name='token' value='<?= htmlspecialchars($_SESSION['token']) ?>'>
 
-        <!-- Course Details -->
+        <!-- Course details -->
         Name: <input type="text" name="name" value="<?= htmlspecialchars($course['NAME']) ?>" required><br>
         Code: <input type="text" name="code" value="<?= htmlspecialchars($course['CODE']) ?>" required><br>
         Department: 

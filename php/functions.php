@@ -66,6 +66,10 @@ function registerStudent($post_data, $user_role) {
     $role_id = 1;  // Default role is 1 for students
 
     $course_ids = $post_data['course_ids'] ?? []; // Validate courses array
+    // Validate name (letters, spaces, and hyphens only)
+    if (!preg_match("/^[a-zA-Z\s\-]+$/", $name)) {
+        return "Invalid name format. Only letters, spaces, and hyphens are allowed.";
+    }
 
     if (!preg_match('/^\d{8}$/', $phonenumber)) {
         return "Invalid phone number. It must be exactly 8 digits.";

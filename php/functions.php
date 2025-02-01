@@ -76,7 +76,7 @@ function registerStudent($post_data, $user_role) {
     }
 
     // Check if the student ID already exists
-    $check_stmt = $conn->prepare("SELECT id FROM students WHERE id = ?");
+    $check_stmt = $conn->prepare ("SELECT id FROM students WHERE id = ?");
     $check_stmt->bind_param("s", $studentid);
     $check_stmt->execute();
     $check_stmt->store_result();

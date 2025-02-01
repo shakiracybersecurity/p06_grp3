@@ -82,7 +82,7 @@ if ($action == 'update'){
 
     //Handle form submission for updating the course
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $update_message = updateCourse($course_id, $_POST,$user_role);
+        $update_message = updateCourses($course_id, $_POST,$user_role);
     }
 
     $departments = getDepartments(); //Fetch departments

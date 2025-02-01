@@ -233,6 +233,7 @@ input[type="submit"]:hover {
         
         <label for="faculty">Faculty:</label>
         <select id="faculty" name="faculty" required>
+        <option value="None" <?= $student['faculty'] == 'None' ? 'selected' : '' ?>>None</option>
         <option value="ENG" <?= $student['faculty'] == 'ENG' ? 'selected' : '' ?>>Engineering</option>
         <option value="IIT" <?= $student['faculty'] == 'IIT' ? 'selected' : '' ?>>Informatics and IT</option>
         </select><br>

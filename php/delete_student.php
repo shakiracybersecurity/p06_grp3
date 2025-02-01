@@ -13,9 +13,13 @@ if (!isset($_SESSION['username'])) {
 
 // Role check for Admin access
 if ($_SESSION['role'] != 3) { // Role 3 is Admin
-    echo "Unauthorized access. Only admins can delete records.";
+    echo "<script>
+            alert('Unauthorized access. Only admins can delete records.');
+            window.location.href = 'faculty_dashboard.php'; // Redirect to dashboard or another page
+          </script>";
     exit();
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     $student_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);

@@ -45,13 +45,14 @@ function checkSessionTimeout($timeout_duration = 300) { //5 mins before users se
     $_SESSION['last_activity'] = time(); //sets users last activity time
 }
 
-function registerStudent($post_data, $user_role) {
+function registerStudent($post_data, $user_role) { 
     global $conn;
 
     if (!isset($post_data['token']) || $post_data['token'] !== $_SESSION['csrf_token']) {
         http_response_code(403);
         exit("Invalid CSRF token.");
     }
+    
     if (!isset($post_data['name'], $post_data['phonenumber'], $post_data['email'], $post_data['department_id'], $post_data['id'], $post_data['faculty'])) {
         return "All fields are required.";
     }
@@ -66,6 +67,7 @@ function registerStudent($post_data, $user_role) {
     $role_id = 1;  // Default role is 1 for students
 
     $course_ids = $post_data['course_ids'] ?? []; // Validate courses array
+
     // Validate name (letters, spaces, and hyphens only)
     if (!preg_match("/^[a-zA-Z\s\-]+$/", $name)) {
         return "Invalid name format. Only letters, spaces, and hyphens are allowed.";
@@ -75,22 +77,23 @@ function registerStudent($post_data, $user_role) {
         return "Invalid phone number. It must be exactly 8 digits.";
     }
 
-    // Check if the student ID already exists
-    $check_stmt = $conn->prepare ("SELECT id FROM students WHERE id = ?");
-    $check_stmt->bind_param("s", $studentid);
+    // Check if the student ID or email already exists
+    $check_stmt = $conn->prepare("SELECT id FROM students WHERE id = ? OR email = ?");
+    $check_stmt->bind_param("ss", $studentid, $email);
     $check_stmt->execute();
     $check_stmt->store_result();
 
     if ($check_stmt->num_rows > 0) {
-        return "Error: A user with this ID already exists.";
+        return "Error: A student with this ID or Email already exists.";
     }
+    $check_stmt->close();
 
     // Register the student
     $register_stmt = $conn->prepare("INSERT INTO students (name, phonenumber, email, department_id, id, faculty, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $register_stmt->bind_param("ssssssi", $name, $phonenumber, $email, $department_id, $studentid, $faculty, $role_id);
 
     if ($register_stmt->execute()) {
-        $message = "Registration for $name successful!<br>";
+        $message = "Registration for $name successful!";
 
         // Allow Admins (role 3) and Faculty (role 2) to assign courses
         if (($user_role == 2 || $user_role == 3) && !empty($course_ids)) {
@@ -102,14 +105,14 @@ function registerStudent($post_data, $user_role) {
                 }
             }
             $assign_stmt->close();
-            $message = "Courses assigned and student registered successfully!";
+            $message .= " Courses assigned successfully!";
         }
+        
+        $register_stmt->close();
         return $message;
     } else {
         return "Error: " . $register_stmt->error;
     }
-    $register_stmt->close();
-    $check_stmt->close();
 }
 
 
@@ -180,6 +183,24 @@ function getDepartments() {
     }
 
     // Return the fetched departments
+    return $departments;
+}
+
+function getStudentDepartments() {  
+    global $conn;
+
+    $departments = [];
+    $stmt = $conn->prepare("SELECT id, name FROM department");
+    if ($stmt) {
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $departments[] = $row;
+        }
+        $stmt->close();
+    } else {
+        error_log("Failed to prepare statement: " . $conn->error);
+    }
     return $departments;
 }
 

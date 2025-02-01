@@ -13,7 +13,15 @@ if (!isset($_SESSION['username'])) {
 
 // Role check for Admin access
 if ($_SESSION['role'] != 3) { // Role 3 is Admin
-    echo "Unauthorized access. Only admins can delete records.";
+    echo "<script>
+            alert('Unauthorized access. Only admins can delete records.');
+            window.location.href = 'faculty_dashboard.php'; // Redirect to dashboard or another page
+          </script>";
+    exit();
+}
+// Validate and sanitize input
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo "<script>alert('Invalid student ID!'); window.location.href='assignments.php?action=read';</script>";
     exit();
 }
 

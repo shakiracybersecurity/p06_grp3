@@ -1,52 +1,23 @@
 <?php 
-// Database connection details
 require 'functions.php';
 $conn = db_connect();
-
-// Start session
 session_start();
-
 checkSessionTimeout();
-
-if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] !=2)) { // Only Admin or Faculty
-    header("Location: login.php");
-    exit("Unauthorized access.");
-}
-
-$user_role = (int)$_SESSION['role']; // Cast to integer to match type
-$user_id = $_SESSION['id'];
+is_logged_in([3, 2]);
 
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    $csrf_token_hashed = hash("sha256", $_SESSION['csrf_token']);
-    $issued_at = date("Y-m-d H:i:s");
-    $expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
-
-    // Insert CSRF token into the database
-    $admin_id = ($user_role === 3) ? $user_id : null;
-    $staff_id = ($user_role === 2) ? $user_id : null;
-
-    $stmt = $conn->prepare("INSERT INTO csrf (TOKEN, ISSUED_AT, EXPIRES_AT, ADMIN_ID, STAFF_ID) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssii", $csrf_token_hashed, $issued_at, $expires_at, $admin_id, $staff_id);
-    if (!$stmt->execute()) {
-        die("Error inserting CSRF token: " . $stmt->error);
-    }
-    $stmt->close();
 }
 
 $student = null;
 $student_courses = [];
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $student_id = intval($_GET['id']);
+    $student_id = (int)$_GET['id'];
     $stmt = $conn->prepare("SELECT id, name, phonenumber, email, faculty, department_id FROM students WHERE id = ?");
     $stmt->bind_param("i", $student_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $student = $result->fetch_assoc();
-    } else {
-        echo "<p>No student records found.</p>";
-    }
+    $student = $result->fetch_assoc();
     $stmt->close();
 
     $stmt = $conn->prepare("SELECT course_id FROM student_courses WHERE student_id = ?");
@@ -59,29 +30,66 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt->close();
 }
 
-// Fetch all available courses
 $courses = $conn->query("SELECT id, name FROM course");
 if (!$courses) {
     die("Error fetching courses: " . $conn->error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST['update'])) {
-    $name = $_POST['name'];
-    $phonenumber = $_POST['phonenumber'];
-    $email = $_POST['email'];
-    $faculty = $_POST['faculty'];
-    $department_id = $_POST['department_id'];
-    $selected_courses = $_POST['course_ids'] ?? [];
+$departments = getStudentDepartments(); // Ensure getDepartments fetches id and name
 
-    $stmt = $conn->prepare("UPDATE students SET name=?, phonenumber=?, email=?, faculty=?, department_id=? WHERE id=?");
-    $stmt->bind_param("ssssii", $_POST['name'], $_POST['phonenumber'], $_POST['email'], $_POST['faculty'], $_POST['department_id'], $_POST['id']);
-    if ($stmt->execute()) {
-        $_SESSION['message'] = "Student details updated successfully.";
-    } else {
-        $_SESSION['message'] = "Update failed or no changes made: " . htmlspecialchars($stmt->error);
+if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST['update'])) {
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['csrf_token']) {
+        die("Invalid CSRF token.");
+    }
+
+    // Extract and validate form inputs
+    $name = trim($_POST['name']);
+    $phonenumber = trim($_POST['phonenumber']);
+    $email = trim($_POST['email']);
+    $faculty = trim($_POST['faculty']);
+    $department_id = (int)$_POST['department_id']; // Ensure this is an integer
+    $selected_courses = $_POST['course_ids'] ?? [];
+    
+    // Validate name (letters, spaces, and hyphens only)
+    if (!preg_match("/^[a-zA-Z\s\-]+$/", $name)) {
+        $_SESSION['message'] = "Invalid name format. Only letters, spaces, and hyphens are allowed.";
+        header("Location: update_student.php?id=$student_id");
+        exit;
+    }
+
+    // Validate phone number (exactly 8 digits)
+    if (!preg_match('/^\d{8}$/', $phonenumber)) {
+        $_SESSION['message'] = "Invalid phone number. It must be exactly 8 digits.";
+        header("Location: update_student.php?id=$student_id");
+        exit;
+    }
+
+    // Check if the email already exists for another student
+    $stmt = $conn->prepare("SELECT id FROM students WHERE email = ? AND id != ?");
+    $stmt->bind_param("si", $email, $student_id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $_SESSION['message'] = "Error: This email is already in use by another student.";
+        header("Location: update_student.php?id=$student_id");
+        exit;
     }
     $stmt->close();
 
+    // Proceed with updating student details
+    $stmt = $conn->prepare("UPDATE students SET name=?, phonenumber=?, email=?, faculty=?, department_id=? WHERE id=?");
+    $stmt->bind_param("ssssii", $name, $phonenumber, $email, $faculty, $department_id, $student_id);
+
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Student details updated successfully.";
+    } else {
+        $_SESSION['message'] = "Error updating student details: " . htmlspecialchars($stmt->error);
+    }
+    $stmt->close();
+
+    // Update student courses
     $stmt = $conn->prepare("DELETE FROM student_courses WHERE student_id = ?");
     $stmt->bind_param("i", $student_id);
     $stmt->execute();
@@ -93,11 +101,14 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST['update'])) {
         $stmt->execute();
     }
     $stmt->close();
+
     header("Location: update_student.php?id=$student_id");
     exit;
 }
+
 $conn->close();
 ?>
+
 <!DOCTYPE html>
  <html lang="en">
     <head>
@@ -229,21 +240,27 @@ input[type="submit"]:hover {
         <input type='hidden' name='id' value='<?= htmlspecialchars($student['id']) ?>'>
         <label>Name:</label><input type='text' name='name' value='<?= htmlspecialchars($student['name']) ?>'><br>
         <label>Phone Number:</label><input type='tel' name='phonenumber'pattern="\d{8}" title="Phone number must be 8 digits" value='<?= htmlspecialchars($student['phonenumber']) ?>'><br>
-        <label>Email:</label><input type='text' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
+        <label>Email:</label><input type='email' name='email' value='<?= htmlspecialchars($student['email']) ?>'><br>
         
         <label for="faculty">Faculty:</label>
         <select id="faculty" name="faculty" required>
+        <option value="None" <?= $student['faculty'] == 'None' ? 'selected' : '' ?>>None</option>
         <option value="ENG" <?= $student['faculty'] == 'ENG' ? 'selected' : '' ?>>Engineering</option>
         <option value="IIT" <?= $student['faculty'] == 'IIT' ? 'selected' : '' ?>>Informatics and IT</option>
         </select><br>
+        
+        Department: 
+        <select name="department_id" required>
+         <option value="">Select Department</option>
+            <?php foreach ($departments as $dept): ?>
+                <option value="<?= htmlspecialchars($dept['id']) ?>" 
+                <?= ($student['department_id'] == $dept['id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($dept['name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select><br>
 
-        <label for="department">Department:</label> 
-        <select id="department" name="department_id" required>
-        <option value="" disabled selected>Select</option>
-        <option value="1">RBE/ENG</option>
-        <option value="2">RBS/IIT</option>
-        <option value="3">RMC/IIT</option>
-        </select> <br>
+
     
         <label for="course">Assign Courses:</label><br>
         <?php while ($course = $courses->fetch_assoc()): ?>

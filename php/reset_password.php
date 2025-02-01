@@ -57,6 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $pass = htmlspecialchars(trim($_POST['password']));
     $confpass = htmlspecialchars(trim($_POST['conf_password']));
 
+    // **Validate Password**
+    if (strlen($pass) < 8) {
+        $error = "Password must be at least 8 characters long.";
+    } elseif ($pass !== $confpass) {
+        $error = "Passwords do not match!";
+    } else {
+        // **Hash Password Securely**
+        $passHash = password_hash($pass, PASSWORD_DEFAULT);
+
     if ($pass == $confpass){
         $passHash = password_hash($pass, PASSWORD_DEFAULT);
         $stmt = $conn->prepare("UPDATE $role SET password_hash = ? WHERE id = ?"); //update password
@@ -73,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }else{
         $error = "passwords do not match!";
     }
+}
 }
 ?>
 

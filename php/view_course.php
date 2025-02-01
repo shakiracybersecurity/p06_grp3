@@ -32,65 +32,65 @@ $result = $conn->query($sql);
         margin: 0;
         box-sizing: border-box;
         font-family: sans-serif;
-    }
+        }
 
-    body{
-        margin-left: auto;
-        margin-right: auto;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color:#b3b4bd; 
-        background-size: cover;
-    }
+        body{
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color:#b3b4bd; 
+            background-size: cover;
+        }
 
-    table{
-        margin-left: auto;
-        margin-right: auto;
-        border-collapse: collapse;
-        width: 80%; /* Adjust width as needed */
-        max-width: 1000px; /* Optional: limit table width */
-        background-color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border: 1px solid;
-    }
+        table{
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            width: 80%; /* Adjust width as needed */
+            max-width: 1000px; /* Optional: limit table width */
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid;
+        }
 
-    th, td{
-        padding: 15px;
-        text-align: center;
-        border: 1px solid;  
-    }
+        th, td{
+            padding: 15px;
+            text-align: center;
+            border: 1px solid;  
+        }
 
-    th{
-        background-color: #0a21c0;
-        color: white;
-    }
+        th{
+            background-color: #0a21c0;
+            color: white;
+        }
 
-    h2{
-        text-align: center;
-        color: #2c2e3a;
-        margin-top: 30px;
-        margin-bottom: 20px;
-    }
+        h2{
+            text-align: center;
+            color: #2c2e3a;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
 
-    button{
-        background: #fff;
-        color: black;
-        padding: 10px;
-        border: 1px solid #2c2e3a;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 15px;
-        margin-left: 15px;
-        border: none;
-    }
+        button{
+            background: #fff;
+            color: black;
+            padding: 10px;
+            border: 1px solid #2c2e3a;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-left: 15px;
+            border: none;
+        }
 
-    button:hover{
-        margin-top: 15px;
-        background: #3b3ec0;
-        color: white;
-        outline: 1px solid #fff;
-    }
+        button:hover{
+            margin-top: 15px;
+            background: #3b3ec0;
+            color: white;
+            outline: 1px solid #fff;
+        }
     </style>
 <body>
 <a href="admin_dashboard.php"><button>Back to Main</button></a>

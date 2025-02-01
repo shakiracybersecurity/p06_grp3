@@ -44,7 +44,7 @@ if (!$grade) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id']; // Grade ID to delete
 
-    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    $token = htmlspecialchars($_POST['token'] ?? '', ENT_QUOTES, 'UTF-8');
     
     // Validate CSRF token
     if (!$token || !password_verify($token, $_SESSION['csrf_hash'])) {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['csrf_plain'] = bin2hex(random_bytes(32));
     $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT);
 
-    $student_id = $_POST['student_id']; // ID of the student
+    $student_id = $_POST['id']; // ID of the student
     // Input validation (basic)
     if (empty($id)) {
         echo "Grade ID is required.";

@@ -68,7 +68,7 @@ if ($action == 'update'){
         $update_message = updateCourse($course_id, $_POST,$user_role);
     }
 
-    $department = getDepartments(); //Fetch departments
+    $departments = getDepartments(); //Fetch departments
 }
 
 ?>

@@ -150,25 +150,32 @@ function getCourseDetails($course_id){
 
     return $course ?: null; // Return null if course not found
 }
-
-function getDepartments(){
+function getDepartments() { 
     global $conn;
-    
+
     // Prepare and execute the query
-    $stmt = $conn->prepare("SELECT * FROM course WHERE ID = ?");
     $departments = [];
     $dept_stmt = $conn->prepare("SELECT NAME FROM department");
-    $dept_stmt->execute();
-    $dept_result = $dept_stmt->get_result();
+    
+    if ($dept_stmt) {
+        $dept_stmt->execute();
+        $dept_result = $dept_stmt->get_result();
 
-    // Fetch department names
-    while ($dept_row = $dept_result->fetch_assoc()) {
-        $departments[] = $dept_row['NAME'];
+        // Fetch department names
+        while ($dept_row = $dept_result->fetch_assoc()) {
+            $departments[] = $dept_row['NAME'];
+        }
+
+        // Close the statement
+        $dept_stmt->close();
+    } else {
+        error_log("Failed to prepare statement: " . $conn->error);
     }
 
-    // Close the statement
-    $dept_stmt->close();
+    // Return the fetched departments
+    return $departments;
 }
+
 
 
 function updateCourses($course_id, $post_data, $user_role){

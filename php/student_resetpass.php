@@ -19,7 +19,7 @@ $student_id = $_SESSION['id'];
 $error = $success = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    $token = htmlspecialchars($_POST['token'] ?? '', ENT_QUOTES, 'UTF-8');
     
     // Validate CSRF token
     if (!$token || !password_verify($token, $_SESSION['csrf_hash'])) {

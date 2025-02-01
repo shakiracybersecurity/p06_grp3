@@ -86,10 +86,11 @@ body {
      <div id="sidePanel" class="sidepanel">
         <button class="closebtn" onclick="toggleSidePanel()">×</button>
         <a href="viewclass.php">View classes</a>
-        <a href="assignments.php?action=create">Create new student profiles</a>
+        <a href="register_student.php">Create new student profiles</a>
         <a href="viewgradetry.php">Grade details</a>
         <a href="view_course.php">Courses Dashboard</a>
         <a href="assignments.php?action=read"> View existing students</a>
+        <a href="assignments.php?action=create">Assign student to course</a>
         <a href="view_assignments.php"> View Student Course Assignments</a>
         <a href="logout.php">Logout</a>
     </div>

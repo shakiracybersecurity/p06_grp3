@@ -28,7 +28,12 @@ $grades = $result->fetch_all(MYSQLI_ASSOC);
 $course_result = $conn->query("SELECT ID, NAME FROM course");
 $courses = $course_result->fetch_all(MYSQLI_ASSOC);
 ?>
-
+<!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Robotic Management System</title>
 <style>
     * {
         margin: 0;

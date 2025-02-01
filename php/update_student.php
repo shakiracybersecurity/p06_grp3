@@ -98,7 +98,12 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST['update'])) {
 }
 $conn->close();
 ?>
-<html>
+<!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Robotic Management System</title>
     <style>
 body{
     margin: 0;
@@ -208,6 +213,7 @@ input[type="submit"]:hover {
 }
 
 </style>
+</head>
 <?php if (isset($_SESSION['message'])) : ?>
     <p style="color: #fff;"><?= $_SESSION['message']; ?></p>
     <?php unset($_SESSION['message']); ?>

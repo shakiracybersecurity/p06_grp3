@@ -239,8 +239,7 @@ $courses = $conn->query("SELECT id, name FROM course");
     </select><br>
 </div>
 <div class = "options">
-    <?php if ($user_role == 2): // Show course assignment only for faculty ?>
-        <label for="course">Assign Courses:</label><br>
+        <label for="course">Courses:</label><br>
         <?php while ($course = $courses->fetch_assoc()): ?>
             <input type="checkbox" name="course_ids[]" value="<?= $course['id'] ?>"> <?= htmlspecialchars($course['name']) ?><br>
         <?php endwhile; ?>
@@ -251,9 +250,8 @@ $courses = $conn->query("SELECT id, name FROM course");
         </div>
 </div>
 </body>
-        </form>
-<?php endif; ?>
-        </body>
-        </form>
-        </html>
+</form>
+</body>
+</form>
+</html>
 

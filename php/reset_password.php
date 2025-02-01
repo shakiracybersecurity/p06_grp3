@@ -83,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $error = "passwords do not match!";
     }
 }
+}
 ?>
 
 <!DOCTYPE html>

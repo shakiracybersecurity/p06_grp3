@@ -260,22 +260,31 @@ function deleteAssignment($student_id, $post_data, $course_id) {
     }
 }
 
+
 function assignCoursesToStudent($student_id, $course_ids, $conn) {
-    // Validate inputs
     if (empty($student_id) || empty($course_ids)) {
         return "Please select a student and at least one course.";
     }
 
-    // Prepare the SQL statement for insertion
+    $errors = [];
     $stmt = $conn->prepare("INSERT INTO student_courses (student_id, course_id) VALUES (?, ?)");
-
-    // Loop through each course ID and bind parameters for insertion
-    foreach ($course_ids as $course_id) {
-        $stmt->bind_param("ii", $student_id, $course_id);
-        $stmt->execute();
+    if (!$stmt) {
+        return "Error preparing statement: " . $conn->error;
     }
 
-    $stmt->close(); // Close the prepared statement
+    foreach ($course_ids as $course_id) {
+        $stmt->bind_param("ii", $student_id, $course_id);
+        if (!$stmt->execute()) {
+            $errors[] = "Failed to assign course ID $course_id: " . $stmt->error;
+        }
+    }
+
+    $stmt->close();
+
+    if (!empty($errors)) {
+        return "Some courses could not be assigned: " . implode(", ", $errors);
+    }
 
     return "Courses assigned successfully.";
 }
+

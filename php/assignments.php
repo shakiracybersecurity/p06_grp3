@@ -19,28 +19,45 @@ if (!isset($_SESSION['csrf_token'])) {
 }
 // Get action from URL
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
-
 if ($action == "create") {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign_courses'])) {
-        $student_id = intval($_POST['student_id']);
-        $course_ids = $_POST['course_ids'] ?? []; // Array of selected course IDs
-
-        // Call the function to assign courses
-        $message = assignCoursesToStudent($student_id, $course_ids, $conn);
-
+    //Check if the user is a faculty member
+    if ($_SESSION['role'] != 2) {
         echo "<script>
-            alert('$message');
-            window.location.href = 'view_assignments.php';
+            alert('Access denied. Only faculty members can assign courses.');
+            window.location.href = 'view_assignments.php'; // Redirect to another page (e.g., homepage or dashboard)
         </script>";
         exit();
     }
 
-    // Fetch students for the dropdown
-    $students_result = $conn->query("SELECT id, name FROM students");
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign_courses'])) {
+        $student_id = intval($_POST['student_id']);
+        $course_ids = $_POST['course_ids'] ?? [];
 
-    // Fetch courses for the checkboxes
+        if (empty($student_id)) {
+            echo "<script>alert('Please select a student.');</script>";
+        } elseif (empty($course_ids)) {
+            echo "<script>alert('Please select at least one course.');</script>";
+        } else {
+            $message = assignCoursesToStudent($student_id, $course_ids, $conn);
+            echo "<script>
+                alert('$message');
+                window.location.href = 'view_assignments.php';
+            </script>";
+            exit();
+        }
+    }
+
+    $students_result = $conn->query("SELECT id, name FROM students");
+    if (!$students_result) {
+        die("Error fetching students: " . $conn->error);
+    }
+
     $courses_result = $conn->query("SELECT id, name FROM course");
+    if (!$courses_result) {
+        die("Error fetching courses: " . $conn->error);
+    }
 }
+
 // Fetch student records for display (only if action = read)
 $student_records = null; // Initialize variable to avoid undefined variable error
 
@@ -99,7 +116,7 @@ if ($action == 'update'){
     margin-top: 0px;
     margin:50px auto;
     max-width: 500px;
-    height: 900px;
+    height: 500px;
     background-color: #fff;
     padding: 30px;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
@@ -138,7 +155,18 @@ input[type="email"], input[type="tel"]{
         font-size: 15px;
         color: #2c2e3a;
 }
-input[type="checkbox"]{
+input{
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        border: 1px solid #2c2e3a;
+        color: #141619;
+        font-size: 13px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+}
+input[type="checkbox"],{
         padding: 10px;
         border: none;
         border-radius: 10px;
@@ -414,44 +442,41 @@ button:hover {
     <?php endif; ?>
 <?php endif; ?>
 
-
 <?php if ($action == 'create'): ?>
     <a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
-    <div class="container">
-        <h2>Assign Courses to Student</h2>
-        <form method="POST" action="">
-            <!-- Dropdown to select a student -->
-            <label for="student_id">Select Student:</label><br>
-            <select name="student_id" id="student_id" required>
-                <option value="">-- Select Student --</option>
+    <form method="POST">
+        <div class="container">
+            <h2>Assign Courses to Student</h2>
+            
+            <!-- Input field with a datalist for searching students -->
+            <label for="student_id">Search and Select a Student by Name:</label><br>
+            <input list="students" name="student_id" id="student_id" required placeholder="Type to search for a student">
+            <datalist id="students">
                 <?php while ($student = $students_result->fetch_assoc()): ?>
-                    <option value="<?php echo $student['id']; ?>">
-                        <?php echo $student['name']; ?>
+                    <option value="<?php echo htmlspecialchars($student['id']); ?>">
+                        <?php echo htmlspecialchars($student['name']); ?> (ID: <?php echo htmlspecialchars($student['id']); ?>)
                     </option>
                 <?php endwhile; ?>
-            </select>
+            </datalist>
             <br><br>
 
-            <div class = "options">
-            <!-- Checkboxes to select courses -->
-            <label>Select Courses:</label><br>
-            <?php while ($course = $courses_result->fetch_assoc()): ?>
-                <input type="checkbox" name="course_ids[]" value="<?php echo $course['id']; ?>">
-                <?php echo $course['name']; ?><br>
-            <?php endwhile; ?>
-            <br>
+            <!-- Checkboxes for courses -->
+            <div class="options">
+                <label>Select Courses:</label><br>
+                <?php while ($course = $courses_result->fetch_assoc()): ?>
+                    <label>
+                        <input type="checkbox" name="course_ids[]" value="<?php echo htmlspecialchars($course['id']); ?>">
+                        <?php echo htmlspecialchars($course['name']); ?>
+                    </label><br>
+                <?php endwhile; ?>
+                <br>
             </div>
 
             <!-- Submit Button -->
-            <input type="submit" name="assign_courses" value="Assign Courses">
-        </form>
-    </div>
-</body>
-</html>
+            <input type="submit" name="assign_courses" value="Assign Courses" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        </div>
+    </form>
 <?php endif; ?>
-        </body>
-        </form>
-        </html>
 
 <?php if ($action == 'update'): ?>
 <div class="back-button">

@@ -35,7 +35,7 @@ if (!$courses) {
     die("Error fetching courses: " . $conn->error);
 }
 
-$departments = getDepartments(); // Ensure getDepartments fetches id and name
+$departments = getStudentDepartments(); // Ensure getDepartments fetches id and name
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST['update'])) {
     $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);

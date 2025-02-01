@@ -500,12 +500,13 @@ button:hover {
 <?php endif; ?>
 
 <?php if ($action == 'update'): ?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
         <meta name ="viewport" content="width=device-width, initial-scale=1.0">
         <title> Robotic Management System</title>
+</head>
 <div class="back-button">
 <a href="view_course.php"><button>Back to Courses</button></a>
 </div>

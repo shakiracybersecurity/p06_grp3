@@ -188,10 +188,6 @@ function getDepartments() {
 function updateCourses($course_id, $post_data, $user_role){
     global $conn;
 
-    if (!isset($post_data['token'])|| $post_data['token'] !== $_SESSION['csrf_token']){
-        http_response_code(403);
-        exit("Invalid CSRF token.");
-    }
 
     // Gather form inputs
     $name = $post_data['name'] ?? '';

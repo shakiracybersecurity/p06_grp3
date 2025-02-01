@@ -81,11 +81,20 @@ if ($action == 'update'){
     }
 
     //Handle form submission for updating the course
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $update_message = updateCourses($course_id, $_POST,$user_role);
+    
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $update_message = updateCourses($course_id, $_POST, $user_role);
+    if (!empty($update_message)) {
+        echo "<script>
+            alert('$update_message');
+            window.location.href = 'view_course.php'; // Redirect to the courses page
+        </script>";
     }
+}
+
 
     $departments = getDepartments(); //Fetch departments
+
 }
 
 ?>
@@ -486,7 +495,7 @@ button:hover {
 <div class="container">
     <form method="POST">
     <h2>Update Course</h2>
-        <input type='hidden' name='token' value='<?= htmlspecialchars($_SESSION['token']) ?>'>
+    <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
         <!-- Course details -->
         Name: <input type="text" name="name" value="<?= htmlspecialchars($course['NAME']) ?>" required><br>

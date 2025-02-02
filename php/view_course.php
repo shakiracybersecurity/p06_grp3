@@ -12,6 +12,10 @@ if (!isset($_SESSION['username']) || ($_SESSION['role'] != 2 && $_SESSION['role'
     exit();
 }
 
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
 // Fetch all courses + department
 $sql = "SELECT course.ID, course.NAME, course.CODE, course.START_DATE, course.END_DATE, 
                course.STATUS, department.NAME AS DEPARTMENT_NAME 
@@ -128,7 +132,10 @@ $result = $conn->query($sql);
                 <td>
                     <a href="assignments.php?action=update&id=<?= $row['ID'] ?>"><button>Edit</button></a>
                     <?php if ($_SESSION['role'] == 3): // Only Admin can delete ?>
-                        <a href="delete_course.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure?')"><button>Delete</button></a>
+                        <form method="POST" action="delete_course.php?id=<?= $row['ID'] ?>">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($id); ?>">
+                        <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button></form>
                     <?php endif; ?>
                 </td>
             </tr>

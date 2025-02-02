@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2025 at 10:40 AM
+-- Generation Time: Feb 02, 2025 at 11:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -465,9 +465,7 @@ CREATE TABLE `department` (
 INSERT INTO `department` (`ID`, `NAME`) VALUES
 (1, 'RBE/ENG'),
 (2, 'RBS/IIT'),
-(3, 'RMC/IIT'),
-(5, 'dep 1'),
-(6, 'dep 2');
+(3, 'RMC/IIT');
 
 -- --------------------------------------------------------
 

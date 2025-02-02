@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows == 1) { //check if class already exists in module
+    if ($result->num_rows == 1) { //check if class already exists in
         $classmodule = $result->fetch_assoc();
         
         if ($module == $classmodule['modules_id']) {
@@ -198,7 +198,7 @@ body{
 <form method="POST">
     <?php if (isset($msg)) {echo $msg;}?>
     <h2> Edit class </h2>
-    Class name: <input type="text" name="class" value = "<?php echo $class_info['classname'];?>" required ><br>
+    Class name: <input type="text" name="class" value = "<?php echo $class_info['classname'];?>" required maxlength="10"><br>
 
     Class mode:
     <input type = "radio" name= "mode" id ="semester" value= "semester" <?php if($class_info['mode'] == "semester"){echo "checked";}?>/>

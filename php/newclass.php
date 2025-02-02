@@ -1,18 +1,24 @@
 <?php
 
 function addclass(){
+    global $conn;
+    $mode = $_POST['mode'];
+    $classname = htmlspecialchars(trim($_POST['class']));
+    $dep = $_POST['department'];
+    $teacher = $_POST['teacher'];
+    $module = $_POST['module'];
     $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id, teacher_id, modules_id) VALUES (?, ?, ?, ?, ?)");
     if ($stmt) {
         $stmt->bind_param("ssiii", $classname, $mode, $dep, $teacher, $module);
         
         if ($stmt->execute()) {
-            $msg = "class added!";
+            return "class added!";
         } else {
-            echo "Error during registration.";
+            return "Error during registration.";
         }
         $stmt->close();
     } else {
-        echo "Failed to prepare the statement.";
+        return "Failed to prepare the statement.";
     }
 }
 
@@ -37,10 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Secure: Sanitize user inputs
-    $mode = $_POST['mode'];
+    
     $classname = htmlspecialchars(trim($_POST['class']));
-    $dep = $_POST['department'];
-    $teacher = $_POST['teacher'];
     $module = $_POST['module'];
 
     $stmt = $conn->prepare("SELECT modules_id FROM class WHERE name = ?");
@@ -54,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($module == $classmodule['modules_id']) {
             $msg = "this class already exists for this module!";
         }else{
-            addtoclass();
+            $msg = addclass();
         }
     }else{
-        addtoclass();
+        $msg = addclass();
     }
 
     // Secure: Use prepared statements to prevent SQL injection

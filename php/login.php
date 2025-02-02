@@ -108,6 +108,14 @@ body{
     box-sizing: border-box;
     font-family: sans-serif;
 }
+img{
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+    image: url('logo.jpg');
+    object-fit: scale-down;
+}
 .container{
     margin-top: 0px;
     margin:50px auto;
@@ -186,6 +194,9 @@ button:hover {
 </head>
  <body>
     <div class="container">
+        <div class= "img">
+            <img src="logo.jpg" alt="" srcset="">
+</div> 
             <?php if (isset($msg)) {echo $msg;}?>
             <h2>Robotic Management System Login</h2>
             <form method="POST">

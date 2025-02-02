@@ -49,9 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();
 
     if ($result->num_rows == 1) {
-        $classmode = $result->fetch_assoc();
+        $classmodule = $result->fetch_assoc();
         
-        if ($module == $classmode['modules_id']) {
+        if ($module == $classmodule['modules_id']) {
             $msg = "this class already exists for this module!";
         }else{
             addtoclass();

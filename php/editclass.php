@@ -53,20 +53,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $teacher = $_POST['teacher'];
     $module = $_POST['module'];
 
-    // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
-    if ($stmt) {
-        $stmt->bind_param("ssiiii", $classname, $mode, $dep, $teacher, $module, $class_id);
+    $stmt = $conn->prepare("SELECT id, modules_id FROM class WHERE NOT id = ? AND name = ?");
+    $stmt->bind_param("is", $class_id, $classname);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $classmodule = $result->fetch_assoc();
         
-        if ($stmt->execute()) {
-            header("Location: viewclass.php"); //goes back to view class if update is successful
-        } else {
-            echo "Error during registration.";
+        if ($module == $classmodule['modules_id']) {
+            $msg = "this class already exists for this module!";
+        }else{
+            $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
+            if ($stmt) {
+                $stmt->bind_param("ssiiii", $classname, $mode, $dep, $teacher, $module, $class_id);
+                
+                if ($stmt->execute()) {
+                    header("Location: viewclass.php"); //goes back to view class if update is successful
+                } else {
+                    echo "Error during registration.";
+                }
+                $stmt->close();
+            } else {
+                echo "Failed to prepare the statement.";
+            }
         }
-        $stmt->close();
-    } else {
-        echo "Failed to prepare the statement.";
+    }else{
+        $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
+        if ($stmt) {
+            $stmt->bind_param("ssiiii", $classname, $mode, $dep, $teacher, $module, $class_id);
+            
+            if ($stmt->execute()) {
+                header("Location: viewclass.php"); //goes back to view class if update is successful
+            } else {
+                echo "Error during registration.";
+            }
+            $stmt->close();
+        } else {
+            echo "Failed to prepare the statement.";
+        }
     }
+
 }
 
 
@@ -169,6 +196,7 @@ body{
 <a href="viewclass.php"><button>Back</button></a> <br>
 
 <form method="POST">
+    <?php if (isset($msg)) {echo $msg;}?>
     <h2> Edit class </h2>
     Class name: <input type="text" name="class" value = "<?php echo $class_info['classname'];?>" required ><br>
 

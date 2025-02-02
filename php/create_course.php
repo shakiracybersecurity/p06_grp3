@@ -44,8 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
 
-    // Validate dates
-    if (strtotime($start_date) > strtotime($end_date)) {
+    // Check for special characters in Course Name and Course Code
+    if (preg_match('/[^a-zA-Z0-9\s]/', $name)) {
+        echo "<script>alert('Error: Course Name cannot contain special characters.');</script>";
+    } elseif (preg_match('/[^a-zA-Z0-9\s]/', $code)) {
+        echo "<script>alert('Error: Course Code cannot contain special characters.');</script>";
+    } elseif (strtotime($start_date) > strtotime($end_date)) {
         $error = "Start date cannot be later than the End date. Try again.";
     } elseif (strtotime($start_date) == strtotime($end_date)) {
         $error = "Start Date cannot be the same as End Date. Try again.";

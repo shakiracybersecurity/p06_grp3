@@ -64,11 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $student_id = $_POST['student_id']; // ID of the student
     $course_id = $_POST['course_id']; // ID of the course
-    $score = $_POST['score']; // Score
+    $score = filter_var($_POST['score'], FILTER_VALIDATE_FLOAT); // Ensure numeric type
     $grade = $_POST['grade']; // Grade
 
     // Input validation
-    if (empty($student_id) || empty($course_id) || empty($score) || empty($grade)) {
+    if ($score === false || $score < 0 || $score > 100) {
+        $error_message = "Score must be between 0 and 100.";
+    } elseif (empty($student_id) || empty($course_id) || empty($grade)) {
         $error_message = "All fields are required.";
     } else {
         // Check if student ID exists before proceeding
@@ -218,7 +220,7 @@ $conn->close();
     </select><br>
 
     <label for="score">Score:</label>
-    <input type="number" step="0.1" name="score" id="score" required><br>
+    <input type="number" step="0.1" name="score" id="score" min="0" max="100" required><br>
 
     <label for="grade">Grade:</label>
     <select name="grade" id="grade" required>

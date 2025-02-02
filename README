@@ -1,12 +1,24 @@
-Project title: Devlopment of a secure Robotic Management System with CRUD functions in PHP.
+# Development of a Secure Robotic Management System with CRUD Functions in PHP
 
-Project description: Develop a secure and user-frienndly web application for managing robotic course materials, 
-student assignments and scores. System will be used by polytechnic administrators , faculty and students.
-The system will be built using PHP and MySQL, and will implement robust security measures to protect sensitive data
-such as student profiles, course information, and performance metrics.
+## Description
+This project involves the development of a secure and user-friendly web application for managing robotic course materials, student assignments, and scores. The system is designed for use by polytechnic administrators, faculty, and students. Built using PHP and MySQL, it implements robust security measures to protect sensitive data such as student profiles, course information, and performance metrics.
 
-Softwares: XAMPP, Visual Studio Code and any web browser.
-Turn on  MYSQL and Apache on XAMPP, search the link https://localhost//p06_grp3/php/login.php to get started.
+## Getting Started
+
+### Prerequisites
+To set up and run this project, you need the following software:
+- **XAMPP**: To host the server and database (with MySQL and Apache).
+- **Visual Studio Code**: For editing the code.
+- **Web Browser**: For accessing the application.
+-Github : to pull the repository
+
+### Installation and Setup
+1. Download and install **XAMPP** from [https://www.apachefriends.org/index.html](https://www.apachefriends.org/index.html).
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/yourgroup/robotic-management-system.git
+3. access the site https://localhost//p06_grp3/php/login.php
+
 To test student:
 Username: student
 Password: password

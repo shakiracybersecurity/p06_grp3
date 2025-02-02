@@ -218,8 +218,11 @@ function updateCourses($course_id, $post_data, $user_role){
     $end_date = $post_data['end_date'] ?? '';
     $status = $post_data['status'] ?? '';
 
-    // only admin can update course data
-    if (strtotime($start_date) > strtotime($end_date)) {
+    if (preg_match('/[^a-zA-Z0-9\s]/', $name)) {
+        return "Error: Course Name cannot contain special characters.";
+    } elseif (preg_match('/[^a-zA-Z0-9\s]/', $code)) {
+        return "Error: Course Code cannot contain special characters."; 
+    } elseif (strtotime($start_date) > strtotime($end_date)) {
         return "Error: Start Date cannot be later than End Date.";
     } elseif (strtotime($start_date) == strtotime($end_date)) {
         return "Error: Start Date cannot be the same as End Date.";

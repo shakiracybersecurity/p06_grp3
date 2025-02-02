@@ -218,15 +218,16 @@ function updateCourses($course_id, $post_data, $user_role){
     $end_date = $post_data['end_date'] ?? '';
     $status = $post_data['status'] ?? '';
 
-    // Validate inputs
-    if (empty($name) || empty($code) || empty($department_name) || empty($start_date) || empty($end_date)) {
-        return"<p style='color: white;'>Please fill in all fields.</p>";
-    } elseif (strtotime($start_date) > strtotime($end_date)) {
-        return "<p style='color: white;'>Error: Start Date cannot be later than End Date.</p>";
-    } 
-
-    // Update course details (name, code, department, start_date, end_date)
+    // only admin can update course data
+    if (strtotime($start_date) > strtotime($end_date)) {
+        return "Error: Start Date cannot be later than End Date.";
+    } elseif (strtotime($start_date) == strtotime($end_date)) {
+        return "Error: Start Date cannot be the same as End Date.";
+    }
+    
+    // Update course details (name, code, department, start_date, end_date) 
     $stmt = $conn->prepare("UPDATE course SET NAME = ?, CODE = ?, DEPARTMENT_NAME = ?, START_DATE = ?, END_DATE = ? WHERE ID = ?");
+    // echo "<p style='color: yellow;'>skipped</p>";
     $stmt->bind_param("sssssi", $name, $code, $department_name, $start_date, $end_date, $course_id);
     $stmt->execute();
     $stmt->close();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 31, 2025 at 05:34 PM
+-- Generation Time: Feb 02, 2025 at 10:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -90,9 +90,9 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`ID`, `NAME`, `DEPARTMENT_NAME`, `START_DATE`, `END_DATE`, `CODE`, `status`) VALUES
-(1, 'Robotic Engineering', 'RBE/ENG', '2025-01-01', '2025-04-01', 'CRE25', 'start'),
-(2, 'Robotic Systems', 'RBS/IIT', '2025-01-01', '2025-04-01', 'CRS25', 'ended'),
-(3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'start');
+(1, 'Robotic Engineering', 'RBE/ENG', '2025-01-02', '2025-04-01', 'CRE25', 'ended'),
+(2, 'Robotic Systems', 'dep 2', '2025-01-01', '2025-04-01', 'CRS25', 'ended'),
+(3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'ended');
 
 --
 -- Triggers `course`
@@ -433,7 +433,19 @@ INSERT INTO `csrf` (`ID`, `STUDENT_ID`, `ADMIN_ID`, `STAFF_ID`, `TOKEN`, `ISSUED
 (306, '1', NULL, NULL, 'bfbabe2aaf32f53b3fecc6324b72a777eaf3c616a156416bc0', '2025-01-30 04:30:10.000000', '2025-01-30 05:30:10.000000'),
 (307, '1', NULL, NULL, 'b0056c922cdbf4c1d4af91fa2ec39ddd592793e913b3ad8fa0', '2025-01-30 04:31:24.000000', '2025-01-30 05:31:24.000000'),
 (308, '1', NULL, NULL, 'd6814eac7802f46eab0e78482e69f231315b89fa6f33f9e92a', '2025-01-30 07:37:26.000000', '2025-01-30 08:37:26.000000'),
-(309, '1', NULL, NULL, 'fa838a1210f5adb675637ca63226a8635f7cb0379b06c291a2', '2025-01-30 09:37:54.000000', '2025-01-30 10:37:54.000000');
+(309, '1', NULL, NULL, 'fa838a1210f5adb675637ca63226a8635f7cb0379b06c291a2', '2025-01-30 09:37:54.000000', '2025-01-30 10:37:54.000000'),
+(310, '1', NULL, NULL, '7b33d0e7b26b1217726d9da096343b9dc7f934eeb14d68b214', '2025-01-31 10:51:57.000000', '2025-01-31 11:51:57.000000'),
+(311, '1', NULL, NULL, 'a5dfc957f7d5282eb940f2263175c200b3f9a93c87524a4bcf', '2025-02-01 08:39:24.000000', '2025-02-01 09:39:24.000000'),
+(312, '9', NULL, NULL, '337eb2cb54a93849d6c40c7623e22c736a879c689d3a57174e', '2025-02-01 09:21:37.000000', '2025-02-01 10:21:37.000000'),
+(313, '1', NULL, NULL, '6c7d106d9df0066e86bd26757e9bca4fdc5736bbad33fa5e2e', '2025-02-01 09:37:55.000000', '2025-02-01 10:37:55.000000'),
+(314, '1', NULL, NULL, '55c0e5fa84be54602b4730ff4d4c8fdd114b3ceab688f83726', '2025-02-01 09:52:10.000000', '2025-02-01 10:52:10.000000'),
+(315, '1', NULL, NULL, '6328c4b3536d4c298fb1223d251d4997eb620355915379ed54', '2025-02-01 11:15:06.000000', '2025-02-01 12:15:06.000000'),
+(316, '1', NULL, NULL, '44aad87922bc70a970667357ea0a8afdc19b8672807dd8f213', '2025-02-01 11:15:30.000000', '2025-02-01 12:15:30.000000'),
+(317, '1', NULL, NULL, 'bc6af6e9fe03a8609cdba92e1c5130d97151dae63000cc5ea6', '2025-02-01 11:17:11.000000', '2025-02-01 12:17:11.000000'),
+(318, '1', NULL, NULL, '397f9ef04af24e1950dd0ae29b99d3db12fdd9c5a7c8208d02', '2025-02-01 11:18:41.000000', '2025-02-01 12:18:41.000000'),
+(319, '1', NULL, NULL, 'e4f7d04bb6d0358c634d13c738e6724740d54fbe14e26215e7', '2025-02-01 12:18:47.000000', '2025-02-01 13:18:47.000000'),
+(320, '1', NULL, NULL, '79f8832657d0ea91b7f8223f6978ae7477fafedcc8bd3bd799', '2025-02-01 13:10:35.000000', '2025-02-01 14:10:35.000000'),
+(321, '1', NULL, NULL, 'bef97c9efedcc7451b9132f5a3b2ad9ce445cbde9337429728', '2025-02-01 13:20:40.000000', '2025-02-01 14:20:40.000000');
 
 -- --------------------------------------------------------
 
@@ -456,22 +468,6 @@ INSERT INTO `department` (`ID`, `NAME`) VALUES
 (3, 'RMC/IIT'),
 (5, 'dep 1'),
 (6, 'dep 2');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `error_logs`
---
-
-CREATE TABLE `error_logs` (
-  `ID` int(11) NOT NULL,
-  `ERROR_MESSAGE` varchar(255) DEFAULT NULL,
-  `ERROR_TYPE` varchar(50) DEFAULT NULL,
-  `STUDENT_ID` varchar(50) DEFAULT NULL,
-  `ADMIN_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
-  `OCCURED_AT` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -524,59 +520,6 @@ INSERT INTO `grades` (`ID`, `STUDENT_ID`, `COURSE_ID`, `SCORE`, `GRADE`, `ENTERE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `granted_permissions`
---
-
-CREATE TABLE `granted_permissions` (
-  `ID` int(11) NOT NULL,
-  `PERMISSION_ID` varchar(50) DEFAULT NULL,
-  `ROLE_DESCRIPTION` varchar(50) DEFAULT NULL,
-  `PERMISSION_DESCRIPTION` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login`
---
-
-CREATE TABLE `login` (
-  `ID` int(11) NOT NULL,
-  `PASSWORD_HASH` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login_attempts`
---
-
-CREATE TABLE `login_attempts` (
-  `ID` int(11) NOT NULL,
-  `STUDENT_ID` varchar(50) DEFAULT NULL,
-  `ADMIN_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
-  `IP_ADDRESS` varchar(50) DEFAULT NULL,
-  `ATTEMPT_TIME` timestamp(6) NULL DEFAULT current_timestamp(6),
-  `SUCCESS` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login_data`
---
-
-CREATE TABLE `login_data` (
-  `ID` int(11) NOT NULL,
-  `PASSWORD_HASH` varchar(50) DEFAULT NULL,
-  `PASSWORD_SET` varchar(50) DEFAULT NULL,
-  `HASH_ALGORITHM_ID` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `modules`
 --
 
@@ -625,24 +568,11 @@ INSERT INTO `password_resets` (`ID`, `STUDENT_ID`, `STAFF_ID`, `ADMIN_ID`, `EMAI
 (19, '1', NULL, NULL, 'yuhaann@gmail.com', 'c894d7d7617ce6f9c8858deff989a661', NULL, '2025-01-22 02:08:47.000000', '2025-01-22 08:08:47.711307'),
 (20, '1', NULL, NULL, 'yuhaann@gmail.com', 'b53eb871fa5df6267cec5967f16957b2', NULL, '2025-01-23 02:14:39.000000', '2025-01-23 08:14:39.302553'),
 (21, '1', NULL, NULL, 'yuhaann@gmail.com', 'b44c04d613d316fc35e446584dffe465', NULL, '2025-01-23 02:44:54.000000', '2025-01-23 08:44:54.673185'),
-(22, '222222', NULL, NULL, 'student2@tp.edu.sg', '55c8f921cb88789223c703fc064d7be3', NULL, '2025-01-25 08:25:09.000000', '2025-01-25 14:25:09.550048');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sensitive_data`
---
-
-CREATE TABLE `sensitive_data` (
-  `ID` int(11) NOT NULL,
-  `STUDENT_ID` varchar(50) DEFAULT NULL,
-  `ADMIN_ID` varchar(50) DEFAULT NULL,
-  `STAFF_ID` varchar(50) DEFAULT NULL,
-  `ENCRYPTED_DATA` blob DEFAULT NULL,
-  `ENCRYPTION_KEY_ID` int(50) DEFAULT NULL,
-  `CREATED_AT` timestamp(6) NULL DEFAULT current_timestamp(6),
-  `UPDATED_AT` timestamp(6) NULL DEFAULT current_timestamp(6)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(22, '222222', NULL, NULL, 'student2@tp.edu.sg', '55c8f921cb88789223c703fc064d7be3', NULL, '2025-01-25 08:25:09.000000', '2025-01-25 14:25:09.550048'),
+(24, '9', NULL, NULL, 'bnurshakira@gmail.com', 'b54ca08a96597272c020b6d4c90f3083', NULL, '2025-02-01 09:44:19.000000', '2025-02-01 15:44:19.957828'),
+(25, '9', NULL, NULL, 'bnurshakira@gmail.com', 'ea5dd6e899da7466f769a76e123819eb', NULL, '2025-02-01 10:26:05.000000', '2025-02-01 16:26:05.634164'),
+(26, '9', NULL, NULL, 'bnurshakira@gmail.com', '2d780ad7f3f7059f9876c9171cbeca0e', NULL, '2025-02-01 10:27:23.000000', '2025-02-01 16:27:23.434727'),
+(27, '1', NULL, NULL, 'bnurshakira@gmail.com', 'eb16f2100e6665df57f116611237b25f', NULL, '2025-02-01 10:37:19.000000', '2025-02-01 16:37:19.056802');
 
 -- --------------------------------------------------------
 
@@ -671,11 +601,8 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`ID`, `NAME`, `PHONENUMBER`, `EMAIL`, `PASSWORD_HASH`, `CREATED_AT`, `UPDATED_AT`, `COURSE_ID`, `FACULTY`, `DEPARTMENT_ID`, `GRADE_ID`, `CLASS`, `ROLE_ID`) VALUES
-(1, 'student', 98009, 'yuhaann@gmail.com', '$2y$10$Iz2d67.JFuq1u5uv4BKHie7plDvToGU4yloUw7cAJOpOzF9yWVJcu', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '1', 'IIT', 3, NULL, NULL, '1'),
-(3456, 'shakira', 90098008, 'shakira@tp.com.sg', '', '2025-01-29 10:55:48.696624', '2025-01-29 10:55:48.696624', NULL, 'ENG', 1, NULL, NULL, '1'),
-(4444, 'student4', 4444, 'student4@tp.edu.sg', '', '2025-01-26 17:11:49.851565', '2025-01-26 17:11:49.851565', NULL, 'IIT', 2, NULL, NULL, '1'),
-(222222, 'student2222', 98009, 'student2@tp.edu.sg', '', '2025-01-29 11:04:41.794904', '2025-01-29 11:04:41.794904', NULL, 'IIT', 3, NULL, NULL, '1'),
-(2302518, 'shakira', 94769972, 'bnurshakira@gmail.com', '', '2025-01-29 18:54:07.033398', '2025-01-29 18:54:07.033398', NULL, 'IIT', 2, NULL, NULL, '1');
+(1, 'student', 12345678, 'bnurshakira@gmail.com', '$2y$10$FqmnTnYrJEXs98CeCGHFx.kIzZFgz4NsXcom5ADxmKvlIyrgeSWrm', '2025-02-01 16:37:05.297615', '2025-02-01 16:37:05.297615', NULL, 'ENG', 1, NULL, NULL, '1'),
+(2502345, 'Alice Johnson', 12345678, 'alice_johnson@example.com', '', '2025-02-01 20:10:11.190216', '2025-02-01 20:10:11.190216', NULL, 'ENG', 1, NULL, NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -696,10 +623,7 @@ CREATE TABLE `student_courses` (
 --
 
 INSERT INTO `student_courses` (`id`, `student_id`, `course_id`, `assigned_at`, `status`) VALUES
-(36, 3456, 1, '2025-01-29 10:55:48', 'start'),
-(38, 222222, 2, '2025-01-29 11:04:41', 'start'),
-(39, 222222, 3, '2025-01-29 11:04:41', 'start'),
-(49, 1, 3, '2025-01-30 14:02:15', 'not-started');
+(120, 2502345, 1, '2025-02-01 20:10:11', 'not-started');
 
 --
 -- Indexes for dumped tables
@@ -736,12 +660,6 @@ ALTER TABLE `department`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `error_logs`
---
-ALTER TABLE `error_logs`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `faculty`
 --
 ALTER TABLE `faculty`
@@ -754,24 +672,6 @@ ALTER TABLE `grades`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `granted_permissions`
---
-ALTER TABLE `granted_permissions`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `login_data`
---
-ALTER TABLE `login_data`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `modules`
 --
 ALTER TABLE `modules`
@@ -781,12 +681,6 @@ ALTER TABLE `modules`
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `sensitive_data`
---
-ALTER TABLE `sensitive_data`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -829,19 +723,13 @@ ALTER TABLE `course`
 -- AUTO_INCREMENT for table `csrf`
 --
 ALTER TABLE `csrf`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=322;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `error_logs`
---
-ALTER TABLE `error_logs`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `faculty`
@@ -856,24 +744,6 @@ ALTER TABLE `grades`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `granted_permissions`
---
-ALTER TABLE `granted_permissions`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `login`
---
-ALTER TABLE `login`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `login_data`
---
-ALTER TABLE `login_data`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
@@ -883,25 +753,19 @@ ALTER TABLE `modules`
 -- AUTO_INCREMENT for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-
---
--- AUTO_INCREMENT for table `sensitive_data`
---
-ALTER TABLE `sensitive_data`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2302519;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9090910;
 
 --
 -- AUTO_INCREMENT for table `student_courses`
 --
 ALTER TABLE `student_courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- Constraints for dumped tables

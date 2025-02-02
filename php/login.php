@@ -113,6 +113,7 @@ img{
     border-radius: 4px;
     padding: 5px;
     width: 150px;
+    margin-top:-15px;
     image: url('logo.jpg');
     object-fit: scale-down;
 }
@@ -185,7 +186,7 @@ button {
     margin-top: 15px;
 }
 button:hover {
-    margin-top: 20px;
+    margin-top: 15px;
     background: #3b3ec0;
     color: white;
     outline: 1px solid #fff;

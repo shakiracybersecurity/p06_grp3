@@ -5,14 +5,9 @@ $conn = db_connect();
 
 // Start session
 session_start();
-
+is_logged_in([3,2]);
 checkSessionTimeout();
 
-// Restrict access: Only Admin (role = 3) and Faculty (role = 2) can access
-if (!isset($_SESSION['username']) || ($_SESSION['role'] != 3 && $_SESSION['role'] != 2)) {
-    header("Location: login.php");
-    exit("Unauthorized access.");
-}
 
 $user_id = $_SESSION['id'];
 $user_role = (int)$_SESSION['role']; // Cast role to integer

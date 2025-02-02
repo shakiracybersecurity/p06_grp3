@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['csrf_plain'] = bin2hex(random_bytes(32));
     $_SESSION['csrf_hash'] = password_hash($_SESSION['csrf_plain'], PASSWORD_DEFAULT);
 
-
     $name = $_POST['name'];
     $code = $_POST['code'];
     $department_name = $_POST['department_name'];
@@ -87,13 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .container {
+            margin-top: 50px;
+            margin:50px auto;
+            max-width: 500px;
             background: white;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 500px;
-            margin-top: 50px;
             height: 700px;
         }
 
@@ -179,8 +179,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .back-link {
-            display: block;
+            /* display: block; */
             text-align: center;
+            margin-left: 60px;
             margin-top: 20px;
             color: #3498db;
             text-decoration: none;

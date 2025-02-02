@@ -6,11 +6,9 @@ $conn = db_connect();
 session_start();
 
 checkSessionTimeout();
+is_logged_in([1]);
 
-if (!isset($_SESSION['username']) || $_SESSION['role'] != 1) { // Only Admin can delete
-    header("Location: login.php");
-    exit("Unauthorized access.");
-}
+
 
 $user_role = (int)$_SESSION['role']; // Cast to integer to match type
 $user_id = $_SESSION['id'];

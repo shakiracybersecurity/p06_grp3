@@ -115,149 +115,149 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     height: 100vh;
     background-color:#2c2e3a;
     background-size: cover;
-}
-*{
-    margin: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-.container{
-    margin-top: 0px;
-    margin:50px auto;
-    max-width: 500px;
-    height: 500px;
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: 1px solid #fff;
-}
-h1{
-    text-align: center;
-    color: #050A44;
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-form{
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-label{
-        font-size: 15px;
-        margin-bottom: 2px;
     }
-input[type="text"],
-input[type="email"], input[type="tel"]{
-    padding: 10px;
-    margin-top: 8px;
-    border: none;
-    border-radius: 15px;
-    background: transparent;
-    border: 1px solid #2c2e3a;
-    color: #141619;
-    font-size: 15px;
-}
-.options label {
-        margin-top: 20px;
-        margin-bottom: 30px;
-        font-size: 15px;
-        color: #2c2e3a;
-}
-input{
-        padding: 10px;
-        border: none;
+    *{
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+    }
+    .container{
+        margin-top: 0px;
+        margin:50px auto;
+        max-width: 500px;
+        height: 500px;
+        background-color: #fff;
+        padding: 30px;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
-        background: transparent;
-        border: 1px solid #2c2e3a;
-        color: #141619;
-        font-size: 13px;
+        border: 1px solid #fff;
+    }
+    h1{
+        text-align: center;
+        color: #050A44;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
         margin-top: 20px;
-        margin-bottom: 20px;
-}
-input[type="checkbox"],{
-        padding: 10px;
-        border: none;
-        border-radius: 10px;
-        background: transparent;
-        border: 1px solid #2c2e3a;
-        color: #141619;
-        font-size: 13px;
-        margin-bottom: 20px;
-}
-.options input{
-        margin-right: 5px;
-        margin-top: 10px;
-}
-select{
-    width: 300px; /* Adjust width */
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    color: #333;
-    margin-bottom: 20px;
-}
-select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    label{
+            font-size: 15px;
+            margin-bottom: 2px;
         }
+    input[type="text"],
+    input[type="email"], input[type="tel"]{
+        padding: 10px;
+        margin-top: 8px;
+        border: none;
+        border-radius: 15px;
+        background: transparent;
+        border: 1px solid #2c2e3a;
+        color: #141619;
+        font-size: 15px;
+    }
+    .options label {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            color: #2c2e3a;
+    }
+    input{
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px solid #2c2e3a;
+            color: #141619;
+            font-size: 13px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+    }
+    input[type="checkbox"],{
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px solid #2c2e3a;
+            color: #141619;
+            font-size: 13px;
+            margin-bottom: 20px;
+    }
+    .options input{
+            margin-right: 5px;
+            margin-top: 10px;
+    }
+    select{
+        width: 300px; /* Adjust width */
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    select:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
 
-button {
-    background: #fff;
-    color: black;
-    padding: 10px;
-    border: 1px solid #2c2e3a;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 15px;
-    display:flex;
-}
-button:hover {
-    margin-top: 15px;
-    background: #3b3ec0;
-    color: white;
-    outline: 1px solid #fff;
-}
-   a {
+    button {
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        display:flex;
+    }
+    button:hover {
+        margin-top: 15px;
+        background: #3b3ec0;
+        color: white;
+        outline: 1px solid #fff;
+    }
+    a {
         text-decoration: none;
     }
     input[type="submit"], button {
-    background: #fff;
-    color: black;
-    padding: 10px;
-    border: 1px solid #2c2e3a;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 15px;
-    display:flex;
+        background: #fff;
+        color: black;
+        padding: 10px;
+        border: 1px solid #2c2e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        display:flex;
     }
     input[type="submit"]:hover, button:hover {
-    margin-top: 15px;
-    background: #3b3ec0;
-    color: white;
-    outline: 1px solid #fff;
+        margin-top: 15px;
+        background: #3b3ec0;
+        color: white;
+        outline: 1px solid #fff;
     }
     </style>
-<?php endif; ?>
-<?php if ($action == 'read'): ?>
+    <?php endif; ?>
+    <?php if ($action == 'read'): ?>
     <style>
     *{
-    margin: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+    }
     body{
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color:#b3b4bd; 
-    background-size: cover;
-    
-}
+        margin: 0;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color:#b3b4bd; 
+        background-size: cover;
+
+    }
     table {
         border-collapse: collapse;
         width: 80%; /* Adjust width as needed */
@@ -266,147 +266,152 @@ button:hover {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         margin-left: auto;
         margin-right: auto;
-        }
+    }
     th, td{
         padding: 15px;
         text-align: center;
         border: 1px solid;
     }
     h2{
-    text-align: center;
-    color: #2c2e3a;
-    margin-top: 30px;
-    margin-bottom: 20px;
+        text-align: center;
+        color: #2c2e3a;
+        margin-top: 30px;
+        margin-bottom: 20px;
     }
     th{
         background-color: #0a21c0;
-         color: white;
+        color: white;
     }
     button, input[type="submit"]{
-    background: #fff;
-    color: black;
-    padding: 10px;
-    border: 1px solid #2c2e3a;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 0px;
-    border: none;
-    }
-    button:hover,input[type="submit"]:hover {
-    margin-top: 0px;
-    background: #3b3ec0;
-    color: white;
-    outline: 1px solid #fff;
-}
-
-    </style>  
-
-
-<?php endif; ?>
-<?php if ($action == 'update'): ?>
-    <style>
-        body{
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color:#050a44;
-    background-size: cover;
-    }
-    *{
-    margin: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-    }
-    .container{
-    margin-top: 0px;
-    margin:50px auto;
-    max-width: 500px;
-    height: 600px;
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: 1px solid #fff;
-}
-
-    h2{
-    text-align: center;
-    color: #2c2e3a;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    }
-      /* Label Style */
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-     /* Input and Select Styles */
-     input[type="text"], select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        box-sizing: border-box;
-    }
-    input[type="date"], select{
-    width: 300px; /* Adjust width */
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    color: #333;
-    margin-bottom: 20px;
-    }
-    select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-    button {
-        display: block;
-        width: 100%;
         background: #fff;
         color: black;
         padding: 10px;
         border: 1px solid #2c2e3a;
         border-radius: 10px;
         cursor: pointer;
-        margin-top: 15px;
-        text-align: center;
-        font-size: 15px;
+        margin-top: 0px;
+        border: none;
     }
-      
-    button:hover {
-    margin-top: 15px;
-    background: #3b3ec0;
-    color: white;
-    outline: 1px solid #fff;
-}
-.back-button {
-    border: none;
-    outline: none;
-    background-color:#050a44;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    width: 100px;
-    display:flex;
-  
+    button:hover,input[type="submit"]:hover {
+        margin-top: 0px;
+        background: #3b3ec0;
+        color: white;
+        outline: 1px solid #fff;
     }
-    a{
-    text-decoration: none;
-    }
+
+</style>  
+
+
+<?php endif; ?>
+<?php if ($action == 'update'): ?>
+    <style>
+        body{
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color:#050a44;
+            background-size: cover;
+        }
+        *{
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        .container{
+            margin-top: 0px;
+            margin:50px auto;
+            max-width: 500px;
+            height: 600px;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid #fff;
+        }
+
+        h2{
+            text-align: center;
+            color: #2c2e3a;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        /* Label Style */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        /* Input and Select Styles */
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="date"], select{
+            width: 300px; /* Adjust width */
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        button {
+            display: block;
+            width: 100%;
+            background: #fff;
+            color: black;
+            padding: 10px;
+            border: 1px solid #2c2e3a;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 15px;
+        }
+        
+        button:hover {
+            margin-top: 15px;
+            background: #3b3ec0;
+            color: white;
+            outline: 1px solid #fff;
+        }
+        .back-button {
+            border: none;
+            outline: none;
+            background-color:#050a44;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: 100px;
+            display:flex;
+        }
+        a{
+            text-decoration: none;
+        }
     </style>
  <?php endif; ?>   
     </style>
 </head>
 <body>
 <!-- Display Student Records -->
+<!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Robotic Management System</title>
 <?php if ($action == 'read'): ?>
     <a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
     <h2>Current Student Records</h2>
@@ -452,6 +457,12 @@ button:hover {
 <?php endif; ?>
 
 <?php if ($action == 'create'): ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Robotic Management System</title>
     <a href="<?= $user_role == 2 ? 'faculty_dashboard.php' : 'admin_dashboard.php' ?>"><button>Back</button></a>
     <form method="POST">
         <div class="container">
@@ -488,6 +499,13 @@ button:hover {
 <?php endif; ?>
 
 <?php if ($action == 'update'): ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Robotic Management System</title>
+</head>
 <div class="back-button">
 <a href="view_course.php"><button>Back to Courses</button></a>
 </div>

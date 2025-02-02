@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows == 1) {
+    if ($result->num_rows == 1) { //check if class already exists in module
         $classmodule = $result->fetch_assoc();
         
         if ($module == $classmodule['modules_id']) {

@@ -7,6 +7,17 @@ such as student profiles, course information, and performance metrics.
 
 Softwares: XAMPP, Visual Studio Code and any web browser.
 Turn on  MYSQL and Apache on XAMPP, search the link https://localhost//p06_grp3/php/login.php to get started.
+To test student:
+Username: student
+Password: password
+
+To test faculty:
+Username: faculty
+Password: staffpass
+
+To test admin:
+Username: admin
+Password: adminpass
 
 Team Members: Shakira (shakiracybersecurity),
 Maegan (Maegann21), 

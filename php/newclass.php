@@ -1,5 +1,21 @@
 <?php
 
+function addclass(){
+    $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id, teacher_id, modules_id) VALUES (?, ?, ?, ?, ?)");
+    if ($stmt) {
+        $stmt->bind_param("ssiii", $classname, $mode, $dep, $teacher, $module);
+        
+        if ($stmt->execute()) {
+            $msg = "class added!";
+        } else {
+            echo "Error during registration.";
+        }
+        $stmt->close();
+    } else {
+        echo "Failed to prepare the statement.";
+    }
+}
+
 require 'functions.php';
 $conn = db_connect();
 session_start();
@@ -27,20 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $teacher = $_POST['teacher'];
     $module = $_POST['module'];
 
-    // Secure: Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO class (name, mode, department_id, teacher_id, modules_id) VALUES (?, ?, ?, ?, ?)");
-    if ($stmt) {
-        $stmt->bind_param("ssiii", $classname, $mode, $dep, $teacher, $module);
+    $stmt = $conn->prepare("SELECT modules_id FROM class WHERE name = ?");
+    $stmt->bind_param("s", $classname);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $classmodule = $result->fetch_assoc();
         
-        if ($stmt->execute()) {
-            echo "class added!";
-        } else {
-            echo "Error during registration.";
+        if ($module == $classmodule['modules_id']) {
+            $msg = "this class already exists for this module!";
+        }else{
+            addtoclass();
         }
-        $stmt->close();
-    } else {
-        echo "Failed to prepare the statement.";
+    }else{
+        addtoclass();
     }
+
+    // Secure: Use prepared statements to prevent SQL injection
+
+    
 
 }
 ?>
@@ -161,16 +183,19 @@ a {
     }
 </style>
 <a href="viewclass.php"><button>Back</button></a><br>
-<form method="POST">
 
+
+<form method="POST"> 
     <div class="container">
+    <?php if (isset($msg)) {echo $msg;}?>
+      
     <h2> Create new class </h2>
-    Class name: <input type="text" name="class" required placeholder="Class Name"><br>
+    Class name: <input type="text" name="class" required placeholder="Class Name" maxlength="10"><br>
 
     Class mode:
-    <input type = "radio" name= "mode" id ="semester" value= "semester"/>
+    <input type = "radio" name= "mode" id ="semester" value= "semester" required/>
     <label for = "semester">Semester</label>
-    <input type = "radio" name= "mode" id ="term" value= "term"/>
+    <input type = "radio" name= "mode" id ="term" value= "term" required/>
     <label for = "term">Term</label>
     <br>
 

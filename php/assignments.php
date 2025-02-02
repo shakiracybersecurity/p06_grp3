@@ -84,17 +84,19 @@ if ($action == 'update'){
     
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $update_message = updateCourses($course_id, $_POST, $user_role);
-    if (!empty($update_message)) {
+    if (strpos($update_message, 'Error:') === 0) {
+        // If it's an error, display it above the form
+        echo "";    
+    } else {
+        // If it's a success message, redirect to the view course page
         echo "<script>
-            alert('$update_message');
-            window.location.href = 'view_course.php'; // Redirect to the courses page
+            alert('$update_message');            
+            window.location.href = 'view_course.php'; 
         </script>";
+
     }
 }
-
-
     $departments = getDepartments(); //Fetch departments
-
 }
 
 ?>
@@ -322,7 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-top: 0px;
             margin:50px auto;
             max-width: 500px;
-            height: 600px;
+            height: auto;
             background-color: #fff;
             padding: 30px;
             box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
@@ -343,7 +345,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: bold;
         }
         /* Input and Select Styles */
-        input[type="text"], select {
+        input[type="text"], select, input[type="date"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -352,21 +354,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 16px;
             box-sizing: border-box;
         }
-        input[type="date"], select{
-            width: 300px; /* Adjust width */
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
+        
         button {
             display: block;
             width: 100%;
@@ -513,6 +501,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="container">
     <form method="POST">
     <h2>Update Course</h2>
+    <?php if (isset($update_message) && strpos($update_message, 'Error:') === 0): ?>
+        <p style="color: red; text-align: center; margin-bottom: 20px;"><?= htmlspecialchars($update_message) ?></p>
+    <?php endif; ?>
     <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
         <!-- Course details -->

@@ -90,9 +90,9 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`ID`, `NAME`, `DEPARTMENT_NAME`, `START_DATE`, `END_DATE`, `CODE`, `status`) VALUES
-(1, 'Robotic Engineering', 'RBE/ENG', '2025-01-02', '2025-04-01', 'CRE25', 'ended'),
-(2, 'Robotic Systems', 'dep 2', '2025-01-01', '2025-04-01', 'CRS25', 'ended'),
-(3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'ended');
+(1, 'Robotic Engineering', 'RBE/ENG', '2025-01-02', '2025-04-01', 'CRE25', 'in-progress'),
+(2, 'Robotic Systems', 'RBS/IIT', '2025-01-01', '2025-04-01', 'CRS25', 'in-progress'),
+(3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'in-progress');
 
 --
 -- Triggers `course`
@@ -465,9 +465,7 @@ CREATE TABLE `department` (
 INSERT INTO `department` (`ID`, `NAME`) VALUES
 (1, 'RBE/ENG'),
 (2, 'RBS/IIT'),
-(3, 'RMC/IIT'),
-(5, 'dep 1'),
-(6, 'dep 2');
+(3, 'RMC/IIT');
 
 -- --------------------------------------------------------
 

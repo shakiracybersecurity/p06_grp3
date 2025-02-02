@@ -17,7 +17,7 @@ To set up and run this project, you need the following software:
 2. Clone this repository:
    ```bash
    git clone https://github.com/yourgroup/robotic-management-system.git
-3. access the site https://localhost//p06_grp3/php/login.php
+3. Access the site on a web browser https://localhost//p06_grp3/php/login.php
 
 To test student:
 Username: student

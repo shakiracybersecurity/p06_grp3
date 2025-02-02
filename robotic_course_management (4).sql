@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2025 at 10:40 AM
+
+-- Generation Time: Feb 02, 2025 at 11:03 AM
+
+-- Generation Time: Feb 02, 2025 at 11:15 AM
+
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,8 +69,8 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `TEACHER_ID`, `MODULES_ID`, `MODE`, `DEPARTMENT_ID`) VALUES
-(12, 'class 2', NULL, NULL, NULL, 'term', 5),
-(13, 'test 3', NULL, NULL, NULL, 'term', 6),
+(12, 'class 2', NULL, '1', '1', 'term', 1),
+(13, 'test 3', NULL, '1', '1', 'term', 1),
 (14, 'class5', NULL, '1', '3', 'term', 3);
 
 -- --------------------------------------------------------
@@ -490,7 +494,8 @@ CREATE TABLE `faculty` (
 --
 
 INSERT INTO `faculty` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PASSWORD_HASH`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
-(1, 'faculty', NULL, NULL, NULL, '$2y$10$fNNYal8fxm2k.gP9AbCYbOlPBP/ZPGtvLzPhxSk61cHX1J1Alc0pa', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
+(1, 'faculty', NULL, NULL, NULL, '$2y$10$fNNYal8fxm2k.gP9AbCYbOlPBP/ZPGtvLzPhxSk61cHX1J1Alc0pa', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2'),
+(3, 'faculty 2', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
 
 -- --------------------------------------------------------
 
@@ -733,7 +738,7 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `grades`

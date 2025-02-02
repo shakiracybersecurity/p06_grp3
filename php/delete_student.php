@@ -4,12 +4,10 @@ require 'functions.php';
 $conn = db_connect();
 // Start session
 session_start();
+is_logged_in([3]);
+
 checkSessionTimeout();
-// Ensure only Admins can access
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit("Unauthorized access.");
-}
+
 
 // Role check for Admin access
 if ($_SESSION['role'] != 3) { // Role 3 is Admin

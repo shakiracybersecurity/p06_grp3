@@ -7,11 +7,6 @@ session_start();
 checkSessionTimeout();
 is_logged_in([3,2]);
 
-if ($_SESSION['role'] == 3){      //redirect back to dashboard of role
-    $redirect = "admin_dashboard.php";
-}elseif($_SESSION['role'] == 2) 
-    $redirect = "faculty_dashboard.php";
-
 $stmt = $conn->prepare("SELECT class.id, class.name as classname, class.mode, department.name as depname, faculty.name as teacher, modules.name as modulename
                         FROM class 
                         LEFT JOIN department ON class.department_id=department.id
@@ -22,6 +17,10 @@ $stmt -> execute();
 $result = $stmt->get_result();
 $class_info = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
 
 ?>
  <!DOCTYPE html>
@@ -121,8 +120,10 @@ $stmt->close();
                 <td><a href="editclass.php?id=<?php echo $class_info['id']; ?>"><button>Edit</button> </a> <br>
                 <?php 
                 if(can_delete()): ?>
-                <a href="deleteclass.php?id=<?php echo $class_info['id'] ?>" onclick="return confirm('Are you sure?')"><button>Delete</button></a></td>
-                <?php endif ?>
+                <form method="POST" action="deleteclass.php?id=<?php echo $class_info['id'] ?>">
+                <input type="hidden" name="id" value="<?= htmlspecialchars($id); ?>">
+                <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
+                <button type="submit" onclick="return confirm('Are you sure?')">Delete</button></form> <?php endif ?>
             </tr>
         <?php endforeach; ?>
     </tbody>

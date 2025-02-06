@@ -62,24 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $classmodule = $result->fetch_assoc();
         $msg = "this class already exists for this module!";
 
-    /*
-        if ($module == $classmodule['modules_id']) {
-            
-        }else{
-            $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
-            if ($stmt) {
-                $stmt->bind_param("ssiiii", $classname, $mode, $dep, $teacher, $module, $class_id);
-                
-                if ($stmt->execute()) {
-                    header("Location: viewclass.php"); //goes back to view class if update is successful
-                } else {
-                    echo "Error during registration.";
-                }
-                $stmt->close();
-            } else {
-                echo "Failed to prepare the statement.";
-            }
-        } */
     }else{
         $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
         if ($stmt) {

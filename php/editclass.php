@@ -13,7 +13,12 @@ if (empty($_SESSION['csrf_plain'])) {
 checkSessionTimeout();
 is_logged_in([3,2]);
 
-$class_id = $_GET['id'];
+if (isset($_GET['id'])){
+    $class_id = $_GET['id'];
+}else{
+    header("Location: viewclass.php");
+}
+
 
 $stmt = $conn->prepare("SELECT class.id as class_id , class.name as classname, class.mode, department.name as depname,
                         department.id as dep_id, faculty.name as teacher, faculty.id as teacher_id, modules.name as modulename, modules.id as module_id

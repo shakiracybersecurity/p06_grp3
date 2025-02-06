@@ -17,11 +17,6 @@ if ($_SESSION['role'] != 3) { // Role 3 is Admin
           </script>";
     exit();
 }
-// Validate and sanitize input
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "<script>alert('Invalid student ID!'); window.location.href='assignments.php?action=read';</script>";
-    exit();
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     $student_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);

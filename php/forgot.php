@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //token
         $length = 16;
         $token = bin2hex(random_bytes($length));
-        $token_expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
+        $token_expiry = date("Y-m-d H:i:s", strtotime("+10 seconds"));
 
         $user = $result->fetch_assoc();
         $user_id = $user['id'];

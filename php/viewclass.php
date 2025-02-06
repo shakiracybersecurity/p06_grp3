@@ -7,6 +7,8 @@ session_start();
 checkSessionTimeout();
 is_logged_in([3,2]);
 
+$redirect = redirect();
+
 $stmt = $conn->prepare("SELECT class.id, class.name as classname, class.mode, department.name as depname, faculty.name as teacher, modules.name as modulename
                         FROM class 
                         LEFT JOIN department ON class.department_id=department.id

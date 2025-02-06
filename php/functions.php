@@ -32,6 +32,15 @@ function can_delete(){
     }
 }
 
+function redirect(){
+    if ($_SESSION['role'] == 3) {
+        $redirect = "admin_dashboard.php";
+    } elseif ($_SESSION['role'] == 2) {
+        $redirect = "faculty_dashboard.php";
+    } 
+    return $redirect;
+}
+
 function checkSessionTimeout($timeout_duration = 300) { //5 mins before users session is expires and they have to re-login
     if (isset($_SESSION['last_activity'])) {
         $inactive_time = time() - $_SESSION['last_activity']; //how long the user has been inactive

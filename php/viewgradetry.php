@@ -9,11 +9,7 @@ session_start();
 checkSessionTimeout();
 is_logged_in([3, 2]);
 
-if ($_SESSION['role'] == 3) {
-    $redirect = "admin_dashboard.php";
-} elseif ($_SESSION['role'] == 2) {
-    $redirect = "faculty_dashboard.php";
-}
+$redirect = redirect();
 
 // Fetch all grades
 $query = "SELECT g.ID, SCORE, s.NAME AS student_name, c.NAME AS course_name, GRADE 

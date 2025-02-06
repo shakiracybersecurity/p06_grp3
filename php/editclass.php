@@ -53,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $teacher = $_POST['teacher'];
     $module = $_POST['module'];
 
-    $stmt = $conn->prepare("SELECT id, modules_id FROM class WHERE NOT id = ? AND name = ?");
-    $stmt->bind_param("is", $class_id, $classname);
+    $stmt = $conn->prepare("SELECT id, modules_id FROM class WHERE NOT id = ? AND name = ? AND modules_id = ?");
+    $stmt->bind_param("isi", $class_id, $classname, $module);
     $stmt->execute();
     $result = $stmt->get_result();
 

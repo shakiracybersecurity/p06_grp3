@@ -91,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->isHTML(TRUE);
         $mail->Body = '<html>Click <a href="http://localhost/p06_grp3/php/reset_password.php?token=' . $token . '">here</a>
                 to reset your password.</html>';
-        $mail->AltBody = 'Hi there, we are happy to confirm your booking. Please check the document in the attachment.';
 
         // send the message
         if(!$mail->send()){

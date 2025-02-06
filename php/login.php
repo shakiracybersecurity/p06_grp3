@@ -121,12 +121,13 @@ img{
     margin-top: 0px;
     margin:50px auto;
     max-width: 500px;
-    height: 500px;
+    height: 600px;
     background-color: #fff;
     padding: 30px;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 1px solid #fff;
+    
 }
 h2{
     text-align: center;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2025 at 10:11 AM
+-- Generation Time: Feb 06, 2025 at 10:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -92,8 +92,7 @@ CREATE TABLE `course` (
 INSERT INTO `course` (`ID`, `NAME`, `DEPARTMENT_NAME`, `START_DATE`, `END_DATE`, `CODE`, `status`) VALUES
 (2, 'Robotic Systems', 'dep 2', '2025-01-01', '2025-04-01', 'CRS25', 'ended'),
 (3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'ended'),
-(5, 'Robotic Architecture', 'RBA/ENG', '2025-02-06', '2025-02-28', 'CR25RA', 'start'),
-(9, 'Robotic Architecture', 'RBA/ENG', '2025-02-06', '2025-02-28', 'CR25RA', 'not-started');
+(5, 'Robotic Engineering', 'RBE/ENG', '2025-02-06', '2025-02-28', 'C25RE', 'start');
 
 --
 -- Triggers `course`

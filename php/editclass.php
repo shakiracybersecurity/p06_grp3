@@ -60,9 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows == 1) { //check if class already exists in
         $classmodule = $result->fetch_assoc();
-        
+        $msg = "this class already exists for this module!";
+
+    /*
         if ($module == $classmodule['modules_id']) {
-            $msg = "this class already exists for this module!";
+            
         }else{
             $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
             if ($stmt) {
@@ -77,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo "Failed to prepare the statement.";
             }
-        }
+        } */
     }else{
         $stmt = $conn->prepare("UPDATE class SET name = ?, mode = ?, department_id = ?, teacher_id = ?, modules_id = ? WHERE id = ?");
         if ($stmt) {

@@ -17,7 +17,7 @@ if ($_SESSION['role'] != 3) { // Role 3 is Admin
           </script>";
     exit();
 }
-// Validate and sanitize input
+// Validate and sanitize input(this code has issue, without this, the delete function works, i think something changed so it doesnt apply anymore.)
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo "<script>alert('Invalid student ID!'); window.location.href='assignments.php?action=read';</script>";
     exit();

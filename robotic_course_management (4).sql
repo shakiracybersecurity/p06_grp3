@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-
--- Generation Time: Feb 02, 2025 at 11:03 AM
-
--- Generation Time: Feb 02, 2025 at 11:15 AM
-
+-- Generation Time: Feb 06, 2025 at 10:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,9 +65,9 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`ID`, `NAME`, `STUDENT_ID`, `TEACHER_ID`, `MODULES_ID`, `MODE`, `DEPARTMENT_ID`) VALUES
-(12, 'class 2', NULL, '1', '1', 'term', 1),
-(13, 'test 3', NULL, '1', '1', 'term', 1),
-(14, 'class5', NULL, '1', '3', 'term', 3);
+(12, 'class01', NULL, '1', '1', 'term', 1),
+(13, 'class02', NULL, '2', '3', 'semester', 2),
+(14, 'class03', NULL, '2', '1', 'term', 3);
 
 -- --------------------------------------------------------
 
@@ -94,9 +90,10 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`ID`, `NAME`, `DEPARTMENT_NAME`, `START_DATE`, `END_DATE`, `CODE`, `status`) VALUES
-(1, 'Robotic Engineering', 'RBE/ENG', '2025-01-02', '2025-04-01', 'CRE25', 'in-progress'),
-(2, 'Robotic Systems', 'RBS/IIT', '2025-01-01', '2025-04-01', 'CRS25', 'in-progress'),
-(3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'in-progress');
+(2, 'Robotic Systems', 'dep 2', '2025-01-01', '2025-04-01', 'CRS25', 'ended'),
+(3, 'Robotic Mechanics and Control', 'RMC/IIT', '2025-01-01', '2025-04-01', 'CRMC25', 'ended'),
+(5, 'Robotic Architecture', 'RBA/ENG', '2025-02-06', '2025-02-28', 'CR25RA', 'start'),
+(9, 'Robotic Architecture', 'RBA/ENG', '2025-02-06', '2025-02-28', 'CR25RA', 'not-started');
 
 --
 -- Triggers `course`
@@ -449,7 +446,9 @@ INSERT INTO `csrf` (`ID`, `STUDENT_ID`, `ADMIN_ID`, `STAFF_ID`, `TOKEN`, `ISSUED
 (318, '1', NULL, NULL, '397f9ef04af24e1950dd0ae29b99d3db12fdd9c5a7c8208d02', '2025-02-01 11:18:41.000000', '2025-02-01 12:18:41.000000'),
 (319, '1', NULL, NULL, 'e4f7d04bb6d0358c634d13c738e6724740d54fbe14e26215e7', '2025-02-01 12:18:47.000000', '2025-02-01 13:18:47.000000'),
 (320, '1', NULL, NULL, '79f8832657d0ea91b7f8223f6978ae7477fafedcc8bd3bd799', '2025-02-01 13:10:35.000000', '2025-02-01 14:10:35.000000'),
-(321, '1', NULL, NULL, 'bef97c9efedcc7451b9132f5a3b2ad9ce445cbde9337429728', '2025-02-01 13:20:40.000000', '2025-02-01 14:20:40.000000');
+(321, '1', NULL, NULL, 'bef97c9efedcc7451b9132f5a3b2ad9ce445cbde9337429728', '2025-02-01 13:20:40.000000', '2025-02-01 14:20:40.000000'),
+(322, '1', NULL, NULL, 'f82aacb4554f559ca0369fa9700f174509d619b08d9027cfe2', '2025-02-06 00:20:03.000000', '2025-02-06 01:20:03.000000'),
+(323, '1', NULL, NULL, '5425a071fa6ec84933fbe99bf75da2ee0a3d40dacdd6eddb68', '2025-02-06 00:20:29.000000', '2025-02-06 01:20:29.000000');
 
 -- --------------------------------------------------------
 
@@ -469,7 +468,8 @@ CREATE TABLE `department` (
 INSERT INTO `department` (`ID`, `NAME`) VALUES
 (1, 'RBE/ENG'),
 (2, 'RBS/IIT'),
-(3, 'RMC/IIT');
+(3, 'RMC/IIT'),
+(4, 'RBA/ENG');
 
 -- --------------------------------------------------------
 
@@ -495,7 +495,7 @@ CREATE TABLE `faculty` (
 
 INSERT INTO `faculty` (`ID`, `NAME`, `EMAIL`, `PHONE_NUMBER`, `DEPARTMENT`, `PASSWORD_HASH`, `CREATED_AT`, `UPDATED_AT`, `ROLE_ID`) VALUES
 (1, 'faculty', NULL, NULL, NULL, '$2y$10$fNNYal8fxm2k.gP9AbCYbOlPBP/ZPGtvLzPhxSk61cHX1J1Alc0pa', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2'),
-(3, 'faculty 2', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
+(2, 'faculty 2', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000', '2');
 
 -- --------------------------------------------------------
 
@@ -622,13 +622,6 @@ CREATE TABLE `student_courses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `student_courses`
---
-
-INSERT INTO `student_courses` (`id`, `student_id`, `course_id`, `assigned_at`, `status`) VALUES
-(120, 2502345, 1, '2025-02-01 20:10:11', 'not-started');
-
---
 -- Indexes for dumped tables
 --
 
@@ -720,13 +713,13 @@ ALTER TABLE `class`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `csrf`
 --
 ALTER TABLE `csrf`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=322;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -738,7 +731,7 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `grades`

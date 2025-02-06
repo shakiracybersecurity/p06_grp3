@@ -18,8 +18,9 @@ checkSessionTimeout();
 
 // Allow only Admin (role_id = 3) or Faculty (role_id = 2) to access
 if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], [2, 3])) {
-    header("Location: unauthorized.php");
-    exit();
+    // Instead of redirecting, display an access denied message
+    echo "<div style='color: red; text-align: center; font-size: 20px; font-weight: bold;'>Access Denied: You do not have the required permissions to view this page.</div>";
+    exit(); // Stop further execution of the script
 }
 
 // Generate and store a new CSRF token if it doesn't exist

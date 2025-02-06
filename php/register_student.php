@@ -22,7 +22,7 @@ $registration_successful = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validate CSRF token
-    $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    $submitted_token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_SPECIAL_CHARS);
     if (!$submitted_token || $submitted_token !== $_SESSION['csrf_token']) {
         http_response_code(403);
         exit("Invalid CSRF token.");
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Fetch all courses
 $courses = $conn->query("SELECT id, name FROM course");
-
+$departments = getDepartments();
 ?>
  <!DOCTYPE html>
  <html lang="en">
@@ -178,13 +178,14 @@ $courses = $conn->query("SELECT id, name FROM course");
     
     <div class = "dropdown">
     <label for="department">Department:</label> 
-    <select id="department" name="department_id" required>
-        <option value="" disabled selected>Select</option>
-        <option value="1">RBE/ENG</option>
-        <option value="2">RBS/IIT</option>
-        <option value="3">RMC/IIT</option>
+    <select name="department_id" id="department" required>
+        <option value="" disabled selected>Select Department</option>
+        <?php foreach ($departments as $dept): ?>
+            <option value="<?= htmlspecialchars($dept) ?>"><?= htmlspecialchars($dept) ?></option>
+        <?php endforeach; ?>
     </select><br>
     
+
     <label for="faculty">Faculty:</label>
     <select id="faculty" name="faculty" required>
         <option value="" disabled selected>Select</option>
